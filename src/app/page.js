@@ -1,32 +1,49 @@
-import HeroSection from '@/components/HeroSection';
-import Navbar from '@/components/Navbar';
-import AboutSection from '@/components/AboutSection';
-import ProjectsSection from '@/components/ProjectsSection';
-import ExperienceSection from '@/components/ExperienceSection';
-import ContactSection from '@/components/ContactSection';
-import OceanSunset from '@/components/OceanSunset';
+'use client'
+
+import { useEffect, useRef } from 'react'
+import { gsap } from 'gsap'
 
 export default function Home() {
+  const textRef = useRef(null)
+
+  useEffect(() => {
+    if (textRef.current) {
+      // GSAP animation timeline
+      const tl = gsap.timeline({ repeat: -1, yoyo: true })
+
+      tl.from(textRef.current, {
+        opacity: 0,
+        scale: 0.5,
+        duration: 1.5,
+        ease: 'elastic.out(1, 0.5)',
+      })
+      .to(textRef.current, {
+        color: '#8b5cf6',
+        duration: 2,
+        ease: 'power2.inOut',
+      })
+      .to(textRef.current, {
+        scale: 1.1,
+        duration: 1,
+        ease: 'power2.inOut',
+      })
+      .to(textRef.current, {
+        color: '#06b6d4',
+        letterSpacing: '0.2em',
+        duration: 2,
+        ease: 'power2.inOut',
+      })
+    }
+  }, [])
+
   return (
-    <>
-      <div className="relative">
-        <Navbar />
-
-        {/* Main Content */}
-        <main className="relative z-10">
-          <HeroSection />
-          <AboutSection />
-          <ProjectsSection />
-          <ExperienceSection />
-          <ContactSection />
-        </main>
-
-        {/* Ocean Sunset Footer */}
-        <OceanSunset />
-
-        {/* Scroll container for ocean animation */}
-        <div className="scroll-container"></div>
-      </div>
-    </>
-  );
+    <main className="flex min-h-screen items-center justify-center bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
+      <h1
+        ref={textRef}
+        className="text-8xl font-bold tracking-tight text-white"
+      >
+        developer
+      </h1>
+    </main>
+  )
 }
