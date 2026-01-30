@@ -1,0 +1,115 @@
+/* Hero Section Styles */
+.hero-section-new {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #FF5733 0%, #FF8C42 100%);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: 80px;
+}
+
+.hero-main {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Massive Typography */
+.hero-massive-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: clamp(8rem, 20vw, 20rem);
+  font-weight: 900;
+  color: #ffffff;
+  letter-spacing: -0.05em;
+  line-height: 0.9;
+  white-space: nowrap;
+  z-index: 1;
+  user-select: none;
+  text-transform: uppercase;
+}
+
+.hero-massive-text span {
+  display: inline-block;
+}
+
+/* Nexus Text */
+.nexus-text {
+  position: absolute;
+  bottom: 8rem;
+  left: 3rem;
+  font-size: 1.5rem;
+  color: #ffffff;
+  font-weight: 300;
+  z-index: 10;
+}
+
+/* Hero Join Button */
+.hero-join-btn {
+  position: absolute;
+  bottom: 3rem;
+  right: 3rem;
+  background: #000000;
+  color: #ffffff;
+  border: none;
+  padding: 1.2rem 2.5rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  border-radius: 6px;
+  cursor: pointer;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.hero-join-btn:hover {
+  background: #1a1a1a;
+  transform: translateY(-2px);
+}
+
+.join-close {
+  font-size: 1.5rem;
+  font-weight: 300;
+}
+
+@media (max-width: 1024px) {
+  .hero-massive-text {
+    font-size: 12rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .hero-massive-text {
+    font-size: 8rem;
+  }
+
+  .nexus-text {
+    left: 1.5rem;
+    bottom: 6rem;
+    font-size: 1.2rem;
+  }
+
+  .hero-join-btn {
+    right: 1.5rem;
+    bottom: 2rem;
+    padding: 1rem 2rem;
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-massive-text {
+    font-size: 5rem;
+    letter-spacing: -0.08em;
+  }
+}
