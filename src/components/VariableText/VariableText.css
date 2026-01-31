@@ -16,12 +16,12 @@
 
 .variable-text {
   display: flex;
-  align-items: flex-start;
+  align-items: flex-start; /* All letters align to same top line */
   justify-content: flex-start;
   flex-wrap: nowrap;
   width: 100vw;
-  height: 100vh;
-  overflow: hidden;
+  height: auto; /* Changed from 100vh */
+  overflow: visible; /* Changed from hidden */
   white-space: nowrap;
   position: absolute;
   top: 0;
@@ -32,30 +32,28 @@
 
 .variable-letter-container {
   display: flex;
-  align-items: center;
-  justify-content: center;
+  align-items: flex-start;
+  justify-content: flex-start;
   flex-shrink: 0;
-  overflow: hidden;
+  overflow: visible; /* Changed from hidden to visible */
   box-sizing: border-box;
-  height: 100vh;
   position: relative;
 }
 
 .variable-letter {
   display: block;
-  /* font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; */
-  font-weight: 400;
+  font-weight: 800;
   color: var(--text-white);
   letter-spacing: 0;
   transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-  transform-origin: top center;
+  transform-origin: top left;
   user-select: none;
-  line-height: 1;
-  text-align: center;
+  line-height: 0.75;
+  text-align: left;
   white-space: nowrap;
-  position: absolute;
+  position: relative; /* Changed from absolute */
   top: 0;
-  left: 50%;
+  left: 0;
   will-change: transform;
 }
 

@@ -10,9 +10,9 @@ export default function HeroSection() {
   const [isHovering, setIsHovering] = useState(false);
   const [letterScales, setLetterScales] = useState([]);
   const letterRefs = useRef([]);
- // Main text to display - change this to any text you want
+
   const heroText = "DEVELOPER";
-  const heroFontClass = "font-helvetica"; // Change this to font-bitcount, font-orbitron, or font-yantramanav
+  const heroFontClass = "font-helvetica";
 
   const handleMouseMove = (e) => {
     setLensPosition({ x: e.clientX, y: e.clientY });
@@ -48,8 +48,8 @@ export default function HeroSection() {
   const getHeightPercentage = (index, total) => {
     const mid = Math.floor(total / 2);
     const distanceFromEdge = Math.min(index, total - 1 - index);
-    const maxHeight = 70;
-    const minHeight = 45;
+    const maxHeight = 80;
+    const minHeight = 55;
     const step = (maxHeight - minHeight) / mid;
     return maxHeight - (distanceFromEdge * step);
   };
@@ -77,10 +77,9 @@ export default function HeroSection() {
           top: 0,
           left: 0,
           width: '100vw',
-          height: '100vh',
           display: 'flex',
           alignItems: 'flex-start',
-          overflow: 'hidden',
+          overflow: 'visible',
         }}>
           {letters.map((letter, index) => {
             const windowHeight = typeof window !== 'undefined' ? window.innerHeight : 1080;
@@ -101,8 +100,7 @@ export default function HeroSection() {
                   className={`variable-letter ${heroFontClass}`}
                   style={{
                     fontSize: `${fontSize}px`,
-                    height: `${fontSize}px`,
-                    transform: `translateX(-50%) scaleX(${scaleX})`,
+                    transform: `scaleX(${scaleX})`,
                   }}
                 >
                   {letter}
@@ -114,7 +112,7 @@ export default function HeroSection() {
       </ZoomLens>
 
       <div className="hero-subtitle">
-        <p>Full Stack Developer</p>
+        <p className="font-bitcount ">Full Stack Developer</p>
         <p className="subtitle-secondary">React • Node.js • Next.js</p>
       </div>
     </section>

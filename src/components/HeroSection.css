@@ -17,9 +17,9 @@
 
 .hero-subtitle p {
   font-size: clamp(20px, 3vw, 32px);
-  font-weight: 700;
+  font-weight: 300;
   margin-bottom: 8px;
-  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-family: 'Bitcount Single';
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
 }
 

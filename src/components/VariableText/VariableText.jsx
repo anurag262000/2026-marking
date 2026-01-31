@@ -3,7 +3,7 @@
 import { useEffect, useState, useRef } from 'react';
 import './VariableText.css';
 
-export default function VariableText({ text = "ANURAG", enableZoom = true, onMouseMove, fontClass = "font-helvetica" }) {
+export default function VariableText({ text = "DEVELOPER", enableZoom = true, onMouseMove, fontClass = "font-helvetica" }) {
   const [windowHeight, setWindowHeight] = useState(typeof window !== 'undefined' ? window.innerHeight : 1080);
   const [letterScales, setLetterScales] = useState([]);
   const letterRefs = useRef([]);
@@ -45,8 +45,8 @@ export default function VariableText({ text = "ANURAG", enableZoom = true, onMou
   const getHeightPercentage = (index, total) => {
     const mid = Math.floor(total / 2);
     const distanceFromEdge = Math.min(index, total - 1 - index);
-    const maxHeight = 70;
-    const minHeight = 45;
+    const maxHeight = 80;
+    const minHeight = 55;
     const step = (maxHeight - minHeight) / mid;
     return maxHeight - (distanceFromEdge * step);
   };
@@ -75,8 +75,7 @@ export default function VariableText({ text = "ANURAG", enableZoom = true, onMou
                 className={`variable-letter ${fontClass}`}
                 style={{
                   fontSize: `${fontSize}px`,
-                  height: `${fontSize}px`,
-                  transform: `translateX(-50%) scaleX(${scaleX})`,
+                  transform: `scaleX(${scaleX})`,
                 }}
               >
                 {letter}
