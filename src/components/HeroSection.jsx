@@ -71,8 +71,8 @@ export default function HeroSection() {
             {/* Exact copy of subtitle for magnification */}
             <div style={{
               position: 'fixed',
-              bottom: '40px',
-              left: '40px',
+              bottom: '10px',
+              left: '10px',
             }}>
               <p className="font-bitcount" style={{
                 fontSize: 'clamp(20px, 3vw, 32px)',
