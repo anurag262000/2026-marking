@@ -1,0 +1,147 @@
+.contact-section {
+  width: 100vw;
+  min-height: 100vh;
+  background: #1a1a1a;
+  padding: 100px 40px;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.contact-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  gap: 80px;
+}
+
+.contact-left {
+  flex: 1;
+}
+
+.contact-title {
+  font-size: clamp(40px, 5vw, 70px);
+  margin-bottom: 30px;
+  line-height: 1.1;
+  color: #fff;
+}
+
+.contact-desc {
+  font-size: 18px;
+  color: rgba(255,255,255,0.7);
+  max-width: 500px;
+  margin-bottom: 60px;
+  line-height: 1.6;
+}
+
+.contact-info {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.info-label {
+  display: block;
+  font-size: 14px;
+  color: #f4793a;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 10px;
+}
+
+.info-value {
+  font-size: 24px;
+  color: #fff;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.info-value:hover {
+  color: #f4793a;
+}
+
+.contact-form-wrapper {
+  flex: 1;
+  max-width: 550px;
+}
+
+.contact-form {
+  background: rgba(255,255,255,0.03);
+  padding: 50px;
+  border-radius: 30px;
+  border: 1px solid rgba(255,255,255,0.05);
+  backdrop-filter: blur(10px);
+}
+
+.form-group {
+  margin-bottom: 30px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 12px;
+  font-size: 14px;
+  color: rgba(255,255,255,0.7);
+}
+
+.contact-form input,
+.contact-form textarea {
+  width: 100%;
+  background: rgba(0,0,0,0.2);
+  border: 1px solid rgba(255,255,255,0.1);
+  padding: 16px;
+  border-radius: 12px;
+  color: #fff;
+  font-size: 16px;
+  transition: all 0.3s ease;
+}
+
+.contact-form input:focus,
+.contact-form textarea:focus {
+  outline: none;
+  border-color: #f4793a;
+  background: rgba(0,0,0,0.4);
+}
+
+.submit-btn {
+  width: 100%;
+  padding: 20px;
+  background: #f4793a;
+  border: none;
+  border-radius: 12px;
+  color: #fff;
+  font-size: 18px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  transition: all 0.3s ease;
+}
+
+.submit-btn:hover {
+  background: #ff5e00;
+  transform: translateY(-2px);
+}
+
+.btn-arrow {
+  transition: transform 0.3s ease;
+}
+
+.submit-btn:hover .btn-arrow {
+  transform: translateX(5px);
+}
+
+@media (max-width: 900px) {
+  .contact-container {
+    flex-direction: column;
+    gap: 60px;
+  }
+
+  .contact-form {
+    padding: 30px;
+  }
+}

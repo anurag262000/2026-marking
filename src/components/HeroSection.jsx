@@ -2,7 +2,7 @@
 
 import { useState, useRef } from 'react';
 import VariableText from '@/components/VariableText/VariableText';
-import HamburgerMenu from '@/components/Navbar/Navbar';
+// import HamburgerMenu from '@/components/Navbar/Navbar';
 import './HeroSection.css';
 
 export default function HeroSection() {
@@ -24,10 +24,18 @@ export default function HeroSection() {
         fontClass={heroFontClass}
       />
 
+      {/* Hero Image Placeholder */}
+      <div className="hero-image-placeholder"></div>
+
       {/* Subtitle Source */}
       <div className="hero-subtitle">
         <p className="font-bitcount subtitle-main">Full Stack Developer</p>
-        <p className="subtitle-secondary">React • Node.js • Next.js</p>
+        <div className="marquee-container">
+          <div className="marquee-content font-bitcount">
+            <span>React • Next.js • Node.js • TypeScript • JavaScript • GSAP • Framer Motion • MongoDB • Postgres • Supabase • Firebase • React Native •&nbsp;</span>
+            <span>React • Next.js • Node.js • TypeScript • JavaScript • GSAP • Framer Motion • MongoDB • Postgres • Supabase • Firebase • React Native •&nbsp;</span>
+          </div>
+        </div>
       </div>
 
       {/* Scroll Indicator */}
@@ -47,8 +55,7 @@ export default function HeroSection() {
         <span className="status-text ">Working at Indiefluence</span>
       </a>
 
-      {/* Hamburger Menu */}
-      <HamburgerMenu />
+      {/* Hamburger Menu Removed (Global) */}
     </section>
   );
 }

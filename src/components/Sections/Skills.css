@@ -1,0 +1,143 @@
+.skills-section {
+    width: 100vw;
+    min-height: 80vh;
+    background: #111; /* Slightly darker/different shade than Projects for subtle distinction */
+    padding: 100px 40px;
+    color: #fff;
+    display: flex;
+    align-items: center;
+}
+
+.skills-container {
+    max-width: 1200px;
+    width: 100%;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 60px;
+}
+
+.skills-content {
+    flex: 1;
+}
+
+.skills-content .section-title {
+    text-align: left;
+    margin-bottom: 20px;
+    line-height: 0.9;
+}
+
+.skills-desc {
+    color: rgba(255,255,255,0.6);
+    margin-bottom: 40px;
+    font-size: 18px;
+    max-width: 400px;
+}
+
+.active-skill-title {
+    font-size: 32px;
+    color: #f4793a;
+    margin-bottom: 15px;
+}
+
+.active-skill-list {
+    list-style: none;
+    padding: 0;
+}
+
+.active-skill-list li {
+    padding: 8px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    font-size: 16px;
+    color: rgba(255,255,255,0.9);
+}
+
+.empty-skill-state {
+    padding: 30px;
+    border: 1px dashed rgba(255,255,255,0.2);
+    border-radius: 10px;
+    color: rgba(255,255,255,0.4);
+    text-align: center;
+}
+
+.skills-chart-wrapper {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.radial-chart {
+    width: 100%;
+    max-width: 500px;
+    overflow: visible;
+}
+
+.chart-bg-circle {
+    fill: none;
+    stroke: rgba(255,255,255,0.1);
+    stroke-width: 1;
+    stroke-dasharray: 4 4;
+}
+
+.chart-axis {
+    stroke: rgba(255,255,255,0.1);
+    stroke-width: 1;
+}
+
+.chart-polygon {
+    fill: rgba(244, 121, 58, 0.2); /* Orange faint fill */
+    stroke: #f4793a;
+    stroke-width: 2;
+}
+
+.chart-node-point {
+    fill: #f4793a;
+    stroke: #111;
+    stroke-width: 2;
+    transition: r 0.3s ease;
+}
+
+.chart-node-group:hover .chart-node-point,
+.chart-node-group.active .chart-node-point {
+    r: 9;
+    fill: #fff;
+}
+
+.chart-label {
+    fill: #fff;
+    font-size: 14px;
+    text-transform: uppercase;
+    transition: all 0.3s ease;
+}
+
+.chart-node-group.active .chart-label {
+    fill: #f4793a;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.chart-value {
+    fill: rgba(255,255,255,0.5);
+    font-size: 12px;
+}
+
+@media (max-width: 900px) {
+    .skills-container {
+        flex-direction: column-reverse;
+        gap: 60px;
+    }
+
+    .skills-content {
+        text-align: center;
+    }
+
+    .skills-content .section-title {
+        text-align: center;
+    }
+
+    .skills-desc {
+        margin: 0 auto 40px;
+    }
+}
