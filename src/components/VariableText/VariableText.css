@@ -1,0 +1,83 @@
+.variable-text-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 2;
+  pointer-events: all;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: 0;
+  cursor: none;
+  overflow: hidden;
+}
+
+.variable-text {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-wrap: nowrap;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  white-space: nowrap;
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 0;
+  margin: 0;
+}
+
+.variable-letter-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  overflow: hidden;
+  box-sizing: border-box;
+  height: 100vh;
+  position: relative;
+}
+
+.variable-letter {
+  display: block;
+  /* font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; */
+  font-weight: 400;
+  color: var(--text-white);
+  letter-spacing: 0;
+  transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  transform-origin: top center;
+  user-select: none;
+  line-height: 1;
+  text-align: center;
+  white-space: nowrap;
+  position: absolute;
+  top: 0;
+  left: 50%;
+  will-change: transform;
+}
+
+.variable-text-container:hover .variable-letter {
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Responsive adjustments */
+@media (max-width: 1024px) {
+  .variable-letter {
+    font-weight: 900;
+  }
+}
+
+@media (max-width: 768px) {
+  .variable-letter {
+    font-weight: 900;
+  }
+}
+
+@media (max-width: 480px) {
+  .variable-letter {
+    font-weight: 800;
+  }
+}
