@@ -2,102 +2,53 @@
 
 import { useState, useRef } from 'react';
 import VariableText from '@/components/VariableText/VariableText';
+import HamburgerMenu from '@/components/Navbar/Navbar';
 import './HeroSection.css';
 
 export default function HeroSection() {
-  const [subtitleLensPosition, setSubtitleLensPosition] = useState({ x: 0, y: 0 });
-  const [isSubtitleHovering, setIsSubtitleHovering] = useState(false);
-  const subtitleRef = useRef(null);
-
   const heroText = "DEVELOPER";
   const heroFontClass = "font-helvetica";
 
-  const LENS_SIZE = 120; // Smaller lens size
-  const ZOOM_LEVEL = 1.8; // Reduced zoom level
-
-  const handleSubtitleMouseMove = (e) => {
-    if (!subtitleRef.current) return;
-
-    setSubtitleLensPosition({ x: e.clientX, y: e.clientY });
-  };
-
-  const handleSubtitleMouseEnter = () => {
-    setIsSubtitleHovering(true);
-  };
-
-  const handleSubtitleMouseLeave = () => {
-    setIsSubtitleHovering(false);
-  };
-
   return (
-    <section className="hero-section">
+    <section className="hero-section" id="home">
+      <div className="liquid-background">
+        <div className="blob blob-1"></div>
+        <div className="blob blob-2"></div>
+        <div className="blob blob-3"></div>
+        <div className="blob blob-4"></div>
+      </div>
+
       {/* Variable Text with Proximity Effect */}
       <VariableText
         text={heroText}
         fontClass={heroFontClass}
       />
 
-      {/* Subtitle with Glass Zoom Effect */}
-      <div
-        ref={subtitleRef}
-        className="hero-subtitle"
-        onMouseMove={handleSubtitleMouseMove}
-        onMouseEnter={handleSubtitleMouseEnter}
-        onMouseLeave={handleSubtitleMouseLeave}
-      >
+      {/* Subtitle Source */}
+      <div className="hero-subtitle">
         <p className="font-bitcount subtitle-main">Full Stack Developer</p>
         <p className="subtitle-secondary">React • Node.js • Next.js</p>
       </div>
 
-      {/* Simplified Real Glass Zoom Lens */}
-      {isSubtitleHovering && (
-        <div
-          className="zoom-lens-glass"
-          style={{
-            left: `${subtitleLensPosition.x}px`,
-            top: `${subtitleLensPosition.y}px`,
-            width: `${LENS_SIZE}px`,
-            height: `${LENS_SIZE}px`,
-          }}
-        >
-          <div
-            className="zoom-content"
-            style={{
-              transform: `scale(${ZOOM_LEVEL})`,
-              left: `${-(subtitleLensPosition.x * ZOOM_LEVEL - LENS_SIZE / 2)}px`,
-              top: `${-(subtitleLensPosition.y * ZOOM_LEVEL - LENS_SIZE / 2)}px`,
-            }}
-          >
-            {/* Exact copy of subtitle for magnification */}
-            <div style={{
-              position: 'fixed',
-              bottom: '10px',
-              left: '10px',
-            }}>
-              <p className="font-bitcount" style={{
-                fontSize: 'clamp(20px, 3vw, 32px)',
-                fontWeight: 300,
-                marginBottom: '8px',
-                color: 'white',
-                textShadow: '2px 2px 4px rgba(0, 0, 0, 0.3)',
-                whiteSpace: 'nowrap',
-              }}>
-                Full Stack Developer
-              </p>
-              <p style={{
-                fontSize: 'clamp(16px, 2vw, 20px)',
-                fontWeight: 400,
-                opacity: 0.85,
-                letterSpacing: '0.05em',
-                color: 'white',
-                whiteSpace: 'nowrap',
-              }}>
-                React • Node.js • Next.js
-              </p>
-            </div>
-          </div>
-        </div>
-      )}
+      {/* Scroll Indicator */}
+      <div className="scroll-indicator">
+        <span className="scroll-text">Scroll to explore</span>
+        <div className="scroll-arrow">↓</div>
+      </div>
+
+      {/* Availability Badge */}
+      <a
+        href="https://indiefluence.in"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="availability-badge"
+      >
+        <span className="status-dot"></span>
+        <span className="status-text ">Working at Indiefluence</span>
+      </a>
+
+      {/* Hamburger Menu */}
+      <HamburgerMenu />
     </section>
   );
 }
