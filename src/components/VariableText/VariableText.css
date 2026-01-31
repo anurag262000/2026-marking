@@ -10,18 +10,18 @@
   align-items: flex-start;
   justify-content: flex-start;
   padding: 0;
-  cursor: none;
+  cursor: default; /* Changed from none to default - shows cursor */
   overflow: hidden;
 }
 
 .variable-text {
   display: flex;
-  align-items: flex-start; /* All letters align to same top line */
+  align-items: flex-start;
   justify-content: flex-start;
   flex-wrap: nowrap;
   width: 100vw;
-  height: auto; /* Changed from 100vh */
-  overflow: visible; /* Changed from hidden */
+  height: auto;
+  overflow: visible;
   white-space: nowrap;
   position: absolute;
   top: 0;
@@ -35,7 +35,7 @@
   align-items: flex-start;
   justify-content: flex-start;
   flex-shrink: 0;
-  overflow: visible; /* Changed from hidden to visible */
+  overflow: visible;
   box-sizing: border-box;
   position: relative;
 }
@@ -45,20 +45,16 @@
   font-weight: 800;
   color: var(--text-white);
   letter-spacing: 0;
-  transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: transform 0.2s ease-out;
   transform-origin: top left;
   user-select: none;
   line-height: 0.75;
   text-align: left;
   white-space: nowrap;
-  position: relative; /* Changed from absolute */
+  position: relative;
   top: 0;
   left: 0;
   will-change: transform;
-}
-
-.variable-text-container:hover .variable-letter {
-  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* Responsive adjustments */

@@ -1,39 +1,55 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import './ZoomLens.css';
 
 export default function ZoomLens({
   isActive = false,
   position = { x: 0, y: 0 },
-  size = 200,
-  zoomLevel = 2.5,
-  children
+  targetRef = null,
+  size = 250,
+  zoomLevel = 2.5
 }) {
-  const [lensStyle, setLensStyle] = useState({});
+  const lensRef = useRef(null);
+  const [backgroundPosition, setBackgroundPosition] = useState('0px 0px');
 
   useEffect(() => {
-    setLensStyle({
-      left: `${position.x}px`,
-      top: `${position.y}px`,
-      width: `${size}px`,
-      height: `${size}px`,
-    });
-  }, [position, size]);
+    if (!isActive || !targetRef?.current || !lensRef.current) return;
+
+    const targetElement = targetRef.current;
+    const targetRect = targetElement.getBoundingClientRect();
+
+    // Calculate the position within the target element
+    const relativeX = position.x - targetRect.left;
+    const relativeY = position.y - targetRect.top;
+
+    // Calculate background position for magnification
+    const bgX = -(relativeX * zoomLevel - size / 2);
+    const bgY = -(relativeY * zoomLevel - size / 2);
+
+    setBackgroundPosition(`${bgX}px ${bgY}px`);
+  }, [position, isActive, targetRef, size, zoomLevel]);
+
+  if (!isActive) return null;
 
   return (
     <div
-      className={`zoom-lens ${isActive ? 'active' : ''}`}
-      style={lensStyle}
+      ref={lensRef}
+      className="zoom-lens-glass"
+      style={{
+        left: `${position.x}px`,
+        top: `${position.y}px`,
+        width: `${size}px`,
+        height: `${size}px`,
+      }}
     >
       <div
-        className="zoom-lens-content"
+        className="zoom-lens-magnifier"
         style={{
-          transform: `translate(-50%, -50%) scale(${zoomLevel})`,
+          backgroundPosition: backgroundPosition,
+          transform: `scale(${zoomLevel})`,
         }}
-      >
-        {children}
-      </div>
+      />
     </div>
   );
 }

@@ -1,120 +1,103 @@
 'use client';
 
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef } from 'react';
 import VariableText from '@/components/VariableText/VariableText';
-import ZoomLens from '@/components/cursers/ZoomLens/ZoomLens';
 import './HeroSection.css';
 
 export default function HeroSection() {
-  const [lensPosition, setLensPosition] = useState({ x: 0, y: 0 });
-  const [isHovering, setIsHovering] = useState(false);
-  const [letterScales, setLetterScales] = useState([]);
-  const letterRefs = useRef([]);
+  const [subtitleLensPosition, setSubtitleLensPosition] = useState({ x: 0, y: 0 });
+  const [isSubtitleHovering, setIsSubtitleHovering] = useState(false);
+  const subtitleRef = useRef(null);
 
   const heroText = "DEVELOPER";
   const heroFontClass = "font-helvetica";
 
-  const handleMouseMove = (e) => {
-    setLensPosition({ x: e.clientX, y: e.clientY });
-    setIsHovering(true);
+  const LENS_SIZE = 120; // Smaller lens size
+  const ZOOM_LEVEL = 1.8; // Reduced zoom level
+
+  const handleSubtitleMouseMove = (e) => {
+    if (!subtitleRef.current) return;
+
+    setSubtitleLensPosition({ x: e.clientX, y: e.clientY });
   };
 
-  const handleMouseLeave = () => {
-    setIsHovering(false);
+  const handleSubtitleMouseEnter = () => {
+    setIsSubtitleHovering(true);
   };
 
-  useEffect(() => {
-    const calculateScales = () => {
-      const scales = letterRefs.current.map((ref) => {
-        if (!ref) return 1;
-
-        const container = ref.parentElement;
-        const containerWidth = container.offsetWidth;
-        const letterWidth = ref.scrollWidth;
-
-        const scaleX = letterWidth > 0 ? containerWidth / letterWidth : 1;
-        return Math.min(scaleX, 1);
-      });
-
-      setLetterScales(scales);
-    };
-
-    setTimeout(calculateScales, 100);
-    window.addEventListener('resize', calculateScales);
-
-    return () => window.removeEventListener('resize', calculateScales);
-  }, [heroText]);
-
-  const getHeightPercentage = (index, total) => {
-    const mid = Math.floor(total / 2);
-    const distanceFromEdge = Math.min(index, total - 1 - index);
-    const maxHeight = 80;
-    const minHeight = 55;
-    const step = (maxHeight - minHeight) / mid;
-    return maxHeight - (distanceFromEdge * step);
+  const handleSubtitleMouseLeave = () => {
+    setIsSubtitleHovering(false);
   };
-
-  const letters = heroText.split('');
-  const characterWidth = 100 / letters.length;
 
   return (
-    <section className="hero-section" onMouseLeave={handleMouseLeave}>
+    <section className="hero-section">
+      {/* Variable Text with Proximity Effect */}
       <VariableText
         text={heroText}
-        enableZoom={true}
-        onMouseMove={handleMouseMove}
         fontClass={heroFontClass}
       />
 
-      <ZoomLens
-        isActive={isHovering}
-        position={lensPosition}
-        size={220}
-        zoomLevel={2.5}
+      {/* Subtitle with Glass Zoom Effect */}
+      <div
+        ref={subtitleRef}
+        className="hero-subtitle"
+        onMouseMove={handleSubtitleMouseMove}
+        onMouseEnter={handleSubtitleMouseEnter}
+        onMouseLeave={handleSubtitleMouseLeave}
       >
-        <div className="variable-text" style={{
-          position: 'absolute',
-          top: 0,
-          left: 0,
-          width: '100vw',
-          display: 'flex',
-          alignItems: 'flex-start',
-          overflow: 'visible',
-        }}>
-          {letters.map((letter, index) => {
-            const windowHeight = typeof window !== 'undefined' ? window.innerHeight : 1080;
-            const heightPercentage = getHeightPercentage(index, letters.length);
-            const fontSize = (windowHeight * heightPercentage) / 100;
-            const scaleX = letterScales[index] || 1;
-
-            return (
-              <div
-                key={index}
-                className="variable-letter-container"
-                style={{
-                  width: `${characterWidth}vw`,
-                }}
-              >
-                <span
-                  ref={(el) => (letterRefs.current[index] = el)}
-                  className={`variable-letter ${heroFontClass}`}
-                  style={{
-                    fontSize: `${fontSize}px`,
-                    transform: `scaleX(${scaleX})`,
-                  }}
-                >
-                  {letter}
-                </span>
-              </div>
-            );
-          })}
-        </div>
-      </ZoomLens>
-
-      <div className="hero-subtitle">
-        <p className="font-bitcount ">Full Stack Developer</p>
+        <p className="font-bitcount subtitle-main">Full Stack Developer</p>
         <p className="subtitle-secondary">React • Node.js • Next.js</p>
       </div>
+
+      {/* Simplified Real Glass Zoom Lens */}
+      {isSubtitleHovering && (
+        <div
+          className="zoom-lens-glass"
+          style={{
+            left: `${subtitleLensPosition.x}px`,
+            top: `${subtitleLensPosition.y}px`,
+            width: `${LENS_SIZE}px`,
+            height: `${LENS_SIZE}px`,
+          }}
+        >
+          <div
+            className="zoom-content"
+            style={{
+              transform: `scale(${ZOOM_LEVEL})`,
+              left: `${-(subtitleLensPosition.x * ZOOM_LEVEL - LENS_SIZE / 2)}px`,
+              top: `${-(subtitleLensPosition.y * ZOOM_LEVEL - LENS_SIZE / 2)}px`,
+            }}
+          >
+            {/* Exact copy of subtitle for magnification */}
+            <div style={{
+              position: 'fixed',
+              bottom: '40px',
+              left: '40px',
+            }}>
+              <p className="font-bitcount" style={{
+                fontSize: 'clamp(20px, 3vw, 32px)',
+                fontWeight: 300,
+                marginBottom: '8px',
+                color: 'white',
+                textShadow: '2px 2px 4px rgba(0, 0, 0, 0.3)',
+                whiteSpace: 'nowrap',
+              }}>
+                Full Stack Developer
+              </p>
+              <p style={{
+                fontSize: 'clamp(16px, 2vw, 20px)',
+                fontWeight: 400,
+                opacity: 0.85,
+                letterSpacing: '0.05em',
+                color: 'white',
+                whiteSpace: 'nowrap',
+              }}>
+                React • Node.js • Next.js
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
     </section>
   );
 }
