@@ -24,8 +24,10 @@ export default function HeroSection() {
         fontClass={heroFontClass}
       />
 
-      {/* Hero Image Placeholder */}
-      <div className="hero-image-placeholder"></div>
+      {/* Hero Image Placeholder - Now with Real Image */}
+      <div className="hero-image-placeholder">
+        <img src="/Headshot.png" alt="Anurag" className="hero-headshot" />
+      </div>
 
       {/* Subtitle Source */}
       <div className="hero-subtitle">

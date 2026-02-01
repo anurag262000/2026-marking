@@ -1,5 +1,5 @@
 .variable-text-container {
-  position: fixed;
+  position: absolute;
   top: 0;
   left: 0;
   width: 100vw;
@@ -11,7 +11,7 @@
   justify-content: flex-start;
   padding: 0;
   cursor: default; /* Changed from none to default - shows cursor */
-  overflow: hidden;
+  overflow: visible;
 }
 
 .variable-text {

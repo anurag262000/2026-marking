@@ -1,0 +1,391 @@
+/* Base Layout */
+.about-section {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #000000; /* Solid Body as requested */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 20;
+    pointer-events: none;
+    font-family: 'Helvetica Neue', sans-serif;
+    color: white;
+}
+
+.about-section.active {
+    pointer-events: all;
+}
+
+/* FULL WIDTH BENTO DASHBOARD */
+.about-container {
+    opacity: 0; /* Handled by GSAP */
+    width: 100%;
+    max-width: 100%; /* UNLOCKED */
+    height: 100vh;
+    padding: 80px 40px; /* Breathing room */
+    display: flex;
+    gap: 30px;
+    z-index: 25;
+    box-sizing: border-box;
+}
+
+.bento-dashboard {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr 1.5fr; /* 3 Columns */
+    grid-template-rows: 1fr; /* 1fr fills the available space */
+    gap: 20px;
+    width: 100%;
+    height: 100%;
+    min-height: 0; /* Important for grid nesting */
+}
+
+.bento-col {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    height: 100%;
+    min-height: 0; /* CRITICAL: Allows flex child to shrink below content size */
+    overflow: hidden; /* Force scrollbar inside children */
+}
+
+/* CARDS & BORDERS */
+.bento-card {
+    position: relative;
+    background: rgba(10, 10, 10, 0.6);
+    border-radius: 20px;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    transition: transform 0.3s ease;
+}
+
+.bento-card:hover {
+    transform: translateY(-2px);
+    background: rgba(20, 20, 20, 0.8);
+}
+
+.card-content {
+    position: relative;
+    padding: 30px;
+    z-index: 2;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+/* GLOWING BORDER EFFECT (Aceternity Style) */
+.glow-border::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(0deg);
+    width: 100%;
+    height: 100%;
+    background: conic-gradient(
+        from 0deg,
+        transparent 0deg,
+        transparent 90deg,
+        var(--primary-color) 180deg,
+        transparent 270deg,
+        transparent 360deg
+    );
+    opacity: 0;
+    transition: opacity 0.3s;
+    z-index: 0;
+    width: 200%;
+    height: 200%;
+    animation: rotate-border 4s linear infinite;
+}
+
+.glow-border:hover::before {
+    opacity: 0.3;
+}
+
+.glow-border::after {
+    content: "";
+    position: absolute;
+    inset: 1px; /* The border thickness */
+    background: rgba(10, 10, 10, 0.95); /* Cover the center */
+    border-radius: 19px;
+    z-index: 1;
+}
+
+@keyframes rotate-border {
+    from { transform: translate(-50%, -50%) rotate(0deg); }
+    to { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+/* TYPOGRAPHY & ELEMENTS */
+.bento-title {
+    font-size: clamp(3rem, 5vw, 7rem);
+    font-weight: 300;
+    line-height: 0.85;
+    color: white;
+    margin-bottom: 20px;
+}
+
+.mono-label {
+    font-size: 0.7rem;
+    letter-spacing: 2px;
+    color: rgba(255, 255, 255, 0.4);
+    margin-bottom: 15px;
+    display: block;
+}
+
+.highlight-card {
+    flex-grow: 1;
+}
+
+.status-text {
+    font-size: 1.5rem;
+    color: var(--primary-color);
+    margin-bottom: 10px;
+}
+
+.bio-text {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    color: #ccc;
+}
+
+.accent {
+    color: white;
+    font-weight: 600;
+}
+
+/* STATS ROW */
+.stat-row {
+    display: flex;
+    gap: 15px;
+}
+
+.mini-stat {
+    padding: 20px;
+    display: flex;
+    flex-direction: column; /* Stack vertically for impact */
+    align-items: flex-start;
+    justify-content: center;
+    flex: 1;
+    background: rgba(255, 255, 255, 0.03);
+}
+
+.stat-number {
+    font-size: 3.5rem; /* Larger */
+    color: white;
+    line-height: 1;
+    text-shadow: 0 0 20px rgba(255, 100, 50, 0.5); /* Glow */
+}
+
+.stat-desc {
+    font-size: 0.7rem;
+    letter-spacing: 2px;
+    color: rgba(255, 255, 255, 0.6);
+    margin-top: 5px;
+}
+
+/* REFINED GLOW BORDER (Aceternity Style) */
+/* Requires the card to have a relative position and overflow hidden */
+.glow-border {
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+}
+
+/* The Moving Beam */
+.glow-border::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 400%; /* Make huge to cover rotation */
+    height: 400%;
+    background: conic-gradient(
+        transparent 80deg,
+        var(--primary-color) 180deg,
+        transparent 280deg
+    );
+    opacity: 0;
+    transition: opacity 0.5s;
+    animation: spin 4s linear infinite;
+    z-index: -1;
+}
+
+.glow-border:hover::before {
+    opacity: 1;
+}
+
+/* The Inner Card Background (Overlay) */
+.glow-border::after {
+    content: "";
+    position: absolute;
+    inset: 1px; /* Border width */
+    background: rgba(10, 10, 10, 0.95);
+    border-radius: 18px;
+    z-index: -1;
+}
+
+@keyframes spin {
+    0% { transform: translate(-50%, -50%) rotate(0deg); }
+    100% { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+/* LOG STREAM */
+.tall-card {
+    height: 100%;
+}
+
+.log-stream {
+    font-family: 'Space Grotesk', monospace;
+    font-size: 0.9rem;
+    color: rgba(0, 255, 136, 0.7); /* Matrix Green or keep white? */
+    line-height: 2;
+}
+
+.log-stream p {
+    border-bottom: 1px dashed rgba(255,255,255,0.05);
+}
+
+.blink {
+    animation: blink 1s infinite;
+}
+
+@keyframes blink {
+    50% { opacity: 0; }
+}
+
+/* SKILL MATRIX */
+.skills-col {
+    display: flex;
+    flex-direction: column;
+}
+
+.header-label {
+    text-align: right;
+}
+
+.skill-matrix {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(4, 1fr);
+    gap: 15px;
+    height: 100%;
+}
+
+.skill-card {
+    cursor: pointer;
+}
+
+.skill-card .card-content.centered {
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.skill-icon {
+    font-size: 2rem;
+    color: var(--primary-color);
+}
+
+.skill-name {
+    font-size: 1rem;
+    letter-spacing: 1px;
+}
+
+/* RESPONSIVE */
+@media (max-width: 1024px) {
+    .bento-dashboard {
+        grid-template-columns: 1fr;
+        padding-bottom: 50px;
+    }
+
+    .about-container {
+        height: auto;
+        overflow-y: auto;
+        display: block;
+    }
+
+    .skill-matrix {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* TERMINAL INPUT STYLES */
+.terminal-input {
+    background: transparent;
+    border: none;
+    color: var(--primary-color);
+    font-family: 'Space Grotesk', monospace;
+    font-size: 0.9rem;
+    width: 60%;
+    outline: none;
+    margin-left: 5px;
+    caret-color: transparent; /* Custom cursor used */
+}
+
+.input-line {
+    display: flex;
+    align-items: center;
+}
+
+.term-input-line {
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.term-output-line {
+    color: rgba(0, 255, 136, 0.8);
+}
+
+/* Hidden Input for Terminal */
+.hidden-input {
+    position: absolute;
+    opacity: 0;
+    top: 0;
+    left: 0;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    border: none;
+    outline: none;
+}
+
+/* Custom Scrollbar for Terminal */
+/* TERMINAL SCROLL FIX */
+.card-content.terminal-content {
+    height: 100%;
+    padding: 25px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden; /* Contains the scrollable area */
+}
+
+.log-stream {
+    flex: 1; /* Take remaining space */
+    width: 100%;
+    overflow-y: auto; /* Force Scrollbar */
+    overscroll-behavior: contain; /* Isolate scroll */
+    display: flex;
+    flex-direction: column;
+    min-height: 0; /* Critical for flex scrolling */
+    padding-right: 5px; /* Space for scrollbar */
+}
+
+.log-stream::-webkit-scrollbar {
+    width: 6px;
+    background: transparent;
+}
+
+.log-stream::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.02);
+}
+
+.log-stream::-webkit-scrollbar-thumb {
+    background: var(--primary-color);
+    border-radius: 3px;
+    opacity: 0.8; /* More visible */
+}

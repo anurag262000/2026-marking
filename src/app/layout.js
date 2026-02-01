@@ -1,5 +1,7 @@
+// app/layout.js - YOUR ORIGINAL (perfect!)
 import './globals.css';
 import Navbar from '@/components/Navbar/Navbar';
+import Lenis from '@studio-freight/lenis';  // ✅ KEEP THIS
 
 export const metadata = {
   title: 'Developer Portfolio',
