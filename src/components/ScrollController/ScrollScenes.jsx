@@ -15,7 +15,7 @@ export default function ScrollController() {
     // Initialize Lenis AFTER DOM ready
     lenisRef.current = new Lenis({
       duration: 1.2,
-      easing: (t) => 1 - (--t) * t * t * t * t,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       smooth: true,
       mouseMultiplier: 1,
       smoothTouch: false,

@@ -1,0 +1,143 @@
+/* ===== WEAPON RACK SECTION ===== */
+.weapon-rack-section {
+    width: 100%;
+    padding: 40px 0;
+    background-color: #0a0a0a;
+    position: relative;
+    z-index: 5;
+}
+
+.weapon-rack-container {
+    max-width: 100%;
+    margin: 0 auto;
+}
+
+.mono-label {
+    font-size: 0.75rem;
+    letter-spacing: 2px;
+    color: rgba(255, 255, 255, 0.4);
+    margin-bottom: 15px;
+    display: block;
+    text-transform: uppercase;
+}
+
+.weapon-rack-label {
+    display: block;
+    text-align: center;
+    margin-bottom: 50px;
+    font-size: 0.85rem;
+}
+
+.marquee-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    overflow: hidden;
+}
+
+/* ===== INFINITE MARQUEE ===== */
+.marquee-container-infinite {
+    width: 100%;
+    overflow: hidden;
+    mask-image: linear-gradient(
+        to right,
+        transparent,
+        black 10%,
+        black 90%,
+        transparent
+    );
+    -webkit-mask-image: linear-gradient(
+        to right,
+        transparent,
+        black 10%,
+        black 90%,
+        transparent
+    );
+}
+
+.marquee-scroller {
+    display: flex;
+    gap: 50px;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    width: max-content;
+}
+
+.marquee-scroller.animate-scroll {
+    animation: scroll var(--animation-duration, 40s) var(--animation-direction, forwards) linear infinite;
+}
+
+.marquee-scroller.pause-on-hover:hover {
+    animation-play-state: paused;
+}
+
+@keyframes scroll {
+    to {
+        transform: translateX(calc(-50% - 25px));
+    }
+}
+
+.marquee-item {
+    flex-shrink: 0;
+}
+
+/* ===== SKILL ITEMS - Minimal Style (no button/pill) ===== */
+.skill-chip {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 0;
+    background: transparent;
+    border: none;
+    transition: opacity 0.3s ease;
+    cursor: default;
+}
+
+.skill-chip:hover {
+    opacity: 0.7;
+}
+
+.skill-chip-icon {
+    font-size: 1.8rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white; /* Black and white icons */
+    opacity: 0.9;
+}
+
+.skill-chip-icon svg {
+    width: 32px;
+    height: 32px;
+    fill: white; /* Force white color */
+    color: white;
+}
+
+.skill-chip-name {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 1rem;
+    font-weight: 400;
+    color: rgba(255, 255, 255, 0.7);
+    letter-spacing: 0.5px;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+    .weapon-rack-section {
+        padding: 60px 0;
+    }
+
+    .skill-chip-icon svg {
+        width: 26px;
+        height: 26px;
+    }
+
+    .skill-chip-name {
+        font-size: 0.9rem;
+    }
+
+    .marquee-scroller {
+        gap: 35px;
+    }
+}

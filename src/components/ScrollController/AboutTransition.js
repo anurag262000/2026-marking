@@ -30,35 +30,51 @@ export default class AboutTransition {
         hero.appendChild(pixelGrid);
     }
 
-    pixelGrid.style.gridTemplateColumns = 'repeat(10, 1fr)';
-    pixelGrid.style.gridTemplateRows = 'repeat(10, 1fr)';
+    // --- SETUP: CIRCLE WIPE OVERLAY (GPU Accelerated) ---
+    let circleWipe = document.querySelector('.circle-wipe-overlay');
+    if (!circleWipe) {
+        circleWipe = document.createElement('div');
+        circleWipe.className = 'circle-wipe-overlay';
+        hero.appendChild(circleWipe);
+    }
 
-    // --- NESTING ---
+    // --- NESTING: Move About inside Hero for pinned transition ---
     if (aboutSection.parentElement !== hero) {
         hero.appendChild(aboutSection);
     }
 
     // Initial States
-    gsap.set(aboutSection, { autoAlpha: 0 }); // Starts invisible
+    gsap.set(aboutSection, { autoAlpha: 0 });
     gsap.set(aboutContent, { y: 30, autoAlpha: 0 });
     gsap.set(glassCard, { zIndex: 15, opacity: 1 });
     gsap.set('.transition-pixel', { scale: 0, opacity: 0 });
+    gsap.set(circleWipe, { scale: 0, opacity: 0 });
 
     const tl = gsap.timeline({
       scrollTrigger: {
         trigger: hero,
         start: 'top top',
-        end: '+=100%', // Reduced from 500% to 200% as requested
-        scrub: 0.5,
-        pin: true,
+        end: '+=300%', // 3x viewport height of scroll distance
+        scrub: 0.5,    // Smooth scrubbing tied to scroll
+        pin: true,     // Pin hero while animating
         anticipatePin: 1,
         onUpdate: (self) => {
-            aboutSection.classList.toggle('active', self.progress > 0.15);
+            const isPastHero = self.progress > 0.15;
+            // Enable pointer-events on About after 15% progress
+            aboutSection.classList.toggle('active', isPastHero);
+            // Disable pointer-events on Hero interactive elements
+            if (glassCard) glassCard.style.pointerEvents = isPastHero ? 'none' : 'auto';
+            const heroInteractiveElements = document.querySelectorAll('.availability-badge, .scroll-indicator, .hero-subtitle, .variable-text-container');
+            heroInteractiveElements.forEach(el => {
+                el.style.pointerEvents = isPastHero ? 'none' : 'auto';
+                el.style.visibility = isPastHero ? 'hidden' : 'visible';
+            });
         }
-    }
+      }
     });
 
-    // --- PHASE 1: SCATTER HERO (Time: 0 -> 0.5) ---
+    // --- PHASE 1: SCATTER HERO (Time: 0 → 0.5) ---
+    // Letters fly off screen with random x/y/rotation
     if (letterContainers.length > 0) {
         tl.to(letterContainers, {
           x: (i) => (Math.random() - 0.5) * window.innerWidth * 1.5,
@@ -69,22 +85,46 @@ export default class AboutTransition {
           stagger: { amount: 0.2, from: "center" },
           duration: 0.5,
           ease: "power1.inOut",
-          clearProps: "x,y,opacity,filter,scale,rotation,transform"
         }, 0);
     }
 
+    // Badge, subtitle, scroll indicator fade out
     tl.to('.scroll-indicator, .availability-badge, .hero-subtitle', {
       opacity: 0,
-       y: -20,
+      y: -20,
       duration: 0.2
     }, 0);
 
+    // Hero headshot fades
     if (heroImage) {
         tl.to(heroImage, { opacity: 0, duration: 0.3 }, 0);
     }
 
-    // --- PHASE 2: WIPE EFFECT (The Card Expands as the Reference) ---
-    // It expands to full screen to "wipe" the hero away
+    // --- PHASE 2: WIPE EFFECT (Time: 0.1 → 1.5) ---
+    // Solid black sphere expands from center → covers screen (GPU accelerated)
+    gsap.set(circleWipe, { opacity: 1 }); // Start solid, never transparent
+    tl.to(circleWipe, {
+        scale: 1.5,
+        duration: 1.4,
+        ease: "power2.inOut"
+    }, 0.1);
+
+    // Pixel grid animates from center outward
+    const pixels = document.querySelectorAll('.transition-pixel');
+    tl.to(pixels, {
+        scale: 1.05,
+        opacity: 1,
+        backgroundColor: '#0a0a0a',
+        stagger: {
+            grid: [10, 10],
+            from: "center",
+            amount: 0.4
+        },
+        duration: 0.5,
+        ease: "power2.in"
+    }, 0.2);
+
+    // Glass card fades and shrinks
     tl.fromTo(glassCard,
       {
         width: '300px',
@@ -100,52 +140,42 @@ export default class AboutTransition {
         width: '100vw',
         height: '100vh',
         borderRadius: '0px',
-        backgroundColor: '#000000', // Solid Black Wipe
+        backgroundColor: '#000000',
         backdropFilter: 'none',
         border: 'none',
-        duration: 0.7,
+        duration: 1.0,
         ease: "power2.out"
-      }, 0);
+      }, 0.2);
 
-    const pixels = document.querySelectorAll('.transition-pixel');
-    tl.to(pixels, {
-        scale: 1.05,
-        opacity: 1,
-        backgroundColor: '#0a0a0a',
-        stagger: {
-            grid: [10, 10],
-            from: "center",
-            amount: 0.4
-        },
-        duration: 0.5,
-        ease: "power2.in"
-    }, 0.1);
+    // --- PHASE 3: ABOUT REVEALS (Time: 1.5 → 2.6) ---
+    // About section becomes visible
+    tl.to(aboutSection, { autoAlpha: 1, duration: 0.1 }, 1.5);
 
+    // Hide the glass card
+    tl.to(glassCard, { autoAlpha: 0, duration: 0.1 }, 1.5);
 
-    // --- PHASE 3: THE SWAP (Refrence Discarded) ---
-    // 1. Reveal the About Section (which has its own Black BG) directly ON TOP of the expanded card
-    tl.to(aboutSection, { autoAlpha: 1, duration: 0.1 }, 0.65);
+    // Hide circle wipe
+    tl.to(circleWipe, { autoAlpha: 0, duration: 0.1 }, 1.5);
 
-    // 2. Hide the Glass Card (Discard it) - it's no longer needed
-    tl.to(glassCard, { autoAlpha: 0, duration: 0.1 }, 0.7);
-
-    // 3. Reveal the Content inside (Beams are already part of the section body)
+    // Content slides up and fades in
     if (aboutContent) {
         tl.to(aboutContent, {
           y: 0,
           autoAlpha: 1,
-          duration: 0.4,
+          duration: 1.1,
           ease: "power2.out"
-        }, 0.7);
+        }, 1.5);
     }
 
-    // --- PHASE 4: THE HOLD ---
-    tl.to({}, { duration: 4.0 });
+    // --- PHASE 4: HOLD position before unpin ---
+    tl.to({}, { duration: 0.4 }, 2.6);
   }
 
   destroy() {
     ScrollTrigger.getAll().forEach(t => t.kill());
     const grid = document.querySelector('.pixel-transition-grid');
     if (grid) grid.remove();
+    const circleWipe = document.querySelector('.circle-wipe-overlay');
+    if (circleWipe) circleWipe.remove();
   }
 }

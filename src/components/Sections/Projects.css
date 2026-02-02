@@ -1,10 +1,9 @@
 .projects-section {
   width: 100vw;
   min-height: 100vh;
-  background: #1a1a1a; /* Dark contrast against Orange Hero */
+  background: #1a1a1a;
   padding: 100px 40px;
   position: relative;
-  z-index: 2; /* Sit above hero liquid bg if needed, or stick to flow */
 }
 
 .projects-container {

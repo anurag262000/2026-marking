@@ -115,3 +115,42 @@ html.lenis-stopped {
 .font-space {
   font-family: 'Space Grotesk', 'Courier New', monospace;
 }
+
+/* ====== PIXEL TRANSITION GRID ====== */
+.pixel-transition-grid {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  grid-template-rows: repeat(10, 1fr);
+  z-index: 16;
+  pointer-events: none;
+}
+
+.transition-pixel {
+  width: 100%;
+  height: 100%;
+  background-color: #000000;
+  transform: scale(0);
+  will-change: transform, opacity;
+}
+
+/* ====== CIRCLE WIPE OVERLAY (GPU Accelerated) ====== */
+.circle-wipe-overlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 150vmax;
+  height: 150vmax;
+  background: #000000;
+  border-radius: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  transform-origin: center center;
+  z-index: 18;
+  pointer-events: none;
+  will-change: transform, opacity;
+  box-shadow: 0 0 100px 50px rgba(0, 0, 0, 0.8);
+}
