@@ -1,5 +1,5 @@
 'use client';
-
+// testing branch 2
 import { useState, useRef } from 'react';
 import VariableText from '@/components/VariableText/VariableText';
 // import HamburgerMenu from '@/components/Navbar/Navbar';
