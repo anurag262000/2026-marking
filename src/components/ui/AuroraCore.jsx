@@ -1,0 +1,100 @@
+"use client";
+import React, { useId, useEffect, useState } from "react";
+import Particles, { initParticlesEngine } from "@tsparticles/react";
+import { loadSlim } from "@tsparticles/slim";
+import { cn } from "@/lib/utils";
+import { motion, useAnimation } from "framer-motion";
+
+export const AuroraCore = ({
+  id,
+  className,
+  background = "transparent",
+  // Soft Pastel Palette: Baby Blue, Misty Pink, Mint Green, Soft Lilac
+   colors = ["#00f2ff", "#7000ff", "#00ff95"],
+  speed = 0.5,
+  fullScreen = false,
+}) => {
+  const [init, setInit] = useState(false);
+  const controls = useAnimation();
+  const generatedId = useId();
+
+  useEffect(() => {
+    initParticlesEngine(async (engine) => {
+      await loadSlim(engine);
+    }).then(() => setInit(true));
+  }, []);
+
+  const particlesLoaded = async (container) => {
+    if (container) {
+      controls.start({ opacity: 1, transition: { duration: 2 } });
+    }
+  };
+
+  return (
+    <motion.div
+      animate={controls}
+      className={cn("opacity-0 relative overflow-hidden", className)}
+    >
+      {/* Aurora Blur Overlay - Heavy blur for pastel softness */}
+      <div className="absolute inset-0 z-0 backdrop-blur-[120px] pointer-events-none" />
+
+      {init && (
+        <Particles
+          id={id || generatedId}
+          className="h-full w-full"
+          particlesLoaded={particlesLoaded}
+          options={{
+            background: { color: { value: background } },
+            fullScreen: { enable: fullScreen, zIndex: 0 },
+            fpsLimit: 60,
+            particles: {
+              number: { value: 6, density: { enable: false } },
+              color: { value: colors },
+              shape: { type: "circle" },
+              opacity: {
+                value: { min: 0.2, max: 0.5 },
+                animation: { enable: true, speed: 0.4, sync: false }
+              },
+              size: {
+                // Desktop Sizes
+                value: { min: 100, max: 300 },
+                animation: { enable: true, speed: 2, sync: false }
+              },
+              move: {
+                enable: true,
+                speed: speed,
+                direction: "none",
+                random: true,
+                outModes: { default: "out" },
+              },
+              shadow: {
+                enable: true,
+                blur: 80,
+                color: { value: colors[0] }
+              }
+            },
+            // Responsive Overrides for Mobile
+            responsive: [
+              {
+                maxWidth: 768,
+                options: {
+                  particles: {
+                    size: {
+                      // Smaller blobs for mobile screens
+                      value: { min: 50, max: 150 }
+                    },
+                    number: {
+                      // Slightly fewer particles to avoid clutter
+                      value: 4
+                    }
+                  }
+                }
+              }
+            ],
+            detectRetina: true,
+          }}
+        />
+      )}
+    </motion.div>
+  );
+};

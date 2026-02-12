@@ -1,43 +1,32 @@
-@import url('https://fonts.googleapis.com/css2?family=Bitcount+Single:wght@100..900&family=Orbitron:wght@400..900&family=Yantramanav:wght@100;300;400;500;700;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bitcount+Single:wght@100..900&family=Orbitron:wght@400..900&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #000000;
+  --color-secondary: #111111;
+  --color-accent: #3b82f6;
+}
+
 
 /* Font Utility Classes */
-.font-bitcount {
-  font-family: 'Bitcount Single', cursive !important;
-}
-
-.font-orbitron {
-  font-family: 'Orbitron', sans-serif !important;
-}
-
-.font-yantramanav {
-  font-family: 'Yantramanav', sans-serif !important;
-}
-
-.font-helvetica {
-  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-}
+.font-bitcount { font-family: 'Bitcount Single', cursive !important; }
+.font-orbitron { font-family: 'Orbitron', sans-serif !important; }
 
 * {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
 
-:root {
-  --primary-color: #f4793a;
-  --secondary-color: #1a1a1a;
-  --text-white: #ffffff;
-  --card-bg: #2a2a2a;
-  --border-color: #404040;
+  box-sizing: border-box;
 }
 
 html,
 body {
   width: 100%;
+  padding: 0;
+  margin: 0;
   min-height: 100vh;
   overflow-x: hidden;
-  background: var(--primary-color);
-  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  background-color: #000000 !important;
+  color: #ffffff;
+  font-family: 'Orbitron', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -51,106 +40,41 @@ body {
   z-index: 1;
 }
 
-/* ADD TO END OF globals.css */
-
-/* Smooth scroll container */
 #smooth-scroll-container {
   overflow-x: hidden;
 }
 
-/* Hero wrapper - preserves ALL original effects */
 .hero-section {
-  position: relative !important;
-  scroll-snap-align: start;
-}
-
-/* Prevent VariableText interference */
-.variable-text-container {
-  /* pointer-events: none !important; - Removed to restore hover effect */
-  pointer-events: auto !important;
-}
-
-/* Lenis scroll smoothing */
-html.lenis,
-html.lenis.lenis-smooth {
-  scroll-behavior: auto !important;
-}
-
-html.lenis-stopped {
-  scroll-behavior: auto !important;
-}
-
-/* About Reveal Overlay - Floating over Hero */
-.about-reveal-overlay {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 10;
-  pointer-events: none;
+  position: relative;
+  min-height: 100vh;
   width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: white;
-  text-align: center;
+  overflow: hidden;
 }
 
-.about-reveal-content {
-  background: rgba(0, 0, 0, 0.4);
-  backdrop-filter: blur(10px);
-  padding: 40px;
-  border-radius: 20px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+.bg-dot-thick-neutral-300 {
+  background-image: radial-gradient(circle, rgba(212, 212, 212, 0.2) 1px, transparent 1px);
+  background-size: 24px 24px;
 }
 
-.about-title {
-  font-size: 3rem;
-  margin-bottom: 1rem;
-  color: #fff;
+.bg-dot-thick-neutral-800 {
+  background-image: radial-gradient(circle, rgba(38, 38, 38, 0.4) 1px, transparent 1px);
+  background-size: 24px 24px;
 }
 
-/* Additional Font Utility for HUD */
-.font-space {
-  font-family: 'Space Grotesk', 'Courier New', monospace;
+.bg-dot-thick-indigo-500 {
+  background-image: radial-gradient(circle, rgba(99, 102, 241, 0.3) 1.5px, transparent 1.5px);
+  background-size: 24px 24px;
 }
 
-/* ====== PIXEL TRANSITION GRID ====== */
-.pixel-transition-grid {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  display: grid;
-  grid-template-columns: repeat(10, 1fr);
-  grid-template-rows: repeat(10, 1fr);
-  z-index: 16;
-  pointer-events: none;
+.stroke-text {
+  -webkit-text-fill-color: transparent;
+  -webkit-text-stroke-width: 1px;
+  -webkit-text-stroke-color: rgba(255, 255, 255, 0.4);
+  transition: all 0.5s ease;
 }
 
-.transition-pixel {
-  width: 100%;
-  height: 100%;
-  background-color: #000000;
-  transform: scale(0);
-  will-change: transform, opacity;
-}
-
-/* ====== CIRCLE WIPE OVERLAY (GPU Accelerated) ====== */
-.circle-wipe-overlay {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 150vmax;
-  height: 150vmax;
-  background: #000000;
-  border-radius: 50%;
-  transform: translate(-50%, -50%) scale(0);
-  transform-origin: center center;
-  z-index: 18;
-  pointer-events: none;
-  will-change: transform, opacity;
-  box-shadow: 0 0 100px 50px rgba(0, 0, 0, 0.8);
+.stroke-text-active {
+  -webkit-text-fill-color: rgba(255, 255, 255, 0.9);
+  -webkit-text-stroke-width: 0px;
+  text-shadow: 0 0 30px rgba(59, 130, 246, 0.5);
 }

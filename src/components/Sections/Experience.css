@@ -37,10 +37,10 @@
   width: 20px;
   height: 20px;
   border-radius: 50%;
-  background: #f4793a;
+  background: #3b82f6;
   border: 4px solid #1a1a1a;
   z-index: 2;
-  box-shadow: 0 0 0 2px #f4793a;
+  box-shadow: 0 0 0 2px #3b82f6;
 }
 
 .timeline-content {
@@ -59,7 +59,7 @@
 
 .timeline-period {
   font-size: 18px;
-  color: #f4793a;
+  color: #3b82f6;
   margin-bottom: 15px;
   display: inline-block;
   opacity: 0.9;
@@ -93,7 +93,7 @@
 .tech-tag {
   padding: 6px 14px;
   background: rgba(244, 121, 58, 0.1);
-  color: #f4793a;
+  color: #3b82f6;
   border-radius: 50px;
   font-size: 12px;
   font-weight: 500;

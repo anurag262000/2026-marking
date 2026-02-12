@@ -18,7 +18,7 @@
 }
 
 .view-all-link {
-  color: #f4793a;
+  color: #3b82f6;
   text-decoration: none;
   font-size: 18px;
   border-bottom: 1px solid transparent;
@@ -27,7 +27,7 @@
 }
 
 .view-all-link:hover {
-  border-bottom-color: #f4793a;
+  border-bottom-color: #3b82f6;
   letter-spacing: 1px;
 }
 
@@ -63,7 +63,7 @@
 }
 
 .dot {
-  color: #f4793a;
+  color: #3b82f6;
 }
 
 .blog-title {
@@ -73,7 +73,7 @@
 }
 
 .blog-card:hover .blog-title {
-  color: #f4793a;
+  color: #3b82f6;
   transition: color 0.3s ease;
 }
 

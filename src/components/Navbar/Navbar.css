@@ -2,7 +2,7 @@
   --bg-soft: #f5e7d7;
   --text-dark: #111111;
   --pill-radius: 999px;
-  --pill-font: "Bitcount", system-ui, sans-serif;
+  --pill-font: 'Bitcount Single', cursive, sans-serif;
 }
 
 /* trigger button bottom-right */
@@ -104,7 +104,7 @@
 }
 
 .discover-title {
-  font-family: "Cormorant Garamond", "Times New Roman", serif;
+  font-family: 'Orbitron', sans-serif;
   font-size: 1.6rem;
   line-height: 1.1;
   color: var(--text-dark);

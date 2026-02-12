@@ -37,7 +37,7 @@
 
 .active-skill-title {
     font-size: 32px;
-    color: #f4793a;
+    color: #3b82f6;
     margin-bottom: 15px;
 }
 
@@ -88,12 +88,12 @@
 
 .chart-polygon {
     fill: rgba(244, 121, 58, 0.2); /* Orange faint fill */
-    stroke: #f4793a;
+    stroke: #3b82f6;
     stroke-width: 2;
 }
 
 .chart-node-point {
-    fill: #f4793a;
+    fill: #3b82f6;
     stroke: #111;
     stroke-width: 2;
     transition: r 0.3s ease;
@@ -113,7 +113,7 @@
 }
 
 .chart-node-group.active .chart-label {
-    fill: #f4793a;
+    fill: #3b82f6;
     font-size: 16px;
     font-weight: bold;
 }

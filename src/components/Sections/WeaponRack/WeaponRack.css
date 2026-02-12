@@ -1,8 +1,8 @@
 /* ===== WEAPON RACK SECTION ===== */
 .weapon-rack-section {
     width: 100%;
-    padding: 40px 0;
-    background-color: #0a0a0a;
+    /* padding: 40px 0; */
+    /* background-color: #0a0a0a; */
     position: relative;
     z-index: 5;
 }
@@ -115,7 +115,7 @@
 }
 
 .skill-chip-name {
-    font-family: 'Space Grotesk', sans-serif;
+    font-family: 'Orbitron', sans-serif;
     font-size: 1rem;
     font-weight: 400;
     color: rgba(255, 255, 255, 0.7);

@@ -4,7 +4,7 @@ import { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Lenis from '@studio-freight/lenis';
-import AboutTransition from './AboutTransition';
+// import AboutTransition from './AboutTransition';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -42,12 +42,12 @@ export default function ScrollController() {
       pinType: 'transform',
     });
 
-    // HeroAboutBridge will auto-init here
-    const bridge = new AboutTransition();
+    // HeroAboutBridge was here, now removed
+    // const bridge = new AboutTransition();
 
     return () => {
       lenisRef.current?.destroy();
-      bridge?.destroy();
+      // bridge?.destroy();
       ScrollTrigger.getAll().forEach(t => t.kill());
     };
   }, []);

@@ -46,7 +46,7 @@
 .info-label {
   display: block;
   font-size: 14px;
-  color: #f4793a;
+  color: #3b82f6;
   text-transform: uppercase;
   letter-spacing: 2px;
   margin-bottom: 10px;
@@ -60,7 +60,7 @@
 }
 
 .info-value:hover {
-  color: #f4793a;
+  color: #3b82f6;
 }
 
 .contact-form-wrapper {
@@ -102,14 +102,14 @@
 .contact-form input:focus,
 .contact-form textarea:focus {
   outline: none;
-  border-color: #f4793a;
+  border-color: #3b82f6;
   background: rgba(0,0,0,0.4);
 }
 
 .submit-btn {
   width: 100%;
   padding: 20px;
-  background: #f4793a;
+  background: #3b82f6;
   border: none;
   border-radius: 12px;
   color: #fff;
