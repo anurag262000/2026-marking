@@ -52,13 +52,13 @@ export const AuroraCore = ({
               color: { value: colors },
               shape: { type: "circle" },
               opacity: {
-                value: { min: 0.2, max: 0.5 },
-                animation: { enable: true, speed: 0.4, sync: false }
+                value: 0.4, // Constant opacity to avoid flashing/pulsing
+                animation: { enable: false }
               },
               size: {
-                // Desktop Sizes
-                value: { min: 100, max: 300 },
-                animation: { enable: true, speed: 2, sync: false }
+                // Desktop Sizes - subtle movement, less "breathing"
+                value: { min: 150, max: 250 },
+                animation: { enable: true, speed: 0.5, sync: false }
               },
               move: {
                 enable: true,

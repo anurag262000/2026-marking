@@ -34,10 +34,10 @@ export default function Navbar() {
 
   const toggleMenu = () => setIsOpen(o => !o);
 
-  const handleMenuClick = (href) => {
-    setIsOpen(false);
-    document.querySelector(href)?.scrollIntoView({ behavior: 'smooth' });
-  };
+ const handleMenuClick = (href) => {
+  setIsOpen(false);
+  document.querySelector(href)?.scrollIntoView({ behavior: 'smooth' });
+};
 
   useEffect(() => {
     document.body.style.overflow = isOpen ? 'hidden' : 'unset';
@@ -70,7 +70,12 @@ export default function Navbar() {
               <p className="discover-title">Discover Tech</p>
               <div className="discover-city-pills">
                 {techItems.map((tech) => (
-                  <button key={tech.label} className={`city-pill ${tech.label === 'React Native' ? 'city-pill-active' : ''}`}>
+                  <button
+                    key={tech.label}
+                    className={`city-pill ${
+                      tech.label === 'React Native' ? 'city-pill-active' : ''
+                    }`}
+                  >
                     {tech.label}
                   </button>
                 ))}
@@ -81,7 +86,10 @@ export default function Navbar() {
               <p className="discover-title">Featured Projects</p>
               <div className="experience-pills">
                 {projectItems.map((proj) => (
-                  <button key={proj.label} className={`experience-pill ${proj.color}`}>
+                  <button
+                    key={proj.label}
+                    className={`experience-pill ${proj.color}`}
+                  >
                     <span className="experience-pill-label">{proj.label}</span>
                   </button>
                 ))}
@@ -99,7 +107,9 @@ export default function Navbar() {
                     rel="noreferrer"
                     className={`experience-pill social-pill social-pill-${i + 1}`}
                   >
-                    <span className="experience-pill-label">{item.label}</span>
+                    <span className="experience-pill-label">
+                      {item.label}
+                    </span>
                   </a>
                 ))}
               </div>
@@ -114,7 +124,9 @@ export default function Navbar() {
                     key={item.number}
                     className="menu-main-item"
                     style={{
-                      transitionDelay: isOpen ? `${index * 0.08 + 0.2}s` : '0s',
+                      transitionDelay: isOpen
+                        ? `${index * 0.08 + 0.2}s`
+                        : '0s',
                     }}
                   >
                     <a
@@ -125,8 +137,12 @@ export default function Navbar() {
                       }}
                       className="menu-main-link"
                     >
-                      <span className="menu-main-number">{item.number}</span>
-                      <span className="menu-main-name font-bitcount">{item.name}</span>
+                      <span className="menu-main-number">
+                        {item.number}
+                      </span>
+                      <span className="menu-main-name font-bitcount">
+                        {item.name}
+                      </span>
                       <span className="menu-main-arrow">→</span>
                     </a>
                   </li>
@@ -135,10 +151,40 @@ export default function Navbar() {
             </nav>
 
             <footer className="menu-footer-row">
-              <a href="#projects" className="footer-text-link" onClick={(e) => { e.preventDefault(); handleMenuClick('#projects'); }}>Projects</a>
-              <a href="#blog" className="footer-text-link" onClick={(e) => { e.preventDefault(); handleMenuClick('#blog'); }}>Blog</a>
-              <a href="mailto:anuragmishra262000@gmail.com" className="footer-text-link">Contact</a>
-              <a href="#" className="footer-text-link" target="_blank" rel="noreferrer">Resume</a>
+              <a
+                href="#projects"
+                className="footer-text-link"
+                onClick={(e) => {
+                  e.preventDefault();
+                  handleMenuClick('#projects');
+                }}
+              >
+                Projects
+              </a>
+              <a
+                href="#blog"
+                className="footer-text-link"
+                onClick={(e) => {
+                  e.preventDefault();
+                  handleMenuClick('#blog');
+                }}
+              >
+                Blog
+              </a>
+              <a
+                href="mailto:anuragmishra262000@gmail.com"
+                className="footer-text-link"
+              >
+                Contact
+              </a>
+              <a
+                href="#"
+                className="footer-text-link"
+                target="_blank"
+                rel="noreferrer"
+              >
+                Resume
+              </a>
             </footer>
           </main>
         </div>

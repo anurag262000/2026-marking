@@ -1,25 +1,14 @@
 "use client";
 import React from "react";
-import { AuroraCore } from "./ui/AuroraCore";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { FiGithub, FiLinkedin, FiMail } from "react-icons/fi";
 import Typewriter from "typewriter-effect";
-import WeaponRack from "./Sections/WeaponRack";
+import WeaponRack from "../Sections/WeaponRack";
 
 export default function HeroSection() {
   return (
-    <section className="relative w-full min-h-screen bg-black overflow-hidden flex flex-col items-center justify-center py-20" id="home">
-      {/* Background Sparkles */}
-      <div className="absolute inset-0 w-full h-full pointer-events-none">
-        <AuroraCore
-          id="tsparticleshero"
-          background="transparent"
-          particleDensity={25}
-          className="w-full h-full"
-          particleColor="#ffffffff"
-        />
-      </div>
+    <section className="relative w-full min-h-screen bg-transparent overflow-hidden flex flex-col items-center justify-center py-0 md:py-20" id="home">
 
       {/* <div className="absolute inset-0 w-full h-full bg-dot-thick-neutral-800 opacity-80 pointer-events-none" /> */}
 
@@ -48,7 +37,7 @@ export default function HeroSection() {
                 initial={{ opacity: 0, x: 30 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: 0.6, duration: 1 }}
-                className="text-[66px] md:text-[126px] lg:text-[176px] xl:text-[212px] 2xl:text-[270px] font-black leading-[0.9] font-orbitron tracking-tighter uppercase stroke-text block"
+                className="text-[66px] md:text-[126px] lg:text-[176px] xl:text-[212px] 2xl:text-[270px] font-black leading-[0.9] font-orbitron tracking-tighter uppercase stroke-text-thick block"
               >
                 THE
               </motion.span>
@@ -73,11 +62,11 @@ export default function HeroSection() {
             transition={{ delay: 2.0, duration: 1 }}
             className="flex items-center gap-4 md:gap-8"
           >
-            <div className="hidden md:block h-[1px] w-20 bg-gradient-to-r from-transparent via-white/10 to-transparent" />
-            <p className="text-white/20 text-[9px] md:text-sm font-bold tracking-[0.4em] md:tracking-[0.6em] uppercase font-orbitron">
+            <div className="hidden md:block h-px w-20 bg-gradient-to-r from-transparent via-white/60 to-transparent" />
+            <p className="text-white/60 text-[9px] md:text-sm font-bold tracking-[0.4em] md:tracking-[0.6em] uppercase font-orbitron">
               Full Stack Engineer & System Architect
             </p>
-            <div className="hidden md:block h-[1px] w-20 bg-gradient-to-l from-transparent via-white/10 to-transparent" />
+            <div className="hidden md:block h-[1px] w-20 bg-gradient-to-l from-transparent via-white/60 to-transparent" />
           </motion.div>
 
           {/* Social Links Replacing Buttons */}

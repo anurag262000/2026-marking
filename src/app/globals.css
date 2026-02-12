@@ -23,12 +23,32 @@ body {
   padding: 0;
   margin: 0;
   min-height: 100vh;
-  overflow-x: hidden;
-  background-color: #000000 !important;
+  /* overflow-x: hidden; Removed to fix sticky scroll issues */
+  background-color: #000000;
   color: #ffffff;
-  font-family: 'Orbitron', sans-serif;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  transition: background-color 0.8s ease, color 0.8s ease;
+}
+
+body.light-theme {
+  background-color: #f7f7f5 !important;
+  color: #111111 !important;
+}
+
+/* Update fog color in JS via prop, but handle global text changes */
+body.light-theme .text-white {
+    color: #111111 !important;
+}
+body.light-theme .text-white\/20,
+body.light-theme .text-white\/40,
+body.light-theme .text-white\/60,
+body.light-theme .text-white\/80 {
+    color: #444 !important; /* Dimmed text becomes dark grey */
+}
+body.light-theme .stroke-text {
+    -webkit-text-stroke-color: rgba(0,0,0,0.2) !important;
 }
 
 #canvas-container {
@@ -79,9 +99,22 @@ body {
   text-shadow: 0 0 30px rgba(59, 130, 246, 0.5);
 }
 
-.stroke-text {
-  -webkit-text-stroke: 1px rgba(255, 255, 255, 0.3);
-  color: transparent;
+.stroke-text-thick {
+  -webkit-text-fill-color: transparent;
+  -webkit-text-stroke-width: 3px;
+  -webkit-text-stroke-color: rgba(255, 255, 255, 0.6);
+  transition: all 0.5s ease;
+}
+
+/* Infinite Marquee Animation */
+@keyframes scroll {
+  to {
+    transform: translateX(calc(-50% - 1rem));
+  }
+}
+
+.animate-scroll {
+  animation: scroll var(--animation-duration, 40s) var(--animation-direction, forwards) linear infinite;
 }
 
 /* Optional: For the vertical text in the image section if you decide to add it back */

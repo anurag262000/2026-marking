@@ -1,28 +1,56 @@
 'use client';
 
-import HeroSection from '@/components/HeroSection';
+import { useState, useEffect } from "react";
+import HeroSection from '@/components/Home/HeroSection';
+import { AuroraCore } from "@/components/ui/AuroraCore";
 import ScrollController from '@/components/ScrollController/ScrollScenes';
-import About from '@/components/Sections/About';
+import About from '@/components/Home/About';
 // import WeaponRack from '@/components/Sections/WeaponRack';
 import Projects from '@/components/Sections/Projects';
 import Skills from '@/components/Sections/Skills';
 import Experience from '@/components/Sections/Experience';
 import Blog from '@/components/Sections/Blog';
 import Contact from '@/components/Sections/Contact';
+import ProjectGallery3D from '@/components/Home/ProjectGallery3D';
 
 export default function Home() {
+  const [isLightTheme, setIsLightTheme] = useState(false);
+
+  // Apply light theme class to body
+  useEffect(() => {
+    if (isLightTheme) {
+      document.body.classList.add('light-theme');
+    } else {
+      document.body.classList.remove('light-theme');
+    }
+  }, [isLightTheme]);
+
   return (
-    <main id="smooth-scroll-container">
+    <main id="smooth-scroll-container" className="relative w-full overflow-clip">
       <ScrollController />
 
-      <HeroSection />
-      {/* <WeaponRack /> */}
-      <About />
-      <Projects />
-      <Skills />
-      <Experience />
-      <Blog />
-      <Contact />
+      {/* Shared Background - Scrolls with page, extends into About */}
+      <div className="absolute top-0 left-0 w-full h-[140vh] z-0 pointer-events-none">
+        <AuroraCore
+          id="tsparticleshero"
+          background="transparent"
+          particleDensity={25}
+          className="w-full h-full"
+          particleColor="#ffffffff"
+        />
+        {/* Seamless fade to black */}
+        <div className="absolute bottom-0 left-0 w-full h-64 bg-gradient-to-t from-black via-black/80 to-transparent" />
+      </div>
+
+      <div className="relative z-10">
+        <HeroSection />
+        {/* <WeaponRack /> */}
+        <About />
+        <ProjectGallery3D setLightTheme={setIsLightTheme} />
+        {/* <Projects /> */}
+        <Blog />
+        <Contact />
+      </div>
     </main>
   );
 }

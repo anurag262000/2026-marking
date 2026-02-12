@@ -14,14 +14,31 @@
   align-items: center;
   justify-content: space-between;
   padding: 1.5rem 2.5rem;
+
+  /* transparent when closed */
+  background: transparent;
+  border-bottom: 1px solid transparent;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+
+  transition: all 0.3s ease;
+}
+
+/* glass background only when menu is open */
+.hamburger-button.active {
   background: rgba(0, 0, 0, 0.4);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-  transition: all 0.3s ease;
 }
 
 .hamburger-button:hover {
+  /* optional: keep hover effect only when active */
+  background: transparent;
+  border-bottom-color: transparent;
+}
+
+.hamburger-button.active:hover {
   background: rgba(0, 0, 0, 0.5);
   border-bottom-color: rgba(255, 255, 255, 0.1);
 }
@@ -53,9 +70,10 @@
   width: 100%;
   background: #ffffff;
   border-radius: 999px;
-  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
-              opacity 0.3s ease,
-              background 0.3s ease;
+  transition:
+    transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+    opacity 0.3s ease,
+    background 0.3s ease;
   box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
 }
 
@@ -114,7 +132,9 @@
   gap: 5rem;
   opacity: 0;
   transform: translateY(-20px);
-  transition: opacity 0.6s ease 0.2s, transform 0.6s ease 0.2s;
+  transition:
+    opacity 0.6s ease 0.2s,
+    transform 0.6s ease 0.2s;
 }
 
 .fullscreen-menu.open .menu-shell {
@@ -293,8 +313,9 @@
   overflow: hidden;
   transform: translateX(-40px);
   opacity: 0;
-  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1),
-              opacity 0.5s ease;
+  transition:
+    transform 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+    opacity 0.5s ease;
 }
 
 .fullscreen-menu.open .menu-main-item {
@@ -378,11 +399,9 @@
     grid-template-columns: 1fr;
     padding: 5rem 1.5rem 3rem;
     gap: 3rem;
-    /* Enable smooth scrolling on mobile */
     -webkit-overflow-scrolling: touch;
   }
 
-  /* Adjust left sidebar for mobile */
   .menu-left {
     gap: 2rem;
   }
@@ -409,7 +428,6 @@
     gap: 0.6rem;
   }
 
-  /* Optimize main menu for mobile */
   .menu-main {
     gap: 2rem;
   }
@@ -447,4 +465,23 @@
   .menu-shell {
     padding: 4.5rem 1.2rem 2rem;
   }
+}
+
+/* ===== LIGHT THEME OVERRIDES ===== */
+body.light-theme .nav-logo {
+  color: #111111;
+  text-shadow: none;
+}
+
+body.light-theme .bar {
+  background: #111111;
+  box-shadow: none;
+}
+
+body.light-theme .hamburger-button.active .nav-logo {
+  color: #ffffff; /* Revert to white when menu is open (dark overlay) */
+}
+
+body.light-theme .hamburger-button.active .bar {
+  background: #ffffff; /* Revert to white when menu is open */
 }
