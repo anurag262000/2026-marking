@@ -1,16 +1,17 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import './Navbar.css';
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
 
   const menuItems = [
-    { name: 'Projects', number: '01', href: '#projects' },
-    { name: 'Skills', number: '02', href: '#skills' },
-    { name: 'Experience', number: '03', href: '#experience' },
-    { name: 'Contact', number: '04', href: '#contact' },
+    { name: 'Projects', number: '01', href: '/projects', type: 'link' },
+    { name: 'About', number: '02', href: '/#about', type: 'scroll' },
+    { name: 'Contact', number: '03', href: '/contact', type: 'link' },
   ];
 
   const socialItems = [
@@ -19,11 +20,7 @@ export default function Navbar() {
     { label: 'Portfolio', href: 'https://anurag.dev' },
   ];
 
-  const techItems = [
-    { label: 'React Native' },
-    { label: 'Node.js' },
-    { label: 'TypeScript' },
-  ];
+
 
   const projectItems = [
     { label: 'Business Card CRM', color: 'exp-pill-1' },
@@ -34,10 +31,24 @@ export default function Navbar() {
 
   const toggleMenu = () => setIsOpen(o => !o);
 
- const handleMenuClick = (href) => {
-  setIsOpen(false);
-  document.querySelector(href)?.scrollIntoView({ behavior: 'smooth' });
-};
+  const handleMenuClick = (item) => {
+    setIsOpen(false);
+
+    if (item.type === 'scroll') {
+      // Extract hash from href (e.g., '/#about' -> '#about')
+      const hash = item.href.split('#')[1];
+      if (hash) {
+        // If we're on home page, scroll to section
+        if (window.location.pathname === '/') {
+          const element = document.getElementById(hash);
+          element?.scrollIntoView({ behavior: 'smooth' });
+        } else {
+          // If on another page, navigate to home then scroll
+          window.location.href = item.href;
+        }
+      }
+    }
+  };
 
   useEffect(() => {
     document.body.style.overflow = isOpen ? 'hidden' : 'unset';
@@ -66,21 +77,6 @@ export default function Navbar() {
 
         <div className="menu-shell">
           <aside className="menu-left">
-            <div className="discover-block">
-              <p className="discover-title">Discover Tech</p>
-              <div className="discover-city-pills">
-                {techItems.map((tech) => (
-                  <button
-                    key={tech.label}
-                    className={`city-pill ${
-                      tech.label === 'React Native' ? 'city-pill-active' : ''
-                    }`}
-                  >
-                    {tech.label}
-                  </button>
-                ))}
-              </div>
-            </div>
 
             <div className="discover-block">
               <p className="discover-title">Featured Projects</p>
@@ -129,54 +125,69 @@ export default function Navbar() {
                         : '0s',
                     }}
                   >
-                    <a
-                      href={item.href}
-                      onClick={(e) => {
-                        e.preventDefault();
-                        handleMenuClick(item.href);
-                      }}
-                      className="menu-main-link"
-                    >
-                      <span className="menu-main-number">
-                        {item.number}
-                      </span>
-                      <span className="menu-main-name font-bitcount">
-                        {item.name}
-                      </span>
-                      <span className="menu-main-arrow">→</span>
-                    </a>
+                    {item.type === 'link' ? (
+                      <Link
+                        href={item.href}
+                        onClick={() => setIsOpen(false)}
+                        className="menu-main-link"
+                      >
+                        <span className="menu-main-number">
+                          {item.number}
+                        </span>
+                        <span className="menu-main-name font-bitcount">
+                          {item.name}
+                        </span>
+                        <span className="menu-main-arrow">→</span>
+                      </Link>
+                    ) : (
+                      <a
+                        href={item.href}
+                        onClick={(e) => {
+                          e.preventDefault();
+                          handleMenuClick(item);
+                        }}
+                        className="menu-main-link"
+                      >
+                        <span className="menu-main-number">
+                          {item.number}
+                        </span>
+                        <span className="menu-main-name font-bitcount">
+                          {item.name}
+                        </span>
+                        <span className="menu-main-arrow">→</span>
+                      </a>
+                    )}
                   </li>
                 ))}
               </ul>
             </nav>
 
             <footer className="menu-footer-row">
-              <a
-                href="#projects"
+              <Link
+                href="/projects"
                 className="footer-text-link"
-                onClick={(e) => {
-                  e.preventDefault();
-                  handleMenuClick('#projects');
-                }}
+                onClick={() => setIsOpen(false)}
               >
                 Projects
-              </a>
+              </Link>
               <a
                 href="#blog"
                 className="footer-text-link"
                 onClick={(e) => {
                   e.preventDefault();
-                  handleMenuClick('#blog');
+                  setIsOpen(false);
+                  document.getElementById('blog')?.scrollIntoView({ behavior: 'smooth' });
                 }}
               >
                 Blog
               </a>
-              <a
-                href="mailto:anuragmishra262000@gmail.com"
+              <Link
+                href="/contact"
                 className="footer-text-link"
+                onClick={() => setIsOpen(false)}
               >
                 Contact
-              </a>
+              </Link>
               <a
                 href="#"
                 className="footer-text-link"
