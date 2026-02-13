@@ -24,7 +24,7 @@ export default function AboutCombined() {
       {/* Background: Subtle tech grid to match Hero */}
       <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff05_1px,transparent_1px),linear-gradient(to_bottom,#ffffff05_1px,transparent_1px)] bg-size-[40px_40px] pointer-events-none" />
 
-      <div className="container mx-auto  px-4 md:px-6 relative z-10">
+      <div className="container mx-auto  px-4 md:px-6 relative z-10 py-16 md:py-0">
         <div className="grid lg:grid-cols-12 gap-8 md:gap-12 items-start">
 
           {/* LEFT COLUMN: The Visual Profile (4/12 width) */}
