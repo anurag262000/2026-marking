@@ -9,8 +9,17 @@
 
 
 /* Font Utility Classes */
-.font-bitcount { font-family: 'Bitcount Single', cursive !important; }
-.font-orbitron { font-family: 'Orbitron', sans-serif !important; }
+.font-bitcount {
+  font-family: 'Bitcount Single', cursive !important;
+}
+
+.font-orbitron {
+  font-family: 'Orbitron', sans-serif !important;
+}
+
+.font-helvetica {
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif !important;
+}
 
 * {
 
@@ -39,16 +48,19 @@ body.light-theme {
 
 /* Update fog color in JS via prop, but handle global text changes */
 body.light-theme .text-white {
-    color: #111111 !important;
+  color: #111111 !important;
 }
+
 body.light-theme .text-white\/20,
 body.light-theme .text-white\/40,
 body.light-theme .text-white\/60,
 body.light-theme .text-white\/80 {
-    color: #444 !important; /* Dimmed text becomes dark grey */
+  color: #444 !important;
+  /* Dimmed text becomes dark grey */
 }
+
 body.light-theme .stroke-text {
-    -webkit-text-stroke-color: rgba(0,0,0,0.2) !important;
+  -webkit-text-stroke-color: rgba(0, 0, 0, 0.2) !important;
 }
 
 #canvas-container {

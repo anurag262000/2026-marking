@@ -2,6 +2,7 @@
 import './globals.css';
 import Navbar from '@/components/Navbar/Navbar';
 import Lenis from '@studio-freight/lenis';  // ✅ KEEP THIS
+import Preloader from '@/components/Preloader/Preloader';
 
 export const metadata = {
   title: 'Developer Portfolio',
@@ -12,6 +13,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body suppressHydrationWarning>
+        <Preloader />
         <Navbar />
         {children}
       </body>

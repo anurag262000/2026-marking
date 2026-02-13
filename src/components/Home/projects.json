@@ -46,37 +46,5 @@
     "approach": "Built a scalable dashboard using PostgreSQL and Node.js to track warehouse stock levels globally.",
     "thumbnail": "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=800&q=80",
     "video": "https://assets.mixkit.co/videos/preview/mixkit-man-working-on-his-laptop-at-home-4050-large.mp4"
-  },
-  {
-    "id": 7,
-    "title": "Fitness Tracker",
-    "org": "Freelance",
-    "approach": "React Native app utilizing accelerometer data to provide real-time workout feedback.",
-    "thumbnail": "https://images.unsplash.com/photo-1576678927484-cc907957088c?w=800&q=80",
-    "video": "https://assets.mixkit.co/videos/preview/mixkit-phone-app-interface-4055-large.mp4"
-  },
-  {
-    "id": 8,
-    "title": "Adaptive Portfolio",
-    "org": "Freelance",
-    "approach": "Utilized Dynamic Serving and Adaptive Design to deliver tailored assets per device resolution.",
-    "thumbnail": "https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?w=800&q=80",
-    "video": "https://assets.mixkit.co/videos/preview/mixkit-man-typing-on-a-keyboard-in-a-dark-room-4057-large.mp4"
-  },
-  {
-    "id": 9,
-    "title": "Node.js API Gateway",
-    "org": "Indiefluence",
-    "approach": "Engineered a central gateway to manage microservices authentication and rate limiting.",
-    "thumbnail": "https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=800&q=80",
-    "video": "https://assets.mixkit.co/videos/preview/mixkit-lines-of-code-in-a-software-development-environment-4051-large.mp4"
-  },
-  {
-    "id": 10,
-    "title": "Bespoke CRM Admin",
-    "org": "Indiefluence",
-    "approach": "Custom admin panel with Drizzle ORM to manage user roles and data permissions efficiently.",
-    "thumbnail": "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&q=80",
-    "video": "https://assets.mixkit.co/videos/preview/mixkit-close-up-of-a-computer-screen-with-code-4052-large.mp4"
   }
 ]
