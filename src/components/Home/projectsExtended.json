@@ -1,0 +1,122 @@
+[
+  {
+    "id": 1,
+    "title": "Business Card CRM",
+    "org": "Indiefluence",
+    "approach": "Built with React Native & Drizzle ORM. Integrated Voice-to-Text transcription to automate contact entry during networking.",
+    "fullDescription": "Developed a comprehensive mobile CRM solution designed specifically for professionals who attend networking events and collect business cards. The app leverages cutting-edge voice-to-text technology to instantly capture contact information, eliminating manual data entry and reducing the risk of losing valuable connections.\n\nThe system uses React Native for cross-platform compatibility and Drizzle ORM for efficient local database management with cloud sync capabilities. Users can simply speak contact details, and the AI-powered transcription engine automatically populates the appropriate fields, tags contacts, and sets follow-up reminders.\n\nKey features include smart duplicate detection, automatic LinkedIn profile matching, customizable follow-up workflows, and analytics to track relationship building over time. The app has processed over 10,000 contacts and achieved a 95% accuracy rate in voice transcription.",
+    "technologies": ["React Native", "Drizzle ORM", "Expo", "TypeScript", "SQLite", "AWS Transcribe", "Node.js", "REST API"],
+    "timeline": "4 months",
+    "team": "Solo Developer",
+    "challenges": "Implementing accurate voice recognition for diverse accents and networking environments with background noise. Solved by implementing multi-pass transcription with confidence scoring and manual correction UI.",
+    "outcomes": "Successfully deployed to 500+ users, 10,000+ contacts managed, 4.8★ rating on app stores",
+    "thumbnail": "https://images.unsplash.com/photo-1556740738-b6a63e27c4df?w=800&q=80",
+    "images": [
+      "https://images.unsplash.com/photo-1551650975-87deedd944c3?w=1200&q=80",
+      "https://images.unsplash.com/photo-1557804506-669a67965ba0?w=1200&q=80",
+      "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=1200&q=80"
+    ],
+    "liveUrl": null,
+    "githubUrl": null
+  },
+  {
+    "id": 2,
+    "title": "Rabbit E-Commerce",
+    "org": "Indiefluence",
+    "approach": "Optimized for high conversion using Next.js. Integrated Shiprocket API for automated logistics and real-time tracking.",
+    "fullDescription": "A premium e-commerce platform built for a boutique fashion brand specializing in artisanal products. The platform prioritizes user experience with lightning-fast page loads, immersive product galleries, and a streamlined checkout process optimized for mobile shoppers.\n\nLeveraging Next.js 14 with app router, the site achieves sub-second page transitions and optimal SEO performance. The integration with Shiprocket API provides customers with real-time shipment tracking, automated shipping label generation, and multi-carrier rate comparison to reduce shipping costs by 30%.\n\nThe platform includes advanced features like dynamic pricing based on inventory levels, AI-powered product recommendations, abandoned cart recovery emails, and a comprehensive admin dashboard for inventory and order management. Payment processing supports multiple gateways including Razorpay and Stripe.",
+    "technologies": ["Next.js 14", "React", "TypeScript", "Tailwind CSS", "PostgreSQL", "Prisma", "Shiprocket API", "Razorpay", "Stripe", "Redis", "AWS S3"],
+    "timeline": "6 months",
+    "team": "Lead Developer (team of 3)",
+    "challenges": "Handling real-time inventory synchronization across multiple warehouses while maintaining fast page loads. Implemented Redis caching layer with smart invalidation strategies and optimistic UI updates.",
+    "outcomes": "42% increase in conversion rate, 2.5s average page load, ₹2.5M+ GMV in first quarter",
+    "thumbnail": "https://images.unsplash.com/photo-1523474253046-8cd2748b5fd2?w=800&q=80",
+    "images": [
+      "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1200&q=80",
+      "https://images.unsplash.com/photo-1512428559087-560fa5ceab42?w=1200&q=80",
+      "https://images.unsplash.com/photo-1556742049-0cfed4f7a07d?w=1200&q=80"
+    ],
+    "liveUrl": null,
+    "githubUrl": null
+  },
+  {
+    "id": 3,
+    "title": "Dynamic Coupon System",
+    "org": "Indiefluence",
+    "approach": "Developed a custom logic engine to handle complex discount rules and time-sensitive promotional codes.",
+    "fullDescription": "An enterprise-grade promotional code management system capable of handling complex business logic for multi-tiered discount strategies. The engine powers marketing campaigns with features like stackable coupons, user-specific promotions, and time-sensitive flash sales.\n\nThe system uses a rules engine architecture that allows marketing teams to create sophisticated campaigns without developer intervention. Rules can be based on cart value, user segments, product categories, purchase history, time windows, and geographic locations. The engine processes thousands of coupon validations per minute with sub-100ms response times.\n\nBuilt with clean architecture principles, the system includes a React-based admin interface for campaign creation, real-time analytics dashboards showing redemption rates and revenue impact, fraud detection algorithms to prevent coupon abuse, and A/B testing capabilities for optimizing discount strategies.",
+    "technologies": ["Node.js", "Express", "MongoDB", "Redis", "React", "TypeScript", "Bull Queue", "Socket.io", "Chart.js", "Jest"],
+    "timeline": "5 months",
+    "team": "Backend Lead (team of 4)",
+    "challenges": "Preventing race conditions during high-traffic flash sales where thousands of users apply limited-use coupons simultaneously. Implemented distributed locking with Redis and optimistic concurrency control.",
+    "outcomes": "Processed 250K+ coupon redemptions, 35% increase in average order value, zero fraud incidents",
+    "thumbnail": "https://images.unsplash.com/photo-1556742049-0cfed4f7a07d?w=800&q=80",
+    "images": [
+      "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1200&q=80",
+      "https://images.unsplash.com/photo-1543286386-713bdd548da4?w=1200&q=80",
+      "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=1200&q=80"
+    ],
+    "liveUrl": null,
+    "githubUrl": null
+  },
+  {
+    "id": 4,
+    "title": "Real-time Chat App",
+    "org": "Freelance",
+    "approach": "Leveraged Socket.io and MERN stack for sub-100ms message latency and persistent chat history.",
+    "fullDescription": "A feature-rich real-time messaging platform supporting one-on-one conversations, group chats, file sharing, and video calls. Designed for small to medium businesses needing an internal communication tool with enterprise-level security.\n\nThe architecture uses Socket.io for WebSocket connections with automatic fallback to long-polling for maximum compatibility. Messages are persisted in MongoDB with efficient indexing strategies for instant history retrieval. The system scales horizontally using Redis pub/sub for multi-server message distribution.\n\nAdvanced features include end-to-end encryption for private conversations, typing indicators, read receipts, message reactions, searchable message history with full-text search, file uploads up to 100MB with virus scanning, and integration with popular tools like Jira and Slack. The mobile-responsive design works seamlessly across all devices.",
+    "technologies": ["React", "Node.js", "Express", "MongoDB", "Socket.io", "Redis", "JWT", "AWS S3", "WebRTC", "Material-UI"],
+    "timeline": "3 months",
+    "team": "Solo Developer",
+    "challenges": "Achieving consistent sub-100ms message delivery across geographically distributed users. Implemented CDN-based Socket.io server deployment with automatic region routing based on user location.",
+    "outcomes": "Supporting 5,000+ concurrent users, 99.9% uptime, 85ms average message latency",
+    "thumbnail": "https://images.unsplash.com/photo-1543269865-cbf427effbad?w=800&q=80",
+    "images": [
+      "https://images.unsplash.com/photo-1611746872915-64382b5c76da?w=1200&q=80",
+      "https://images.unsplash.com/photo-1587825140708-dfaf72ae4b04?w=1200&q=80",
+      "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=1200&q=80"
+    ],
+    "liveUrl": null,
+    "githubUrl": null
+  },
+  {
+    "id": 5,
+    "title": "MERN Task Manager",
+    "org": "Freelance",
+    "approach": "Focused on CRUD efficiency and drag-and-drop UI for seamless task prioritization.",
+    "fullDescription": "A powerful project management tool designed for agile teams, featuring Kanban boards, sprint planning, and burndown charts. The interface prioritizes speed with keyboard shortcuts, bulk operations, and instant search across all project data.\n\nBuilt on the MERN stack with React DnD for smooth drag-and-drop interactions. Tasks can be organized into customizable columns, filtered by assignee, priority, or labels, and visualized through multiple views including list, board, and calendar. The system includes automated workflows for recurring tasks and notifications.\n\nCollaboration features include real-time updates when team members make changes, @mentions in comments, file attachments, time tracking with automatic timesheet generation, and integration webhooks for CI/CD pipelines. The dashboard provides project health metrics and team velocity analytics.",
+    "technologies": ["React", "Redux", "Node.js", "Express", "MongoDB", "React DnD", "Chart.js", "JWT", "Nodemailer", "Joi"],
+    "timeline": "2 months",
+    "team": "Solo Developer",
+    "challenges": "Maintaining smooth drag-and-drop performance with hundreds of tasks on screen while keeping data synchronized across multiple users. Implemented virtual scrolling and optimistic updates with conflict resolution.",
+    "outcomes": "Adopted by 8 companies, managing 50,000+ tasks, 30% improvement in team productivity (client reported)",
+    "thumbnail": "https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?w=800&q=80",
+    "images": [
+      "https://images.unsplash.com/photo-1507925921958-8a62f3d1a50d?w=1200&q=80",
+      "https://images.unsplash.com/photo-1557426272-fc759fdf7a8d?w=1200&q=80",
+      "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=1200&q=80"
+    ],
+    "liveUrl": null,
+    "githubUrl": null
+  },
+  {
+    "id": 6,
+    "title": "Inventory Pro",
+    "org": "Indiefluence",
+    "approach": "Built a scalable dashboard using PostgreSQL and Node.js to track warehouse stock levels globally.",
+    "fullDescription": "An enterprise inventory management system designed for businesses with multiple warehouses across different geographic regions. The platform provides real-time visibility into stock levels, automated reorder triggers, and predictive analytics for demand forecasting.\n\nThe backend uses PostgreSQL for transactional data integrity with complex queries optimized for reporting. The system handles SKU tracking, batch/lot management, expiration date monitoring, and multi-currency pricing. Integration with barcode scanners and RFID readers enables rapid stock counts and movement tracking.\n\nThe analytics engine uses historical sales data and machine learning models to predict stock requirements, automatically generating purchase orders when inventory falls below calculated thresholds. The dashboard provides customizable reports on inventory turnover, dead stock identification, and profitability analysis by product line.",
+    "technologies": ["React", "Node.js", "PostgreSQL", "Sequelize", "Docker", "Redis", "Chart.js", "Material-UI", "Python", "Pandas", "scikit-learn"],
+    "timeline": "7 months",
+    "team": "Full-Stack Developer (team of 5)",
+    "challenges": "Synchronizing inventory across 12 warehouses in different time zones with unreliable internet connections. Implemented offline-first architecture with eventual consistency and conflict resolution algorithms.",
+    "outcomes": "Reduced stock discrepancies by 87%, decreased overstock by 42%, managing inventory worth $15M+",
+    "thumbnail": "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=800&q=80",
+    "images": [
+      "https://images.unsplash.com/photo-1553413077-190dd305871c?w=1200&q=80",
+      "https://images.unsplash.com/photo-1578575437130-527eed3abbec?w=1200&q=80",
+      "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1200&q=80"
+    ],
+    "liveUrl": null,
+    "githubUrl": null
+  }
+]
