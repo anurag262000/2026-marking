@@ -10,9 +10,12 @@ export const AuroraCore = ({
   className,
   background = "transparent",
   // Soft Pastel Palette: Baby Blue, Misty Pink, Mint Green, Soft Lilac
-   colors = ["#00f2ff", "#7000ff", "#00ff95"],
+  colors = ["#00f2ff", "#7000ff", "#00ff95"],
   speed = 0.5,
   fullScreen = false,
+  particleDensity = 6,
+  particleColor = null, // Optional override for all particles
+  blur = 80,
 }) => {
   const [init, setInit] = useState(false);
   const controls = useAnimation();
@@ -36,7 +39,10 @@ export const AuroraCore = ({
       className={cn("opacity-0 relative overflow-hidden", className)}
     >
       {/* Aurora Blur Overlay - Heavy blur for pastel softness */}
-      <div className="absolute inset-0 z-0 backdrop-blur-[120px] pointer-events-none" />
+      <div
+        className="absolute inset-0 z-0 pointer-events-none"
+        style={{ backdropFilter: `blur(${blur}px)` }}
+      />
 
       {init && (
         <Particles
@@ -48,8 +54,8 @@ export const AuroraCore = ({
             fullScreen: { enable: fullScreen, zIndex: 0 },
             fpsLimit: 60,
             particles: {
-              number: { value: 6, density: { enable: false } },
-              color: { value: colors },
+              number: { value: particleDensity, density: { enable: false } },
+              color: { value: particleColor ? particleColor : colors },
               shape: { type: "circle" },
               opacity: {
                 value: 0.4, // Constant opacity to avoid flashing/pulsing
@@ -69,8 +75,8 @@ export const AuroraCore = ({
               },
               shadow: {
                 enable: true,
-                blur: 80,
-                color: { value: colors[0] }
+                blur: blur,
+                color: { value: particleColor ? particleColor : colors[0] }
               }
             },
             // Responsive Overrides for Mobile
@@ -85,7 +91,7 @@ export const AuroraCore = ({
                     },
                     number: {
                       // Slightly fewer particles to avoid clutter
-                      value: 4
+                      value: Math.max(2, Math.floor(particleDensity / 2))
                     }
                   }
                 }

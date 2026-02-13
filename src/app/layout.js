@@ -9,6 +9,8 @@ export const metadata = {
   description: 'Full Stack Developer Portfolio - React, Node.js, Next.js',
 };
 
+import Footer from '@/components/Footer';
+
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
@@ -16,6 +18,7 @@ export default function RootLayout({ children }) {
         <Preloader />
         <Navbar />
         {children}
+        <Footer />
       </body>
     </html>
   );

@@ -7,7 +7,7 @@ import * as THREE from "three";
 import { motion, AnimatePresence } from "framer-motion";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import projects from "./projects.json";
+import projects from "./projectsExtended.json";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -106,7 +106,6 @@ const Scene = ({ activeIndex, setActiveIndex, progressRef }) => {
   const currentScroll = useRef(0);
 
   useFrame(() => {
-    // Reach the last project at 70% scroll to allow a 30% "hold" buffer at the end
     const adjustedProgress = progressRef.current;
     const targetScroll = adjustedProgress * totalScrollWidth;
     currentScroll.current += (targetScroll - currentScroll.current) * CONFIG.lerpSpeed;
@@ -126,7 +125,6 @@ const Scene = ({ activeIndex, setActiveIndex, progressRef }) => {
     camera.position.x = xMove;
     camera.position.z = CONFIG.camZ - zMove;
 
-    // ✅ Calculate dynamic focus based on actual slide center
     const focusX =
       safeIndex * CONFIG.spacingX * Math.cos(CONFIG.wallAngleY);
 
@@ -154,19 +152,37 @@ const Scene = ({ activeIndex, setActiveIndex, progressRef }) => {
 // --- Main Component ---
 export default function ProjectGallery3D({ setLightTheme }) {
   const [activeIndex, setActiveIndex] = useState(0);
-  const [localIsLight, setLocalIsLight] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+  const [mobileIsLight, setMobileIsLight] = useState(false);
 
   const componentRef = useRef(null);
   const pinRef = useRef(null);
-  const mobileCardsRef = useRef(null);
-  const mobileContainerRef = useRef(null);
   const progressRef = useRef(0);
   const desktopSidebarRef = useRef(null);
+  const mobileScrollRef = useRef(null);
+  const lastLightRef = useRef(false);
 
+  const updateTheme = (shouldBeLight) => {
+    if (lastLightRef.current !== shouldBeLight) {
+      lastLightRef.current = shouldBeLight;
+      if (setLightTheme) setLightTheme(shouldBeLight);
+    }
+  };
+
+  // Detect mobile
   useEffect(() => {
-    let ctx = gsap.context(() => {
-      // 1. Base ScrollTrigger for Pinning
-      const mainST = ScrollTrigger.create({
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
+  // Desktop GSAP logic only
+  useEffect(() => {
+    const mm = gsap.matchMedia();
+
+    mm.add("(min-width: 768px)", () => {
+      ScrollTrigger.create({
         trigger: componentRef.current,
         start: "top top",
         end: "6000",
@@ -176,74 +192,58 @@ export default function ProjectGallery3D({ setLightTheme }) {
         invalidateOnRefresh: true,
         onUpdate: (self) => {
           progressRef.current = self.progress;
-
-          // --- DIRECT DOM THEME TOGGLE (Extreme Performance) ---
           const shouldBeLight = self.progress > 0.02 && self.progress < 0.98;
-
-          const toggleLightMode = (isLight) => {
-            if (mobileContainerRef.current) {
-              if (isLight) mobileContainerRef.current.classList.add("is-light-mode");
-              else mobileContainerRef.current.classList.remove("is-light-mode");
-            }
-            if (desktopSidebarRef.current) {
-              if (isLight) desktopSidebarRef.current.classList.add("is-light-mode");
-              else desktopSidebarRef.current.classList.remove("is-light-mode");
-            }
-            if (setLightTheme) setLightTheme(isLight);
-          };
-
-          toggleLightMode(shouldBeLight);
-          // -----------------------------------------------------
+          if (desktopSidebarRef.current) {
+            if (shouldBeLight) desktopSidebarRef.current.classList.add("is-light-mode");
+            else desktopSidebarRef.current.classList.remove("is-light-mode");
+          }
+          updateTheme(shouldBeLight);
         },
         onLeave: () => {
-          if (mobileContainerRef.current) mobileContainerRef.current.classList.remove("is-light-mode");
           if (desktopSidebarRef.current) desktopSidebarRef.current.classList.remove("is-light-mode");
-          if (setLightTheme) setLightTheme(false);
+          updateTheme(false);
         },
         onLeaveBack: () => {
-          if (mobileContainerRef.current) mobileContainerRef.current.classList.remove("is-light-mode");
           if (desktopSidebarRef.current) desktopSidebarRef.current.classList.remove("is-light-mode");
-          if (setLightTheme) setLightTheme(false);
-        },
+          updateTheme(false);
+        }
       });
+    });
 
-      // 2. Mobile Movement Timeline (Hardware Accelerated)
-      if (mobileCardsRef.current && window.innerWidth < 768) {
-        const container = mobileCardsRef.current;
-        const scrollWidth = container.scrollWidth - window.innerWidth;
-
-        gsap.to(container, {
-          x: -scrollWidth,
-          ease: "none",
-          force3D: true,
-          scrollTrigger: {
-            trigger: componentRef.current,
-            start: "top top",
-            end: "6000",
-            scrub: 0.05, // Smoother response
-            invalidateOnRefresh: true,
-          }
-        });
-
-      }
-    }, componentRef);
-
-    return () => ctx.revert();
+    return () => mm.revert();
   }, [setLightTheme]);
+
+  // Mobile: Use IntersectionObserver for theme switching (no GSAP at all)
+  useEffect(() => {
+    if (!isMobile) return;
+
+    const el = mobileScrollRef.current;
+    if (!el) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        const isVisible = entry.isIntersecting;
+        setMobileIsLight(isVisible);
+        updateTheme(isVisible);
+      },
+      { threshold: 0.8 }
+    );
+
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [isMobile, setLightTheme]);
 
   const activeProject = projects[activeIndex];
 
   return (
     <section ref={componentRef} className="relative z-20 bg-transparent" id="projects-3d">
 
-      {/* --- SHARED PINNED CONTAINER --- */}
-      <div ref={pinRef} className="relative w-full h-screen overflow-hidden">
+      {/* --- DESKTOP VIEW (3D + Pinned) --- */}
+      <div ref={pinRef} className="hidden md:block relative w-full h-[100dvh] overflow-hidden">
+        <div className="flex relative w-full h-full flex-row">
 
-        {/* --- DESKTOP VIEW (3D) --- */}
-        <div className="hidden md:flex relative w-full h-full flex-row">
-
-          {/* 3D Canvas Layer */}
-          <div className="absolute inset-0 z-0 bg-transparent">
+          {/* 3D Canvas Layer — only rendered on desktop */}
+          {!isMobile && <div className="absolute inset-0 z-0 bg-transparent">
             <Canvas
               camera={{ position: [0, 0, CONFIG.camZ], fov: 45 }}
               gl={{ antialias: true, alpha: true }}
@@ -258,13 +258,44 @@ export default function ProjectGallery3D({ setLightTheme }) {
                 <Scene activeIndex={activeIndex} setActiveIndex={setActiveIndex} progressRef={progressRef} />
               </Suspense>
             </Canvas>
-          </div>
+          </div>}
 
           {/* Left Text Panel - Desktop (40% width) */}
           <div
             ref={desktopSidebarRef}
             className="relative z-10 w-[40%] h-full flex flex-col justify-center p-16 md:p-4 lg:p-6 xl:p-10 border-r transition-colors duration-500 backdrop-blur-xl desktop-sidebar sidebar-border"
           >
+           <style jsx>{`
+            .desktop-sidebar {
+              background-color: var(--sidebar-bg);
+              border-color: var(--sidebar-border);
+              color: var(--sidebar-text);
+            }
+            .sidebar-border { border-color: var(--sidebar-border); }
+            .sidebar-border-inner { border-color: var(--sidebar-border-inner); }
+            .sidebar-title { color: var(--sidebar-text); }
+            .sidebar-desc { color: var(--sidebar-text-muted); }
+            .sidebar-counter { color: var(--sidebar-text-muted); }
+            .sidebar-helper { color: var(--sidebar-text-muted); }
+            .sidebar-label { color: var(--sidebar-text-muted); }
+            .sidebar-value { color: var(--sidebar-text); }
+
+            .desktop-sidebar:not(.is-light-mode) {
+              --sidebar-bg: rgba(24, 24, 27, 0.8);
+              --sidebar-border: rgba(255, 255, 255, 0.1);
+              --sidebar-border-inner: rgba(255, 255, 255, 0.3);
+              --sidebar-text: #ffffff;
+              --sidebar-text-muted: rgba(255, 255, 255, 0.9);
+            }
+
+            .desktop-sidebar.is-light-mode {
+              --sidebar-bg: #ffffff;
+              --sidebar-border: rgba(0, 0, 0, 0.1);
+              --sidebar-border-inner: rgba(0, 0, 0, 0.2);
+              --sidebar-text: #000000;
+              --sidebar-text-muted: rgba(0, 0, 0, 0.7);
+            }
+          `}</style>
             <AnimatePresence mode="wait">
               <motion.div
                 key={activeProject.id}
@@ -308,133 +339,87 @@ export default function ProjectGallery3D({ setLightTheme }) {
           <div className="hidden md:block w-[60%] h-full pointer-events-none" />
 
         </div>
+      </div>
 
-
-        {/* --- MOBILE VIEW (Vertical-to-Horizontal Scroll) --- */}
+      {/* --- MOBILE VIEW (Native horizontal touch scroll — no GSAP, no pinning) --- */}
+      <div
+        ref={mobileScrollRef}
+        className="md:hidden w-full py-12 transition-colors duration-500"
+        style={{ backgroundColor: mobileIsLight ? '#f7f7f5' : '#18181b' }}
+      >
         <div
-          ref={mobileContainerRef}
-          className="md:hidden w-full h-full relative overflow-hidden transition-colors duration-500 mobile-gallery-container"
+          className="flex gap-5 px-5 overflow-x-auto pb-4"
           style={{
-            '--bg-color': localIsLight ? 'rgba(255,255,255,0.9)' : '#18181b', // Initial values
-            '--text-primary': localIsLight ? '#000000' : '#ffffff',
-            '--text-secondary': localIsLight ? 'rgba(0,0,0,0.5)' : 'rgba(255,255,255,0.5)',
-            '--card-bg': localIsLight ? 'rgba(0,0,0,0.05)' : 'rgba(255,255,255,0.05)',
-            '--card-border': localIsLight ? 'rgba(0,0,0,0.1)' : 'rgba(255,255,255,0.1)',
+            scrollSnapType: 'x mandatory',
+            WebkitOverflowScrolling: 'touch',
+            scrollbarWidth: 'none',
+            msOverflowStyle: 'none',
           }}
         >
-          {/* Internal Styles for Extreme Performance Theme Toggling */}
-          <style jsx>{`
-            .desktop-sidebar {
-              background-color: var(--sidebar-bg);
-              border-color: var(--sidebar-border);
-              color: var(--sidebar-text);
-            }
-            .sidebar-border { border-color: var(--sidebar-border); }
-            .sidebar-border-inner { border-color: var(--sidebar-border-inner); }
-            .sidebar-title { color: var(--sidebar-text); }
-            .sidebar-desc { color: var(--sidebar-text-muted); }
-            .sidebar-counter { color: var(--sidebar-text-muted); }
-            .sidebar-helper { color: var(--sidebar-text-muted); }
-            .sidebar-label { color: var(--sidebar-text-muted); }
-            .sidebar-value { color: var(--sidebar-text); }
-
-            .desktop-sidebar:not(.is-light-mode) {
-              --sidebar-bg: rgba(24, 24, 27, 0.8);
-              --sidebar-border: rgba(255, 255, 255, 0.1);
-              --sidebar-border-inner: rgba(255, 255, 255, 0.3);
-              --sidebar-text: #ffffff;
-              --sidebar-text-muted: rgba(255, 255, 255, 0.9);
-            }
-
-            .desktop-sidebar.is-light-mode {
-              --sidebar-bg: #ffffff;
-              --sidebar-border: rgba(0, 0, 0, 0.1);
-              --sidebar-border-inner: rgba(0, 0, 0, 0.2);
-              --sidebar-text: #000000;
-              --sidebar-text-muted: rgba(0, 0, 0, 0.7);
-            }
-
-            .mobile-gallery-container {
-              background-color: var(--bg-color);
-            }
-            .mobile-gallery-container.is-light-mode {
-              --bg-color: #f7f7f5 !important;
-              --text-primary: #000000 !important;
-              --text-secondary: rgba(0,0,0,0.5) !important;
-              --card-bg: rgba(0,0,0,0.05) !important;
-              --card-border: rgba(0,0,0,0.1) !important;
-            }
-            .mobile-gallery-container:not(.is-light-mode) {
-              --bg-color: #18181b !important;
-              --text-primary: #ffffff !important;
-              --text-secondary: rgba(255,255,255,0.5) !important;
-              --card-bg: rgba(255,255,255,0.05) !important;
-              --card-border: rgba(255,255,255,0.1) !important;
-            }
-            .mobile-text-primary { color: var(--text-primary); transition: color 0.5s ease; }
-            .mobile-text-secondary { color: var(--text-secondary); transition: color 0.5s ease; }
-            .mobile-card {
-              background-color: var(--card-bg);
-              border-color: var(--card-border);
-              transition: transform 0.4s cubic-bezier(0.2, 0, 0.2, 1), background-color 0.5s ease;
-              will-change: transform;
-            }
-            .mobile-card:active {
-              transform: scale(0.98);
-            }
+          <style>{`
+            .mobile-scroll-container::-webkit-scrollbar { display: none; }
           `}</style>
-
-          {/* Animating Cards Container */}
-          <div className="absolute inset-0 flex items-center overflow-hidden">
+          {projects.map((project, idx) => (
             <div
-              ref={mobileCardsRef}
-              className="flex gap-4 px-6 will-change-transform"
+              key={project.id}
+              className="shrink-0 flex flex-col rounded-2xl overflow-hidden shadow-lg"
               style={{
-                backfaceVisibility: "hidden",
-                perspective: 1000
+                width: '85vw',
+                minHeight: '550px',
+                scrollSnapAlign: 'center',
+                backgroundColor: mobileIsLight ? 'rgba(0,0,0,0.04)' : 'rgba(255,255,255,0.06)',
+                border: `1px solid ${mobileIsLight ? 'rgba(0,0,0,0.08)' : 'rgba(255,255,255,0.08)'}`,
+                transition: 'background-color 0.5s ease, border-color 0.5s ease',
               }}
             >
-              {projects.map((project, idx) => (
-                <div key={project.id} className="min-w-[85vw] h-[85vh] flex flex-col border rounded-3xl overflow-hidden shadow-2xl mobile-card">
-
-                  {/* Image Area */}
-                  <div className="relative flex-[1.4] w-full bg-zinc-900">
-                    <Image
-                      src={project.thumbnail}
-                      alt={project.title}
-                      fill
-                      className="object-cover"
-                      priority={idx < 2}
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent" />
-                    <div className="absolute bottom-6 left-6 text-white/40 text-[10px] font-bold tracking-[0.3em] uppercase font-orbitron">
-                      {String(idx + 1).padStart(2, '0')}
-                    </div>
-                  </div>
-
-                  {/* Text Area */}
-                  <div className="p-8 flex flex-col  relative z-10">
-                    <div>
-                      <h3 className="text-2xl sm:text-3xl font-helvetica font-light italic mb-3 leading-tight mobile-text-primary tracking-tight">
-                        {project.title}
-                      </h3>
-                      <p className="text-sm font-light leading-relaxed mb-6 mobile-text-secondary line-clamp-3">
-                        {project.approach}
-                      </p>
-                    </div>
-
-                    <div className="grid grid-cols-[60px_1fr] gap-y-2 text-sm border-t pt-4 border-current opacity-30 mobile-text-primary">
-                      <span className="uppercase font-bold text-[9px] tracking-widest self-center opacity-60 font-orbitron">Org</span>
-                      <span className="italic font-medium">{project.org}</span>
-                    </div>
-                  </div>
-
+              {/* Image */}
+              <div className="relative w-full h-[400px] bg-zinc-900">
+                <Image
+                  src={project.thumbnail}
+                  alt={project.title}
+                  fill
+                  className="object-cover"
+                  sizes="85vw"
+                  priority={idx < 2}
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent" />
+                <div
+                  className="absolute bottom-4 left-4 text-[10px] font-bold tracking-[0.3em] uppercase font-orbitron"
+                  style={{ color: 'rgba(255,255,255,0.35)' }}
+                >
+                  {String(idx + 1).padStart(2, '0')}
                 </div>
-              ))}
-            </div>
-          </div>
-        </div>
+              </div>
 
+              {/* Text */}
+              <div className="p-5 flex flex-col">
+                <h3
+                  className="text-xl font-helvetica font-light italic mb-2 leading-tight tracking-tight"
+                  style={{ color: mobileIsLight ? '#000' : '#fff', transition: 'color 0.5s ease' }}
+                >
+                  {project.title}
+                </h3>
+                <p
+                  className="text-xs font-light leading-relaxed mb-3 line-clamp-3"
+                  style={{ color: mobileIsLight ? 'rgba(0,0,0,0.55)' : 'rgba(255,255,255,0.5)', transition: 'color 0.5s ease' }}
+                >
+                  {project.approach}
+                </p>
+                <div
+                  className="grid grid-cols-[50px_1fr] gap-y-1 text-xs pt-3"
+                  style={{
+                    color: mobileIsLight ? '#000' : '#fff',
+                    borderTop: `1px solid ${mobileIsLight ? 'rgba(0,0,0,0.12)' : 'rgba(255,255,255,0.12)'}`,
+                    transition: 'color 0.5s ease, border-color 0.5s ease',
+                  }}
+                >
+                  <span className="uppercase font-bold text-[8px] tracking-widest self-center opacity-50 font-orbitron">Org</span>
+                  <span className="italic font-medium">{project.org}</span>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
 
     </section>

@@ -5,10 +5,6 @@ import HeroSection from '@/components/Home/HeroSection';
 import { AuroraCore } from "@/components/ui/AuroraCore";
 import ScrollController from '@/components/ScrollController/ScrollScenes';
 import About from '@/components/Home/About';
-// import WeaponRack from '@/components/Sections/WeaponRack';
-import Projects from '@/components/Sections/Projects';
-import Skills from '@/components/Sections/Skills';
-import Experience from '@/components/Sections/Experience';
 import Blog from '@/components/Sections/Blog';
 import Contact from '@/components/Sections/Contact';
 import ProjectGallery3D from '@/components/Home/ProjectGallery3D';
@@ -35,9 +31,8 @@ export default function Home() {
         <AuroraCore
           id="tsparticleshero"
           background="transparent"
-          particleDensity={25}
+          particleDensity={8}
           className="w-full h-full"
-          particleColor="#ffffffff"
         />
         {/* Seamless fade to black */}
         <div className="absolute bottom-0 left-0 w-full h-64 bg-gradient-to-t from-black via-black/80 to-transparent" />
@@ -45,11 +40,13 @@ export default function Home() {
 
       <div className="relative z-10">
         <HeroSection />
-        {/* <WeaponRack /> */}
         <About />
         <ProjectHeader isLightTheme={isLightTheme} />
+
         <ProjectGallery3D setLightTheme={setIsLightTheme} />
+
         {/* <Projects /> */}
+        {/* <Testimonials /> */}
         <Blog />
         <Contact />
       </div>
