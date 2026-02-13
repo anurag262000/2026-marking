@@ -12,6 +12,7 @@ import Experience from '@/components/Sections/Experience';
 import Blog from '@/components/Sections/Blog';
 import Contact from '@/components/Sections/Contact';
 import ProjectGallery3D from '@/components/Home/ProjectGallery3D';
+import ProjectHeader from '@/components/Home/ProjectHeader';
 
 export default function Home() {
   const [isLightTheme, setIsLightTheme] = useState(false);
@@ -46,6 +47,7 @@ export default function Home() {
         <HeroSection />
         {/* <WeaponRack /> */}
         <About />
+        <ProjectHeader isLightTheme={isLightTheme} />
         <ProjectGallery3D setLightTheme={setIsLightTheme} />
         {/* <Projects /> */}
         <Blog />
