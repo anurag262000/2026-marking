@@ -9,6 +9,7 @@ import Blog from '@/components/Sections/Blog';
 import Contact from '@/components/Sections/Contact';
 import ProjectGalleryCSS from '@/components/Home/ProjectGalleryCSS';
 import ProjectHeader from '@/components/Home/ProjectHeader';
+import Testimonials from '@/components/Sections/Testimonials';
 
 export default function Home() {
   const [isLightTheme, setIsLightTheme] = useState(false);
@@ -44,6 +45,8 @@ export default function Home() {
         <ProjectHeader isLightTheme={isLightTheme} />
 
         <ProjectGalleryCSS setLightTheme={setIsLightTheme} />
+
+        <Testimonials />
 
         {/* <Projects /> */}
         {/* <Testimonials /> */}
