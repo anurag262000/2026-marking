@@ -18,6 +18,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  z-index: 2;
 }
 
 .counter {
@@ -50,13 +51,21 @@
   width: 0%;
 }
 
-.overlay {
+/* Vertical bars overlay — fills entire screen */
+.barsOverlay {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background: #3b82f6;
-  z-index: 10000;
-  transform: translateY(100%);
+  z-index: 999999;
+  display: flex;
+  pointer-events: none;
+}
+
+.verticalBar {
+  flex: 1;
+  height: 100%;
+  background-color: #000000;
+  will-change: transform;
 }

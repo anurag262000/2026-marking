@@ -14,7 +14,6 @@ export default function ProjectGalleryCSS({ setLightTheme }) {
   const pathname = usePathname();
   const [activeIndex, setActiveIndex] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
-  const [mobileIsLight, setMobileIsLight] = useState(false);
 
   const sectionRef = useRef(null);
   const pinContainerRef = useRef(null);
@@ -111,45 +110,34 @@ export default function ProjectGalleryCSS({ setLightTheme }) {
           // Theme
           const shouldBeLight = progress > 0.02 && progress < 0.95;
           if (shouldBeLight) {
-            sidebar.classList.add("is-light-mode");
+            sidebar.style.background = 'rgba(247, 247, 245, 0.9)';
+            sidebar.style.borderColor = 'rgba(0, 0, 0, 0.1)';
+            sidebar.style.color = '#0f172a';
           } else {
-            sidebar.classList.remove("is-light-mode");
+            sidebar.style.background = 'rgba(10, 10, 10, 0.4)';
+            sidebar.style.borderColor = 'rgba(255, 255, 255, 0.1)';
+            sidebar.style.color = 'white';
           }
           if (setLightThemeRef.current) {
             setLightThemeRef.current(shouldBeLight);
           }
         },
         onLeave: () => {
-          sidebar.classList.remove("is-light-mode");
+          sidebar.style.background = 'rgba(10, 10, 10, 0.4)';
+          sidebar.style.borderColor = 'rgba(255, 255, 255, 0.1)';
+          sidebar.style.color = 'white';
           if (setLightThemeRef.current) setLightThemeRef.current(false);
         },
         onLeaveBack: () => {
-          sidebar.classList.remove("is-light-mode");
+          sidebar.style.background = 'rgba(10, 10, 10, 0.4)';
+          sidebar.style.borderColor = 'rgba(255, 255, 255, 0.1)';
+          sidebar.style.color = 'white';
           if (setLightThemeRef.current) setLightThemeRef.current(false);
         }
       });
     }, sectionRef);
 
     return () => ctx.revert();
-  }, [isMobile]);
-
-  // Mobile: IntersectionObserver for theme
-  useEffect(() => {
-    if (!isMobile) return;
-    const el = mobileScrollRef.current;
-    if (!el) return;
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        const isLight = entry.isIntersecting;
-        setMobileIsLight(isLight);
-        if (setLightThemeRef.current) setLightThemeRef.current(isLight);
-      },
-      { threshold: 0.8 }
-    );
-
-    observer.observe(el);
-    return () => observer.disconnect();
   }, [isMobile]);
 
   const activeProject = projects[activeIndex];
@@ -161,23 +149,15 @@ export default function ProjectGalleryCSS({ setLightTheme }) {
       <div ref={pinContainerRef} className="hidden md:block relative w-full h-[100dvh] overflow-hidden">
         <div className="flex relative w-full h-full">
 
-          {/* Left Sidebar */}
           <div
             ref={sidebarRef}
-            className="desktop-sidebar relative z-30 w-[40%] h-full flex flex-col justify-center p-10 border-r transition-colors duration-700 backdrop-blur-xl"
+            className="desktop-sidebar relative z-30 w-[40%] h-full flex flex-col justify-center p-10 border-r transition-all duration-700 backdrop-blur-xl"
+            style={{
+              background: 'rgba(10, 10, 10, 0.4)',
+              borderColor: 'rgba(255, 255, 255, 0.1)',
+              color: 'white',
+            }}
           >
-            <style jsx>{`
-              .desktop-sidebar {
-                background: rgba(10, 10, 10, 0.4);
-                border-color: rgba(255, 255, 255, 0.1);
-                color: white;
-              }
-              .desktop-sidebar.is-light-mode {
-                background: rgba(247, 247, 245, 0.9);
-                border-color: rgba(0, 0, 0, 0.1);
-                color: #0f172a;
-              }
-            `}</style>
 
             <div className="space-y-8">
               <div className="space-y-1">
@@ -263,47 +243,59 @@ export default function ProjectGalleryCSS({ setLightTheme }) {
         </div>
       </div>
 
-      {/* MOBILE VIEW */}
-      <div className="md:hidden relative min-h-screen py-20">
-        <div ref={mobileScrollRef} className="space-y-12 px-6">
+      {/* MOBILE VIEW — Horizontal Swipe Slider */}
+      <div className="md:hidden relative py-16" ref={mobileScrollRef}>
+        {/* Slider Container */}
+        <div
+          className="flex gap-5 overflow-x-auto snap-x snap-mandatory px-6 pb-6 no-scrollbar"
+          style={{
+            scrollbarWidth: 'none',
+            msOverflowStyle: 'none',
+            WebkitOverflowScrolling: 'touch',
+          }}
+        >
           {projects.map((project, index) => (
             <div
               key={project.id}
-              className="mobile-card rounded-2xl overflow-hidden border shadow-xl transition-all duration-500"
+              className="flex-shrink-0 snap-center rounded-2xl overflow-hidden border shadow-2xl transition-all duration-500"
               style={{
-                background: mobileIsLight ? 'rgba(255,255,255,0.9)' : 'rgba(0,0,0,0.6)',
-                borderColor: mobileIsLight ? 'rgba(0,0,0,0.1)' : 'rgba(255,255,255,0.1)',
-                color: mobileIsLight ? '#0f172a' : 'white'
+                width: '85vw',
+                background: 'rgba(0,0,0,0.7)',
+                borderColor: 'rgba(255,255,255,0.08)',
+                color: 'white',
               }}
             >
-              <div className="relative aspect-[4/3]">
+              <div className="relative aspect-[16/10]">
                 <Image
                   src={project.thumbnail}
                   alt={project.title}
                   fill
-                  sizes="(max-width: 768px) 100vw"
+                  sizes="85vw"
                   className="object-cover"
                 />
+                {/* Number badge */}
+                <div className="absolute bottom-3 right-4 font-orbitron text-white/15 text-5xl font-black">
+                  {String(index + 1).padStart(2, '0')}
+                </div>
               </div>
 
-              <div className="p-6 space-y-4 backdrop-blur-xl">
+              <div className="p-5 space-y-3">
                 <div className="flex items-center justify-between">
-                  <span className="text-xs uppercase tracking-wider opacity-60">{project.org}</span>
-                  <span className="text-xs opacity-60">{project.team}</span>
+                  <span className="text-[10px] uppercase tracking-widest opacity-50 font-bold">{project.org}</span>
+                  <span className="text-[10px] uppercase tracking-widest opacity-50">{project.team}</span>
                 </div>
 
-                <h3 className="text-2xl font-helvetica italic font-thin">{project.title}</h3>
+                <h3 className="text-2xl font-helvetica italic font-semibold leading-snug">{project.title}</h3>
 
-                <p className="text-xs leading-relaxed opacity-70 line-clamp-2">
+                <p className="text-xs leading-relaxed opacity-60 line-clamp-2">
                   {project.fullDescription}
                 </p>
 
-                <div className="flex flex-wrap gap-2">
+                <div className="flex flex-wrap gap-2 pt-1">
                   {project.technologies.slice(0, 3).map((tech, i) => (
                     <span
                       key={i}
-                      className="px-2 py-1 text-[9px] font-orbitron uppercase rounded-full border opacity-50"
-                      style={{ borderColor: 'currentColor' }}
+                      className="px-2.5 py-1 text-[9px] font-orbitron uppercase rounded-full border border-white/20 opacity-60"
                     >
                       {tech}
                     </span>
@@ -321,6 +313,11 @@ export default function ProjectGalleryCSS({ setLightTheme }) {
               </div>
             </div>
           ))}
+        </div>
+
+        {/* Scroll hint */}
+        <div className="text-center mt-4 text-xs text-white/30 font-inter tracking-wider">
+          ← Swipe to explore →
         </div>
       </div>
     </section>

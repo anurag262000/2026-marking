@@ -186,7 +186,7 @@ export default function Testimonials() {
             <div className="max-w-[1400px] mx-auto px-8 md:px-6 relative z-10">
                 {/* Header */}
                 <div className="text-center mb-16">
-                    <h2 className="text-4xl md:text-6xl font-black uppercase bg-gradient-to-br from-white to-blue-400 bg-clip-text text-transparent mb-4 tracking-tight font-bitcount">
+                    <h2 className="text-4xl md:text-6xl font-black uppercase bg-gradient-to-br from-white to-blue-400 bg-clip-text font-weight-200 text-transparent mb-4 tracking-tight font-bitcount">
                         Client Testimonials
                     </h2>
                     <p className="text-lg text-white/60 font-light font-inter">

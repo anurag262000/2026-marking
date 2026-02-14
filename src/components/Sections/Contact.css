@@ -145,3 +145,48 @@
     padding: 30px;
   }
 }
+
+/* ===== Light Theme Overrides ===== */
+body.light-theme .contact-section {
+  background: #f7f7f5;
+  color: #111;
+}
+
+body.light-theme .contact-title {
+  color: #111;
+}
+
+body.light-theme .contact-desc {
+  color: rgba(0, 0, 0, 0.6);
+}
+
+body.light-theme .info-value {
+  color: #111;
+}
+
+body.light-theme .contact-form {
+  background: rgba(0, 0, 0, 0.03);
+  border-color: rgba(0, 0, 0, 0.1);
+}
+
+body.light-theme .form-group label {
+  color: rgba(0, 0, 0, 0.6);
+}
+
+body.light-theme .contact-form input,
+body.light-theme .contact-form textarea {
+  background: rgba(0, 0, 0, 0.04);
+  border-color: rgba(0, 0, 0, 0.12);
+  color: #111;
+}
+
+body.light-theme .contact-form input:focus,
+body.light-theme .contact-form textarea:focus {
+  border-color: #3b82f6;
+  background: rgba(0, 0, 0, 0.06);
+}
+
+body.light-theme .contact-form input::placeholder,
+body.light-theme .contact-form textarea::placeholder {
+  color: rgba(0, 0, 0, 0.35);
+}

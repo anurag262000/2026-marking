@@ -21,6 +21,7 @@
 /* Font Utility Classes */
 .font-bitcount {
   font-family: 'Bitcount Single', cursive !important;
+  font-weight: 300;
 }
 
 .font-orbitron {
@@ -62,21 +63,135 @@ body.light-theme {
   --card-bg: rgba(0, 0, 0, 0.04);
 }
 
-/* Update fog color in JS via prop, but handle global text changes */
+/* ===== Global Tailwind Class Overrides for Light Theme ===== */
+
+/* Text colors */
 body.light-theme .text-white {
-  color: #111111 !important;
+  color: #111 !important;
 }
 
 body.light-theme .text-white\/20,
 body.light-theme .text-white\/40,
-body.light-theme .text-white\/60,
-body.light-theme .text-white\/80 {
-  color: #444 !important;
-  /* Dimmed text becomes dark grey */
+body.light-theme .text-white\/60 {
+  color: rgba(0, 0, 0, 0.5) !important;
+}
+
+body.light-theme .text-white\/70,
+body.light-theme .text-white\/80,
+body.light-theme .text-white\/90 {
+  color: rgba(0, 0, 0, 0.7) !important;
 }
 
 body.light-theme .stroke-text {
   -webkit-text-stroke-color: rgba(0, 0, 0, 0.2) !important;
+}
+
+/* Border colors */
+body.light-theme .border-white\/5,
+body.light-theme .border-white\/10 {
+  border-color: rgba(0, 0, 0, 0.08) !important;
+}
+
+/* Background opacity classes */
+body.light-theme .bg-white\/\[0\.02\],
+body.light-theme .bg-white\/\[0\.03\],
+body.light-theme .bg-white\/\[0\.05\] {
+  background-color: rgba(0, 0, 0, 0.03) !important;
+}
+
+/* Gradient text (stats numbers etc.) */
+body.light-theme .bg-gradient-to-b.from-white.to-white\/50 {
+  --tw-gradient-from: #111 !important;
+  --tw-gradient-to: rgba(17, 17, 17, 0.5) !important;
+}
+
+/* ===== About Section ===== */
+body.light-theme #about {
+  transition: all 0.5s ease;
+}
+
+body.light-theme #about .bg-black\/40 {
+  background-color: rgba(247, 247, 245, 0.6) !important;
+}
+
+body.light-theme #about .bg-black\/60 {
+  background-color: rgba(247, 247, 245, 0.8) !important;
+}
+
+/* Status indicator */
+body.light-theme #about .text-\[10px\].text-white\/90 {
+  color: rgba(0, 0, 0, 0.8) !important;
+}
+
+/* Stats gradient text (02+, 15+, etc.) */
+body.light-theme #about .text-transparent.bg-clip-text {
+  background-image: linear-gradient(to bottom, #111, rgba(17, 17, 17, 0.5)) !important;
+  -webkit-background-clip: text !important;
+}
+
+/* Skill card hover */
+body.light-theme #about .hover\:border-blue-500\/50:hover {
+  border-color: rgba(59, 130, 246, 0.5) !important;
+}
+
+/* Divider line */
+body.light-theme #about .border-t.border-white\/10 {
+  border-color: rgba(0, 0, 0, 0.1) !important;
+}
+
+/* Grid background pattern */
+body.light-theme #about .bg-\[linear-gradient\(to_right\,\#ffffff05_1px\,transparent_1px\)\,linear-gradient\(to_bottom\,\#ffffff05_1px\,transparent_1px\)\] {
+  background-image: linear-gradient(to right, rgba(0,0,0,0.04) 1px, transparent 1px), linear-gradient(to bottom, rgba(0,0,0,0.04) 1px, transparent 1px) !important;
+}
+
+/* ===== Navbar ===== */
+body.light-theme .navbar-logo,
+body.light-theme .nav-brand {
+  color: #111 !important;
+}
+
+/* ===== Launch Site Button ===== */
+body.light-theme .bg-blue-600 {
+  background-color: #111 !important;
+}
+
+body.light-theme .bg-blue-600:hover,
+body.light-theme .hover\:bg-blue-500:hover {
+  background-color: #333 !important;
+}
+
+body.light-theme .bg-blue-600.text-white {
+  color: #fff !important;
+}
+
+/* ===== Testimonials ===== */
+body.light-theme #testimonials {
+  background: linear-gradient(to bottom, #f7f7f5, #f0f0ee) !important;
+}
+
+body.light-theme #testimonials h2 {
+  background-image: linear-gradient(to bottom right, #111, #3b82f6) !important;
+}
+
+body.light-theme #testimonials p,
+body.light-theme #testimonials span {
+  color: rgba(0, 0, 0, 0.6) !important;
+}
+
+body.light-theme #testimonials [class*="bg-white/"] {
+  background-color: rgba(0, 0, 0, 0.03) !important;
+  border-color: rgba(0, 0, 0, 0.08) !important;
+}
+
+body.light-theme #testimonials h4 {
+  color: #111 !important;
+}
+
+/* ===== All transition smoothness ===== */
+body.light-theme * {
+  transition-property: color, background-color, border-color;
+  transition-duration: 0.5s;
+  transition-timing-function: ease;
 }
 
 #canvas-container {
@@ -88,8 +203,11 @@ body.light-theme .stroke-text {
   z-index: 1;
 }
 
-#smooth-scroll-container {
-  overflow-x: hidden;
+/* Only hide overflow-x on desktop; mobile needs horizontal scroll for sliders */
+@media (min-width: 768px) {
+  #smooth-scroll-container {
+    overflow-x: hidden;
+  }
 }
 
 .hero-section {

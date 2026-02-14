@@ -10,6 +10,7 @@ import Contact from '@/components/Sections/Contact';
 import ProjectGalleryCSS from '@/components/Home/ProjectGalleryCSS';
 import ProjectHeader from '@/components/Home/ProjectHeader';
 import Testimonials from '@/components/Sections/Testimonials';
+import ThemeTransition from '@/components/Home/ThemeTransition';
 
 export default function Home() {
   const [isLightTheme, setIsLightTheme] = useState(false);
@@ -24,7 +25,8 @@ export default function Home() {
   }, [isLightTheme]);
 
   return (
-    <main id="smooth-scroll-container" className="relative w-full overflow-clip">
+    <main id="smooth-scroll-container" className="relative w-full overflow-y-clip">
+      <ThemeTransition />
       <ScrollController />
 
       {/* Shared Background - Scrolls with page, extends into About */}

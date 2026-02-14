@@ -112,3 +112,43 @@
     gap: 20px;
   }
 }
+
+/* ===== Light Theme Overrides ===== */
+body.light-theme .blog-section {
+  background: #f7f7f5;
+  color: #111;
+}
+
+body.light-theme .blog-card {
+  background: #fff;
+  border-color: rgba(0, 0, 0, 0.08);
+}
+
+body.light-theme .blog-card:hover {
+  background: #fafafa;
+  border-color: rgba(0, 0, 0, 0.15);
+}
+
+body.light-theme .blog-meta {
+  color: rgba(0, 0, 0, 0.5);
+}
+
+body.light-theme .blog-title {
+  color: #111;
+}
+
+body.light-theme .blog-card:hover .blog-title {
+  color: #3b82f6;
+}
+
+body.light-theme .blog-excerpt {
+  color: rgba(0, 0, 0, 0.6);
+}
+
+body.light-theme .blog-tag {
+  color: rgba(0, 0, 0, 0.4);
+}
+
+body.light-theme .section-title {
+  color: #111;
+}
