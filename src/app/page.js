@@ -7,7 +7,7 @@ import ScrollController from '@/components/ScrollController/ScrollScenes';
 import About from '@/components/Home/About';
 import Blog from '@/components/Sections/Blog';
 import Contact from '@/components/Sections/Contact';
-import ProjectGallery3D from '@/components/Home/ProjectGallery3D';
+import ProjectGalleryCSS from '@/components/Home/ProjectGalleryCSS';
 import ProjectHeader from '@/components/Home/ProjectHeader';
 
 export default function Home() {
@@ -43,7 +43,7 @@ export default function Home() {
         <About />
         <ProjectHeader isLightTheme={isLightTheme} />
 
-        <ProjectGallery3D setLightTheme={setIsLightTheme} />
+        <ProjectGalleryCSS setLightTheme={setIsLightTheme} />
 
         {/* <Projects /> */}
         {/* <Testimonials /> */}

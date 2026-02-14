@@ -7,6 +7,16 @@
   --color-accent: #3b82f6;
 }
 
+/* Theme Custom Properties */
+:root {
+  --foreground: #ffffff;
+  --background: #000000;
+  --foreground-muted: rgba(255, 255, 255, 0.7);
+  --background-muted: rgba(0, 0, 0, 0.8);
+  --border-color: rgba(255, 255, 255, 0.1);
+  --card-bg: rgba(255, 255, 255, 0.05);
+}
+
 
 /* Font Utility Classes */
 .font-bitcount {
@@ -44,6 +54,12 @@ body {
 body.light-theme {
   background-color: #f7f7f5 !important;
   color: #111111 !important;
+  --foreground: #0f172a;
+  --background: #f7f7f5;
+  --foreground-muted: rgba(15, 23, 42, 0.7);
+  --background-muted: rgba(247, 247, 245, 0.9);
+  --border-color: rgba(0, 0, 0, 0.1);
+  --card-bg: rgba(0, 0, 0, 0.04);
 }
 
 /* Update fog color in JS via prop, but handle global text changes */
@@ -142,4 +158,30 @@ body.light-theme .stroke-text {
 
 .animate-marquee-slow {
   animation: marquee 25s linear infinite;
+}
+
+/* Theme Utility Classes */
+.theme-text {
+  color: var(--foreground);
+  transition: color 0.6s ease;
+}
+
+.theme-text-muted {
+  color: var(--foreground-muted);
+  transition: color 0.6s ease;
+}
+
+.theme-bg {
+  background-color: var(--background);
+  transition: background-color 0.6s ease;
+}
+
+.theme-border {
+  border-color: var(--border-color);
+  transition: border-color 0.6s ease;
+}
+
+.theme-card-bg {
+  background-color: var(--card-bg);
+  transition: background-color 0.6s ease;
 }

@@ -44,7 +44,7 @@ export default function Footer() {
             LET'S
           </span>
            {/* Stylized 'DO' - using italic/accent color to mimic handwriting/difference */}
-          <span className="text-[15vw] md:text-[12rem] lg:text-[14rem]  font-bitcount italic text-white/80 tracking-tighter relative z-10 ">
+          <span className="text-[15vw] md:text-[12rem] lg:text-[14rem]  font-orbitron italic text-white/80 tracking-tighter relative z-10 ">
             WORK
           </span>
           <span className="text-[15vw] md:text-[12rem] lg:text-[14rem] font-black font-orbitron text-accent stroke-text-active">

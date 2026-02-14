@@ -1,205 +1,73 @@
 "use client";
-
 import React, { useRef, useEffect } from "react";
 import Image from "next/image";
 import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { motion } from "framer-motion";
 import TextReveal from "./TextReveal";
 
-if (typeof window !== "undefined") {
-  gsap.registerPlugin(ScrollTrigger);
-}
-
-/**
- * ProjectDetail Component
- * Individual project section with scroll-triggered animations
- *
- * @param {Object} props
- * @param {Object} props.project - Project data object
- * @param {number} props.index - Project index for alternating layouts
- * @param {boolean} props.isLast - Whether this is the last project
- */
-const ProjectDetail = ({ project, index, isLast = false }) => {
+const ProjectDetail = ({ project, index, isLast = false, isLightTheme = false }) => {
   const sectionRef = useRef(null);
-  const imageRef = useRef(null);
-  const contentRef = useRef(null);
-
   const isEven = index % 2 === 0;
-  const layoutClass = isEven ? "md:flex-row" : "md:flex-row-reverse";
 
-  useEffect(() => {
-    if (!sectionRef.current) return;
-
-    const ctx = gsap.context(() => {
-      // Image animation
-      if (imageRef.current) {
-        gsap.fromTo(
-          imageRef.current,
-          {
-            x: isEven ? -100 : 100,
-            opacity: 0,
-          },
-          {
-            x: 0,
-            opacity: 1,
-            duration: 1.2,
-            ease: "power3.out",
-            scrollTrigger: {
-              trigger: imageRef.current,
-              start: "top 75%",
-              toggleActions: "play none none none",
-            },
-          }
-        );
-      }
-
-      // Content container fade in
-      if (contentRef.current) {
-        gsap.fromTo(
-          contentRef.current,
-          {
-            opacity: 0,
-          },
-          {
-            opacity: 1,
-            duration: 0.8,
-            ease: "power2.out",
-            scrollTrigger: {
-              trigger: contentRef.current,
-              start: "top 80%",
-              toggleActions: "play none none none",
-            },
-          }
-        );
-      }
-
-      // Tech stack stagger animation
-      const techItems = sectionRef.current.querySelectorAll(".tech-item");
-      if (techItems.length > 0) {
-        gsap.fromTo(
-          techItems,
-          {
-            opacity: 0,
-            y: 10,
-          },
-          {
-            opacity: 1,
-            y: 0,
-            duration: 0.4,
-            stagger: 0.05,
-            ease: "power2.out",
-            scrollTrigger: {
-              trigger: techItems[0],
-              start: "top 85%",
-              toggleActions: "play none none none",
-            },
-          }
-        );
-      }
-    }, sectionRef);
-
-    return () => ctx.revert();
-  }, [isEven]);
+  // Define theme-aware classes
+  const textPrimary = isLightTheme ? 'text-slate-900' : 'text-slate-50';
+  const textSecondary = isLightTheme ? 'text-slate-700' : 'text-slate-300';
+  const textMuted = isLightTheme ? 'text-slate-600' : 'text-slate-400';
+  const borderColor = isLightTheme ? 'border-slate-200' : 'border-white/10';
+  const bgCard = isLightTheme ? 'bg-black/5' : 'bg-white/5';
+  const bgBorder = isLightTheme ? 'border-slate-300/50' : 'border-white/20';
+  const btnBg = isLightTheme ? 'bg-slate-900 hover:bg-slate-800 border-slate-900' : 'bg-white/10 hover:bg-white/20 border-white/20';
+  const btnBorder = isLightTheme ? 'hover:border-slate-700' : 'hover:border-white/40';
 
   return (
     <section
       ref={sectionRef}
-      className={`relative min-h-screen flex items-center py-20 md:py-32 ${isLast ? "" : "border-b border-white/10"
-        }`}
+      className={`relative min-h-screen flex items-center py-20 transition-colors duration-700 ${isLast ? "" : `border-b ${borderColor}`}`}
     >
       <div className="container mx-auto px-6 md:px-12">
-        <div className={`flex flex-col ${layoutClass} gap-12 md:gap-16 items-center`}>
+        <div className={`flex flex-col ${isEven ? "md:flex-row" : "md:flex-row-reverse"} gap-16 items-center`}>
 
-          {/* Image Section */}
-          <div ref={imageRef} className="w-full md:w-1/2">
-            <div className="relative aspect-[4/3] rounded-2xl overflow-hidden group">
-              <Image
-                src={project.images?.[0] || project.thumbnail}
-                alt={project.title}
-                fill
-                priority={index === 0}
-                sizes="(max-width: 768px) 100vw, 50vw"
-                className="object-cover transition-transform duration-700 group-hover:scale-105"
-              />
-              {/* Gradient overlay */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-60 group-hover:opacity-40 transition-opacity duration-500" />
-
-              {/* Project number badge */}
-              <div className="absolute top-6 left-6 bg-white/10 backdrop-blur-md border border-white/20 rounded-full px-4 py-2">
-                <span className="text-white font-orbitron font-bold text-sm tracking-wider">
-                  {String(index + 1).padStart(2, "0")}
-                </span>
+          <div className="w-full md:w-1/2">
+            <div className={`relative aspect-[4/3] rounded-2xl overflow-hidden border ${bgBorder} shadow-2xl group backdrop-blur-md ${bgCard}`}>
+              <Image src={project.thumbnail} alt={project.title} fill className="object-cover transition-transform duration-700 group-hover:scale-105" />
+              <div className={`absolute top-6 left-6 ${bgCard} backdrop-blur-xl border ${bgBorder} rounded-full px-4 py-2`}>
+                <span className={`${textPrimary} font-orbitron font-bold text-xs`}>{project.category}</span>
               </div>
             </div>
           </div>
 
-          {/* Content Section */}
-          <div ref={contentRef} className="w-full md:w-1/2 space-y-8">
-
-            {/* Organization */}
+          <div className="w-full md:w-1/2 space-y-8">
             <div className="flex items-center gap-3">
-              <div className="w-12 h-0.5 bg-gradient-to-r from-orange-500 to-transparent"></div>
-              <span className="text-orange-400 font-orbitron text-sm uppercase tracking-widest">
-                {project.org}
-              </span>
+              <div className={`w-12 h-0.5 ${isLightTheme ? 'bg-slate-600' : 'bg-white/40'}`}></div>
+              <span className={`${textMuted} font-orbitron text-xs uppercase tracking-widest`}>{project.org}</span>
             </div>
 
-            {/* Title with text reveal */}
-            <h2 className="text-4xl md:text-6xl lg:text-7xl font-helvetica font-thin italic leading-tight">
-              <TextReveal mode="words" stagger={0.05} duration={0.8}>
-                {project.title}
-              </TextReveal>
+            <h2 className={`text-4xl md:text-6xl font-helvetica italic font-thin ${textPrimary}`}>
+              <TextReveal>{project.title}</TextReveal>
             </h2>
 
-            {/* Description with text reveal */}
-            <div className="text-lg md:text-xl text-white/80 leading-relaxed space-y-4">
-              <TextReveal mode="words" stagger={0.02} duration={0.6} trigger="top 85%">
-                {project.fullDescription?.split("\n\n")[0] || project.approach}
-              </TextReveal>
+            <p className={`text-lg ${textSecondary} font-light leading-relaxed`}>{project.fullDescription}</p>
+
+            <div className={`grid grid-cols-2 gap-6 pt-6 border-t ${borderColor}`}>
+              <div>
+                <p className={`text-[10px] ${textMuted} opacity-60 uppercase tracking-widest font-orbitron`}>Highlight</p>
+                <p className={`text-lg ${textPrimary} italic mt-1`}>{project.keyHighlight}</p>
+              </div>
+              <div>
+                <p className={`text-[10px] ${textMuted} opacity-60 uppercase tracking-widest font-orbitron`}>Timeline</p>
+                <p className={`text-lg ${textPrimary} mt-1`}>{project.timeline}</p>
+              </div>
             </div>
 
-            {/* Project metadata grid */}
-            <div className="grid grid-cols-2 gap-6 pt-6 border-t border-white/10">
-              {project.timeline && (
-                <div>
-                  <p className="text-xs text-white/50 uppercase tracking-widest mb-2 font-orbitron">Timeline</p>
-                  <p className="text-lg font-medium">{project.timeline}</p>
-                </div>
-              )}
-              {project.team && (
-                <div>
-                  <p className="text-xs text-white/50 uppercase tracking-widest mb-2 font-orbitron">Team</p>
-                  <p className="text-lg font-medium">{project.team}</p>
-                </div>
-              )}
+            <div className="pt-6">
+              <a
+                href={project.liveUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={`inline-block px-8 py-4 ${btnBg} ${isLightTheme ? 'text-white' : 'text-white'} border ${btnBorder} font-orbitron text-xs uppercase tracking-[0.2em] rounded-lg transition-all transform hover:scale-105 backdrop-blur-md`}
+              >
+                Launch Live Site ↗
+              </a>
             </div>
-
-            {/* Technologies */}
-            {project.technologies && project.technologies.length > 0 && (
-              <div className="space-y-4">
-                <p className="text-xs text-white/50 uppercase tracking-widest font-orbitron">Technologies</p>
-                <div className="flex flex-wrap gap-2">
-                  {project.technologies.slice(0, 8).map((tech, i) => (
-                    <span
-                      key={i}
-                      className="tech-item px-4 py-2 bg-white/5 backdrop-blur-sm border border-white/10 rounded-full text-sm font-medium hover:bg-white/10 hover:border-white/20 transition-all duration-300"
-                    >
-                      {tech}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            )}
-
-            {/* Outcomes */}
-            {project.outcomes && (
-              <div className="bg-gradient-to-br from-orange-500/10 to-transparent border border-orange-500/20 rounded-xl p-6 backdrop-blur-sm">
-                <p className="text-xs text-orange-400 uppercase tracking-widest mb-3 font-orbitron">Key Outcomes</p>
-                <p className="text-white/90 leading-relaxed">{project.outcomes}</p>
-              </div>
-            )}
-
           </div>
         </div>
       </div>
