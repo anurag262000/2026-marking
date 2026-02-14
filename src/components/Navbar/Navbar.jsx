@@ -9,6 +9,7 @@ export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
 
   const menuItems = [
+    { name: 'Home', number: '00', href: '/', type: 'link' },
     { name: 'Projects', number: '01', href: '/projects', type: 'link' },
     { name: 'About', number: '02', href: '/#about', type: 'scroll' },
     { name: 'Contact', number: '03', href: '/contact', type: 'link' },
@@ -59,18 +60,28 @@ export default function Navbar() {
 
   return (
     <>
-      <button
-        className={`hamburger-button ${isOpen ? 'active' : ''}`}
-        onClick={toggleMenu}
-        aria-label="Toggle menu"
+      <header
+        className={`navbar-header ${isOpen ? 'active' : ''}`}
       >
-        <span className="nav-logo font-bitcount">ANURAG</span>
-        <div className="hamburger-icon">
-          <span className="bar bar-1" />
-          <span className="bar bar-2" />
-          <span className="bar bar-3" />
-        </div>
-      </button>
+        <Link
+          href="/"
+          className="nav-logo-link"
+          onClick={() => setIsOpen(false)}
+        >
+          <span className="nav-logo font-bitcount">ANURAG</span>
+        </Link>
+        <button
+          className="hamburger-toggle"
+          onClick={toggleMenu}
+          aria-label="Toggle menu"
+        >
+          <div className="hamburger-icon">
+            <span className="bar bar-1" />
+            <span className="bar bar-2" />
+            <span className="bar bar-3" />
+          </div>
+        </button>
+      </header>
 
       <div className={`fullscreen-menu ${isOpen ? 'open' : ''}`}>
         <div className="menu-bg" />

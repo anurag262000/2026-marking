@@ -26,7 +26,7 @@ const TextReveal = ({
   mode = "words",
   stagger = 0.03,
   duration = 0.6,
-  trigger = "top 80%",
+  trigger = "top 90%",
   ...props
 }) => {
   const textRef = useRef(null);
@@ -42,53 +42,60 @@ const TextReveal = ({
     const element = textRef.current;
     const text = children;
 
-    // Split text into words or characters
-    const splitText = mode === "chars"
-      ? text.split("")
-      : text.split(" ");
-
-    // Clear existing content
-    element.innerHTML = "";
-
-    // Create span elements for each unit
-    const spans = splitText.map((unit, index) => {
-      const span = document.createElement("span");
-      span.style.display = "inline-block";
-      span.style.opacity = "0";
-      span.style.transform = "translateY(20px)";
-
-      // For word mode, add space after each word except the last
-      if (mode === "words" && index < splitText.length - 1) {
-        span.textContent = unit + " ";
-      } else {
-        span.textContent = unit;
-      }
-
-      element.appendChild(span);
-      return span;
-    });
-
-    // GSAP animation with ScrollTrigger
+    // Use ScrollTrigger to detect when to split and animate
     const ctx = gsap.context(() => {
-      gsap.fromTo(
-        spans,
-        {
-          opacity: 0,
-          y: 20,
+      ScrollTrigger.create({
+        trigger: element,
+        start: "top 120%", // Start splitting and animating slightly before it's in view
+        onEnter: () => {
+          if (element.dataset.splitted === "true") return;
+
+          // Split text into words or characters
+          const splitText = mode === "chars"
+            ? text.split("")
+            : text.split(" ");
+
+          // Clear existing text content
+          element.innerHTML = "";
+
+          // Create span elements for each unit
+          const spans = splitText.map((unit, index) => {
+            const span = document.createElement("span");
+            span.style.display = "inline-block";
+            span.style.opacity = "0";
+            span.style.transform = "translateY(20px)";
+
+            if (mode === "words" && index < splitText.length - 1) {
+              span.textContent = unit + " ";
+            } else {
+              span.textContent = unit;
+            }
+
+            element.appendChild(span);
+            return span;
+          });
+
+          element.dataset.splitted = "true";
+
+          // Animate the spans
+          gsap.fromTo(
+            spans,
+            {
+              opacity: 0,
+              y: 20,
+            },
+            {
+              opacity: 1,
+              y: 0,
+              duration: duration,
+              stagger: stagger,
+              ease: "power3.out",
+              overwrite: "auto",
+            }
+          );
         },
-        {
-          opacity: 1,
-          y: 0,
-          duration: duration,
-          stagger: stagger,
-          ease: "power3.out",
-          scrollTrigger: {
-            trigger: element,
-            start: trigger,
-            toggleActions: "play none none none",
-          },
-        }
-      );
+        once: true // Only trigger once
+      });
     }, element);
 
     return () => {
@@ -97,8 +104,12 @@ const TextReveal = ({
   }, [children, isClient, mode, stagger, duration, trigger]);
 
   return (
-    <span ref={textRef} className={className} {...props}>
-      {!isClient && children}
+    <span
+      ref={textRef}
+      className={`inline-block whitespace-pre-wrap ${className}`}
+      {...props}
+    >
+      {children}
     </span>
   );
 };

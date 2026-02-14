@@ -105,9 +105,8 @@ const ProjectDetail = ({ project, index, isLast = false }) => {
   return (
     <section
       ref={sectionRef}
-      className={`relative min-h-screen flex items-center py-20 md:py-32 ${
-        isLast ? "" : "border-b border-white/10"
-      }`}
+      className={`relative min-h-screen flex items-center py-20 md:py-32 ${isLast ? "" : "border-b border-white/10"
+        }`}
     >
       <div className="container mx-auto px-6 md:px-12">
         <div className={`flex flex-col ${layoutClass} gap-12 md:gap-16 items-center`}>
@@ -119,6 +118,8 @@ const ProjectDetail = ({ project, index, isLast = false }) => {
                 src={project.images?.[0] || project.thumbnail}
                 alt={project.title}
                 fill
+                priority={index === 0}
+                sizes="(max-width: 768px) 100vw, 50vw"
                 className="object-cover transition-transform duration-700 group-hover:scale-105"
               />
               {/* Gradient overlay */}
