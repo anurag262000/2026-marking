@@ -273,7 +273,7 @@ const ContactPage = () => {
                     </p>
                     <div className="flex gap-4">
                       <a
-                        href="https://github.com/anuragmishra262000"
+                        href="https://github.com/anurag262000"
                         target="_blank"
                         rel="noopener noreferrer"
                         className="text-white/60 hover:text-orange-400 transition-colors"
@@ -281,7 +281,7 @@ const ContactPage = () => {
                         GitHub
                       </a>
                       <a
-                        href="https://linkedin.com/in/anuragmishra262000"
+                        href="https://www.linkedin.com/in/anuragmishra26"
                         target="_blank"
                         rel="noopener noreferrer"
                         className="text-white/60 hover:text-orange-400 transition-colors"

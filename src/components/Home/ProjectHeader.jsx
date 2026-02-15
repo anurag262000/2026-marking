@@ -25,12 +25,12 @@ const ProjectHeader = () => {
           w-24 h-1 mt-4 rounded-full
           bg-white/80
         `} />
-                <p className={`
+                {/* <p className={`
           text-sm sm:text-base mt-6 font-orbitron tracking-widest uppercase opacity-60
           text-white
         `}>
                     Scroll vertically to explore
-                </p>
+                </p> */}
             </motion.div>
         </div>
     );

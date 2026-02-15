@@ -79,10 +79,10 @@ export default function HeroSection() {
             <a href="https://github.com/anurag262000" target="_blank" className="text-white/40 hover:text-white transition-all hover:scale-110">
               <FiGithub size={32} />
             </a>
-            <a href="www.linkedin.com/in/anuragmishra26" target="_blank" className="text-white/40 hover:text-white transition-all hover:scale-110">
+            <a href="https://www.linkedin.com/in/anuragmishra26" target="_blank" className="text-white/40 hover:text-white transition-all hover:scale-110">
               <FiLinkedin size={32} />
             </a>
-            <a href="mailto:anuragmiahra262000@gmail.com" className="text-white/40 hover:text-white transition-all hover:scale-110">
+            <a href="mailto:anuragmishra262000@gmail.com" className="text-white/40 hover:text-white transition-all hover:scale-110">
               <FiMail size={32} />
             </a>
           </motion.div>

@@ -15,7 +15,7 @@ export default function Home() {
     <main className="relative w-full overflow-y-clip">
 
       {/* Shared Background - Scrolls with page, extends into About */}
-      <div className="absolute top-0 left-0 w-full h-[140vh] z-0 pointer-events-none">
+      <div className="absolute top-0 left-0 w-full h-[110vh] z-0 pointer-events-none">
         <AuroraCore
           id="tsparticleshero"
           background="transparent"

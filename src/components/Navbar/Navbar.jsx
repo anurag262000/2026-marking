@@ -16,9 +16,9 @@ export default function Navbar() {
   ];
 
   const socialItems = [
-    { label: 'GitHub', href: 'https://github.com/anuragmishra262000' },
-    { label: 'LinkedIn', href: 'https://linkedin.com/in/anuragmishra262000' },
-    { label: 'Portfolio', href: 'https://anurag.dev' },
+    { label: 'GitHub', href: 'https://github.com/anurag262000' },
+    { label: 'LinkedIn', href: 'https://www.linkedin.com/in/anuragmishra26' },
+    // { label: 'Portfolio', href: 'https://anurag.dev' },
   ];
 
 

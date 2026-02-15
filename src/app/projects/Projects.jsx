@@ -42,7 +42,7 @@ export default function ProjectsPage() {
           });
 
           // Set initial state
-          gsap.set(bannerRef.current, { scale: 0.85, borderRadius: "3rem" });
+          gsap.set(bannerRef.current, { scale: 0.65, borderRadius: "3rem" });
 
           // Animate banner to full screen
           tl.to(bannerRef.current, {

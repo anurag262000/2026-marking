@@ -48,8 +48,8 @@ function ProjectGalleryContent({ setLightTheme }) {
       ctx = gsap.context(() => {
 
       ScrollTrigger.matchMedia({
-        // DESKTOP: Pinned Stacking Layout
-        "(min-width: 768px)": function() {
+        // DESKTOP: Pinned Stacking Layout (Above 1100px)
+        "(min-width: 1101px)": function() {
             const slides = gsap.utils.toArray('.project-slide');
             const totalSlides = slides.length;
 
@@ -107,8 +107,8 @@ function ProjectGalleryContent({ setLightTheme }) {
             });
         },
 
-        // MOBILE: Normal Vertical Layout
-        "(max-width: 767px)": function() {
+        // MOBILE: Normal Vertical Layout (1100px and below)
+        "(max-width: 1100px)": function() {
             const cards = gsap.utils.toArray('.project-slide');
 
             // Clear any desktop styles
@@ -139,16 +139,16 @@ function ProjectGalleryContent({ setLightTheme }) {
   }, []); // Empty dependency array - only initialize once on mount
 
   return (
-    <div ref={containerRef} className="relative w-full bg-black md:h-screen">
+    <div ref={containerRef} className="relative w-full bg-black desk:h-screen">
       {projects.map((project, index) => (
         <div
             key={project.id}
             id={`project-${project.id}`}
-            className="project-slide relative w-full flex flex-col md:flex-row bg-[#0a0a0a] min-h-[auto] md:h-screen md:absolute md:top-0 md:left-0 md:w-full"
+            className="project-slide relative w-full flex flex-col desk:flex-row bg-[#0a0a0a] min-h-[auto] desk:h-screen desk:absolute desk:top-0 desk:left-0 desk:w-full"
         >
 
-          {/* --- MOBILE HEADER (Visible only on mobile) --- */}
-          <div className="md:hidden w-full p-6 pb-4 pt-12 bg-[#0a0a0a]">
+          {/* --- MOBILE HEADER (Visible only on mobile/tablet) --- */}
+          <div className="desk:hidden w-full p-6 pb-4 pt-12 bg-[#0a0a0a]">
              <div className="flex items-center gap-3 mb-4">
                 <span className="font-orbitron text-blue-500 text-xs tracking-widest">{String(index + 1).padStart(2, '0')}</span>
                 <div className="h-px w-8 bg-blue-500/30" />
@@ -158,36 +158,36 @@ function ProjectGalleryContent({ setLightTheme }) {
           </div>
 
           {/* --- MAIN CONTENT (Desktop Left / Mobile Bottom) --- */}
-          <div className="w-full md:w-1/2 p-6 md:p-20 flex flex-col justify-center relative z-20 md:border-r md:border-white/5 bg-[#0a0a0a] order-3 md:order-1">
+          <div className="w-full desk:w-1/2 p-6 desk:p-20 flex flex-col justify-center relative z-20 desk:border-r desk:border-white/5 bg-[#0a0a0a] order-3 desk:order-1">
 
-            {/* Desktop Header (Hidden on Mobile) */}
-            <div className="hidden md:block mb-12">
+            {/* Desktop Header (Hidden on Mobile/Tablet) */}
+            <div className="hidden desk:block mb-12">
                <div className="flex items-center gap-3 text-sm font-orbitron tracking-[0.2em] text-blue-400 mb-4 opacity-80">
                   <span>{String(index + 1).padStart(2, '0')}</span>
                   <span className="w-8 h-[1px] bg-blue-400/50"></span>
                   <span className="uppercase">{project.category}</span>
                </div>
-               <h2 className="text-6xl font-helvetica font-bold leading-[0.9] tracking-tight mb-2">
+               <h2 className="text-6xl 4xl:text-[8rem] font-helvetica font-bold leading-[0.9] tracking-tight mb-2">
                   {project.title}
                </h2>
-               <p className="text-2xl text-white/40 font-light italic">{project.org}</p>
+               <p className="text-2xl 4xl:text-5xl text-white/40 font-light italic">{project.org}</p>
             </div>
 
             {/* Shared Content (Description, Tech, Links) */}
             <div className="space-y-6 md:space-y-8">
-                {/* Mobile Org Label */}
-                <p className="md:hidden text-lg text-white/40 font-light italic mb-4">{project.org}</p>
+                {/* Mobile/Tablet Org Label */}
+                <p className="desk:hidden text-lg text-white/40 font-light italic mb-4">{project.org}</p>
 
-                <p className="text-sm md:text-base leading-relaxed text-white/90">{project.fullDescription}</p>
+                <p className="text-sm md:text-base 4xl:text-4xl leading-relaxed text-white/90">{project.fullDescription}</p>
 
-                <div className="space-y-2">
-                    <h3 className="text-xs uppercase tracking-widest text-white/30 font-bold">The Challenge</h3>
-                    <p className="text-sm leading-relaxed text-white/80 border-l-2 border-blue-500/30 pl-4">{project.challenge}</p>
+                <div className="space-y-4">
+                    <h3 className="text-xs 4xl:text-2xl uppercase tracking-widest text-white/30 font-bold">The Challenge</h3>
+                    <p className="text-sm md:text-base 4xl:text-3xl leading-relaxed text-white/80 border-l-2 border-blue-500/30 pl-4">{project.challenge}</p>
                 </div>
 
                 <div className="flex flex-wrap gap-2 pt-4">
                    {project.technologies.slice(0, 5).map(tech => (
-                     <span key={tech} className="px-3 py-1 text-[10px] font-orbitron uppercase tracking-wider border border-white/10 rounded-full text-white/60">
+                     <span key={tech} className="px-3 py-1 text-[10px] 4xl:text-lg font-orbitron uppercase tracking-wider border border-white/10 rounded-full text-white/60">
                        {tech}
                      </span>
                    ))}
@@ -197,25 +197,24 @@ function ProjectGalleryContent({ setLightTheme }) {
                     <Link
                       href={project.liveUrl || '#'}
                       target="_blank"
-                      className="inline-flex items-center gap-3 px-6 py-3 bg-white text-black font-bold font-orbitron text-xs uppercase tracking-widest hover:bg-blue-500 hover:text-white transition-all w-full md:w-auto justify-center"
+                      className="inline-flex items-center gap-3 px-6 py-3 4xl:px-12 4xl:py-6 bg-white text-black font-bold font-orbitron text-xs 4xl:text-lg uppercase tracking-widest hover:bg-blue-500 hover:text-white transition-all w-full desk:w-auto justify-center"
                     >
                       <span>View Project</span>
-                      <LuArrowUpRight className="w-4 h-4" />
+                      <LuArrowUpRight className="w-4 h-4 4xl:w-6 4xl:h-6" />
                     </Link>
                 </div>
             </div>
           </div>
 
           {/* --- IMAGE SECTION (Desktop Right / Mobile Middle) --- */}
-          <div className="relative w-full md:w-1/2 h-[40vh] md:h-full overflow-hidden order-2 md:order-2">
+          <div className="relative w-full desk:w-1/2 aspect-square desk:aspect-auto desk:h-full overflow-hidden order-2 desk:order-2">
              <Image
                src={project.thumbnail || project.image}
                alt={project.title}
                fill
                className="object-cover"
-               priority={index === 0}
              />
-             <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a] to-transparent opacity-80 md:hidden"></div>
+              <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a] via-transparent to-transparent opacity-40 desk:hidden"></div>
           </div>
 
         </div>

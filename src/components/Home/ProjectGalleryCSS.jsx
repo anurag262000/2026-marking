@@ -31,9 +31,9 @@ export default function ProjectGalleryCSS() {
     return () => clearTimeout(timer);
   }, [pathname]);
 
-  // Mobile detection
+  // Mobile detection (Tablet/Mobile fallback up to 1100px)
   useEffect(() => {
-    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    const checkMobile = () => setIsMobile(window.innerWidth < 1101);
     checkMobile();
     window.addEventListener('resize', checkMobile);
     return () => window.removeEventListener('resize', checkMobile);
@@ -132,8 +132,8 @@ export default function ProjectGalleryCSS() {
   return (
     <section ref={sectionRef} className="relative z-20 bg-transparent" id="projects-gallery">
 
-      {/* DESKTOP VIEW */}
-      <div ref={pinContainerRef} className="hidden md:block relative w-full h-[100dvh] overflow-hidden">
+      {/* DESKTOP VIEW (Above 1100px) */}
+      <div ref={pinContainerRef} className="hidden desk:block relative w-full h-[100dvh] overflow-hidden">
         <div className="flex relative w-full h-full">
 
           <div
@@ -274,7 +274,7 @@ export default function ProjectGalleryCSS() {
                 <div className="absolute inset-0 bg-gradient-to-br from-blue-900/20 via-transparent to-purple-900/20" />
 
                 <div className="text-center relative z-10">
-                   <h1 className="text-6xl md:text-8xl font-black text-white/10 font-orbitron tracking-tighter uppercase mb-4">
+                   <h1 className="text-6xl desk:text-8xl font-black text-white/10 font-orbitron tracking-tighter uppercase mb-4">
                       FIN
                    </h1>
                    <p className="text-white/40 font-mono tracking-widest text-sm uppercase">
@@ -287,8 +287,8 @@ export default function ProjectGalleryCSS() {
         </div>
       </div>
 
-      {/* MOBILE VIEW — Horizontal Swipe Slider */}
-      <div className="md:hidden relative py-16" ref={mobileScrollRef}>
+      {/* MOBILE VIEW — Horizontal Swipe Slider (1100px and below) */}
+      <div className="desk:hidden relative py-16" ref={mobileScrollRef}>
         {/* Slider Container */}
         <div
           className="flex gap-5 overflow-x-auto snap-x snap-mandatory px-6 pb-6 no-scrollbar"
@@ -309,7 +309,7 @@ export default function ProjectGalleryCSS() {
                 color: 'white',
               }}
             >
-              <div className="relative aspect-[16/10]">
+              <div className="relative aspect-square">
                 <Image
                   src={project.thumbnail}
                   alt={project.title}
@@ -372,11 +372,10 @@ export default function ProjectGalleryCSS() {
                View my complete project history and source code on GitHub.
              </p>
              <Link
-                href="https://github.com/anuragmishra262000"
-                target="_blank"
+                href="/projects"
                 className="w-full py-4 bg-white text-black font-orbitron text-xs uppercase tracking-widest rounded-lg font-bold mb-3"
              >
-               GitHub
+               View All Projects ↗
              </Link>
              <Link
                 href="/contact"
