@@ -1,11 +1,11 @@
 "use client";
 
 import './globals.css';
-import { usePathname } from 'next/navigation';
 import { useEffect } from 'react';
 import Navbar from '@/components/Navbar/Navbar';
 import Footer from '@/components/Footer';
 import Preloader from '@/components/Preloader/Preloader';
+import SmoothScroll from '@/components/SmoothScroll';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
@@ -15,18 +15,6 @@ if (typeof window !== 'undefined') {
 }
 
 export default function RootLayout({ children }) {
-  const pathname = usePathname();
-
-  // Refresh ScrollTrigger on route changes to prevent animation glitches
-  useEffect(() => {
-    // Small delay to ensure DOM is ready
-    const timer = setTimeout(() => {
-      ScrollTrigger.refresh();
-    }, 100);
-
-    return () => clearTimeout(timer);
-  }, [pathname]);
-
   // Global GSAP cleanup on unmount
   useEffect(() => {
     return () => {
@@ -38,10 +26,12 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body suppressHydrationWarning>
-        <Preloader />
-        <Navbar />
-        {children}
-        <Footer />
+        <SmoothScroll>
+            <Preloader />
+            <Navbar />
+            {children}
+            <Footer />
+        </SmoothScroll>
       </body>
     </html>
   );
