@@ -10,7 +10,7 @@ import projects from './projectsExtended.json';
 
 gsap.registerPlugin(ScrollTrigger);
 
-export default function ProjectGalleryCSS({ setLightTheme }) {
+export default function ProjectGalleryCSS() {
   const pathname = usePathname();
   const [activeIndex, setActiveIndex] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
@@ -21,12 +21,7 @@ export default function ProjectGalleryCSS({ setLightTheme }) {
   const cardsRef = useRef([]);
   const mobileScrollRef = useRef(null);
   const activeIndexRef = useRef(0);
-  const setLightThemeRef = useRef(setLightTheme);
 
-  // Keep refs in sync
-  useEffect(() => {
-    setLightThemeRef.current = setLightTheme;
-  }, [setLightTheme]);
 
   // Route change handler
   useEffect(() => {
@@ -107,32 +102,21 @@ export default function ProjectGalleryCSS({ setLightTheme }) {
             setActiveIndex(newIndex);
           }
 
-          // Theme
-          const shouldBeLight = progress > 0.02 && progress < 0.95;
-          if (shouldBeLight) {
-            sidebar.style.background = 'rgba(247, 247, 245, 0.9)';
-            sidebar.style.borderColor = 'rgba(0, 0, 0, 0.1)';
-            sidebar.style.color = '#0f172a';
-          } else {
+          // Direct DOM manipulation for performance
+            // Dark mode (default)
             sidebar.style.background = 'rgba(10, 10, 10, 0.4)';
             sidebar.style.borderColor = 'rgba(255, 255, 255, 0.1)';
             sidebar.style.color = 'white';
-          }
-          if (setLightThemeRef.current) {
-            setLightThemeRef.current(shouldBeLight);
-          }
         },
         onLeave: () => {
           sidebar.style.background = 'rgba(10, 10, 10, 0.4)';
           sidebar.style.borderColor = 'rgba(255, 255, 255, 0.1)';
           sidebar.style.color = 'white';
-          if (setLightThemeRef.current) setLightThemeRef.current(false);
         },
         onLeaveBack: () => {
           sidebar.style.background = 'rgba(10, 10, 10, 0.4)';
           sidebar.style.borderColor = 'rgba(255, 255, 255, 0.1)';
           sidebar.style.color = 'white';
-          if (setLightThemeRef.current) setLightThemeRef.current(false);
         }
       });
     }, sectionRef);
@@ -140,7 +124,10 @@ export default function ProjectGalleryCSS({ setLightTheme }) {
     return () => ctx.revert();
   }, [isMobile]);
 
-  const activeProject = projects[activeIndex];
+  const limitedProjects = projects.slice(0, 4);
+  const totalSlides = limitedProjects.length + 1; // +1 for Explore More
+  const activeProject = activeIndex < limitedProjects.length ? limitedProjects[activeIndex] : null;
+  const isExploreSlide = activeIndex === limitedProjects.length;
 
   return (
     <section ref={sectionRef} className="relative z-20 bg-transparent" id="projects-gallery">
@@ -158,58 +145,93 @@ export default function ProjectGalleryCSS({ setLightTheme }) {
               color: 'white',
             }}
           >
+            {isExploreSlide ? (
+               // EXPLORE MORE SIDEBAR CONTENT
+               <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
+                  <div className="space-y-1">
+                    <span className="text-sm tracking-widest uppercase font-bold opacity-50">Archive</span>
+                    <h3 className="text-3xl font-semibold italic">More Work</h3>
+                  </div>
 
-            <div className="space-y-8">
-              <div className="space-y-1">
-                <span className="text-sm tracking-widest uppercase font-bold opacity-50">Organization</span>
-                <h3 className="text-3xl font-semibold italic">{activeProject.org}</h3>
-              </div>
+                  <div className="space-y-2">
+                    <h2 className="text-5xl lg:text-7xl font-helvetica italic font-normal leading-[1.1]">
+                      Explore More
+                    </h2>
+                  </div>
 
-              <div className="space-y-2">
-                <span className="text-sm tracking-widest uppercase font-bold opacity-50">Project</span>
-                <h2 className="text-5xl lg:text-7xl font-helvetica italic font-normal leading-[1.1]">
-                  {activeProject.title}
-                </h2>
-              </div>
+                  <p className="text-base leading-relaxed opacity-80 max-w-md">
+                    This is a curated selection. Dive into my full repository of experiments, open-source contributions, and side projects on GitHub.
+                  </p>
 
-              <div className="space-y-1">
-                <span className="text-sm tracking-widest uppercase font-bold opacity-50">Role</span>
-                <p className="text-2xl italic font-semibold">{activeProject.team}</p>
-              </div>
+                  <div className="flex flex-col gap-4 pt-4">
+                    <Link
+                      href="/projects"
+                      className={`inline-block px-8 py-4 bg-white text-black hover:bg-gray-200 font-orbitron text-sm uppercase tracking-[0.2em] rounded-lg transition-all transform hover:scale-105 text-center`}
+                    >
+                      View All Projects ↗
+                    </Link>
+                    <Link
+                      href="/contact"
+                      className="inline-block px-8 py-4 border border-current hover:opacity-50 font-orbitron text-sm uppercase tracking-[0.2em] rounded-lg transition-all text-center"
+                    >
+                      Contact Me
+                    </Link>
+                  </div>
+               </div>
+            ) : (
+               // NORMAL PROJECT CONTENT
+               <div className="space-y-8">
+                  <div className="space-y-1">
+                    <span className="text-sm tracking-widest uppercase font-bold opacity-50">Organization</span>
+                    <h3 className="text-3xl font-semibold italic">{activeProject?.org}</h3>
+                  </div>
 
-              <p className="text-base leading-relaxed opacity-80 max-w-md">
-                {activeProject.fullDescription}
-              </p>
+                  <div className="space-y-2">
+                    <span className="text-sm tracking-widest uppercase font-bold opacity-50">Project</span>
+                    <h2 className="text-5xl lg:text-7xl font-helvetica italic font-normal leading-[1.1]">
+                      {activeProject?.title}
+                    </h2>
+                  </div>
 
-              <div className="flex flex-wrap gap-2 pt-2">
-                {activeProject.technologies.slice(0, 4).map((tech, i) => (
-                  <span
-                    key={i}
-                    className="px-4 py-1.5 text-xs font-orbitron uppercase tracking-wider rounded-full border opacity-70"
-                    style={{
-                      background: 'rgba(255,255,255,0.05)',
-                      borderColor: 'currentColor'
-                    }}
+                  <div className="space-y-1">
+                    <span className="text-sm tracking-widest uppercase font-bold opacity-50">Role</span>
+                    <p className="text-2xl italic font-semibold">{activeProject?.team}</p>
+                  </div>
+
+                  <p className="text-base leading-relaxed opacity-80 max-w-md">
+                    {activeProject?.fullDescription}
+                  </p>
+
+                  <div className="flex flex-wrap gap-2 pt-2">
+                    {activeProject?.technologies.slice(0, 4).map((tech, i) => (
+                      <span
+                        key={i}
+                        className="px-4 py-1.5 text-xs font-orbitron uppercase tracking-wider rounded-full border opacity-70"
+                        style={{
+                          background: 'rgba(255,255,255,0.05)',
+                          borderColor: 'currentColor'
+                        }}
+                      >
+                        {tech}
+                      </span>
+                    ))}
+                  </div>
+
+                  <Link
+                    href={activeProject?.liveUrl || '#'}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={`inline-block mt-2 px-6 py-3 bg-blue-600 hover:bg-blue-500 text-white font-orbitron text-xs uppercase tracking-[0.2em] rounded-lg transition-all transform hover:scale-105`}
                   >
-                    {tech}
-                  </span>
-                ))}
-              </div>
-
-              <Link
-                href={activeProject.liveUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-block mt-2 px-6 py-3 bg-blue-600 hover:bg-blue-500 text-white font-orbitron text-xs uppercase tracking-[0.2em] rounded-lg transition-all transform hover:scale-105"
-              >
-                Launch Site ↗
-              </Link>
-            </div>
+                    Launch Site ↗
+                  </Link>
+                </div>
+            )}
           </div>
 
           {/* Right Gallery - Stacking Cards */}
           <div className="relative w-[60%] h-full" style={{ clipPath: 'inset(0)' }}>
-            {projects.map((project, index) => (
+            {limitedProjects.map((project, index) => (
               <div
                 key={project.id}
                 ref={el => cardsRef.current[index] = el}
@@ -239,6 +261,28 @@ export default function ProjectGalleryCSS({ setLightTheme }) {
                 </div>
               </div>
             ))}
+
+            {/* EXPLORE MORE CARD (Final Slide) */}
+            <div
+                ref={el => cardsRef.current[limitedProjects.length] = el}
+                className="absolute inset-0 w-full h-full bg-[#050505] flex items-center justify-center p-10"
+                style={{
+                  zIndex: limitedProjects.length + 1,
+                }}
+            >
+                <div className="absolute inset-0 opacity-[0.15] bg-[url('https://grainy-gradients.vercel.app/noise.svg')] pointer-events-none" />
+                <div className="absolute inset-0 bg-gradient-to-br from-blue-900/20 via-transparent to-purple-900/20" />
+
+                <div className="text-center relative z-10">
+                   <h1 className="text-6xl md:text-8xl font-black text-white/10 font-orbitron tracking-tighter uppercase mb-4">
+                      FIN
+                   </h1>
+                   <p className="text-white/40 font-mono tracking-widest text-sm uppercase">
+                      End of Archive
+                   </p>
+                </div>
+            </div>
+
           </div>
         </div>
       </div>
@@ -254,7 +298,7 @@ export default function ProjectGalleryCSS({ setLightTheme }) {
             WebkitOverflowScrolling: 'touch',
           }}
         >
-          {projects.map((project, index) => (
+          {limitedProjects.map((project, index) => (
             <div
               key={project.id}
               className="flex-shrink-0 snap-center rounded-2xl overflow-hidden border shadow-2xl transition-all duration-500"
@@ -313,6 +357,35 @@ export default function ProjectGalleryCSS({ setLightTheme }) {
               </div>
             </div>
           ))}
+
+          {/* MOBILE EXPLORE CARD */}
+          <div
+             className="flex-shrink-0 snap-center rounded-2xl overflow-hidden border shadow-2xl transition-all duration-500 bg-[#0a0a0a] flex flex-col items-center justify-center p-8 text-center"
+             style={{
+                width: '85vw',
+                borderColor: 'rgba(255,255,255,0.08)',
+                color: 'white',
+             }}
+          >
+             <h3 className="text-3xl font-helvetica font-bold mb-4">Explore More</h3>
+             <p className="text-sm text-white/60 mb-8 leading-relaxed">
+               View my complete project history and source code on GitHub.
+             </p>
+             <Link
+                href="https://github.com/anuragmishra262000"
+                target="_blank"
+                className="w-full py-4 bg-white text-black font-orbitron text-xs uppercase tracking-widest rounded-lg font-bold mb-3"
+             >
+               GitHub
+             </Link>
+             <Link
+                href="/contact"
+                className="w-full py-4 border border-white/20 text-white font-orbitron text-xs uppercase tracking-widest rounded-lg font-bold"
+             >
+               Contact
+             </Link>
+          </div>
+
         </div>
 
         {/* Scroll hint */}

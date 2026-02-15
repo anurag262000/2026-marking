@@ -4,54 +4,54 @@ import React, { useRef, useEffect, useState } from 'react';
 import { gsap } from 'gsap';
 
 const testimonials = [
-    {
-        id: 1,
-        name: 'Sarah Chen',
-        role: 'CTO',
-        company: 'TechVision Inc',
-        image: '/testimonials/avatar1.jpg',
-        quote: 'Working with Anurag transformed our entire digital infrastructure. His technical expertise and creative vision delivered beyond our expectations.'
-    },
-    {
-        id: 2,
-        name: 'Michael Rodriguez',
-        role: 'Product Manager',
-        company: 'InnovateLabs',
-        image: '/testimonials/avatar2.jpg',
-        quote: 'An exceptional developer who combines deep technical knowledge with outstanding communication skills. Our project was delivered on time and exceeded all requirements.'
-    },
-    {
-        id: 3,
-        name: 'Emily Thompson',
-        role: 'Founder & CEO',
-        company: 'StartupHub',
-        image: '/testimonials/avatar3.jpg',
-        quote: 'Anurag\'s ability to architect scalable solutions while maintaining pixel-perfect design is remarkable. A true full-stack professional.'
-    },
-    {
-        id: 4,
-        name: 'David Park',
-        role: 'Engineering Lead',
-        company: 'CloudScale',
-        image: '/testimonials/avatar4.jpg',
-        quote: 'Rarely do you find someone who excels at both frontend aesthetics and backend architecture. Anurag is that rare talent.'
-    },
-    {
-        id: 5,
-        name: 'Lisa Anderson',
-        role: 'VP of Technology',
-        company: 'DigitalFirst',
-        image: '/testimonials/avatar5.jpg',
-        quote: 'His attention to detail and commitment to excellence made our collaboration seamless. The final product speaks for itself.'
-    },
-    {
-        id: 6,
-        name: 'James Wilson',
-        role: 'Creative Director',
-        company: 'DesignCo',
-        image: '/testimonials/avatar6.jpg',
-        quote: 'A developer who truly understands design principles. Anurag brought our vision to life with stunning precision and performance.'
-    }
+  {
+    id: 1,
+    name: 'Priya',
+    role: 'Frontend Developer',
+    company: 'Indiefluence',
+    image: '/testimonials/priya.jpg',
+    quote: 'Anurag leads from the front. His architectural clarity and structured thinking make complex projects manageable for the entire team. Working under his guidance significantly improved my approach to scalable frontend systems.'
+  },
+  {
+    id: 2,
+    name: 'Yogesh',
+    role: 'Full Stack Developer',
+    company: 'Indiefluence',
+    image: '/testimonials/yogesh.jpg',
+    quote: 'Anurag combines leadership with deep hands-on involvement. He does not just design systems — he actively codes critical components, ensuring architectural integrity across projects.'
+  },
+  {
+    id: 3,
+    name: 'Sumit',
+    role: 'UI/UX Designer',
+    company: 'Indiefluence',
+    image: '/testimonials/sumit.jpg',
+    quote: 'Collaborating with Anurag ensures design ideas are executed with technical precision. He respects design systems while optimizing for performance and scalability.'
+  },
+  {
+    id: 4,
+    name: 'Riya Sharma',
+    role: 'Full Stack Intern',
+    company: 'Indiefluence',
+    image: '/testimonials/riya.jpg',
+    quote: 'As an intern, I learned how production-grade systems are architected. Anurag encourages ownership and explains architectural decisions clearly, which accelerated my growth.'
+  },
+  {
+    id: 5,
+    name: 'Yash Choudhary',
+    role: 'Full Stack Developer (Ex-Intern)',
+    company: 'Indiefluence',
+    image: '/testimonials/yash.jpg',
+    quote: 'Anurag sets high engineering standards while remaining approachable. His mentorship played a key role in shaping my understanding of scalable backend architecture.'
+  },
+  {
+    id: 6,
+    name: 'Aayushi Verma',
+    role: 'Content Strategist',
+    company: 'Independent Client',
+    image: '/testimonials/aayushi.jpg',
+    quote: 'Anurag developed my portfolio with exceptional attention to structure and performance. His ability to translate creative vision into a fast and elegant website is impressive.'
+  }
 ];
 
 export default function Testimonials() {

@@ -24,10 +24,10 @@ export default function Navbar() {
 
 
   const projectItems = [
-    { label: 'Business Card CRM', color: 'exp-pill-1' },
-    { label: 'Auth System v2', color: 'exp-pill-2' },
-    { label: 'Indiefluence App', color: 'exp-pill-3' },
-    { label: '3D Portfolio', color: 'exp-pill-4' },
+    { label: 'Myro.bot', id: 'myro', color: 'exp-pill-1' },
+    { label: 'House of Aerawat', id: 'aerawat', color: 'exp-pill-2' },
+    { label: 'Rabbit Auto Care', id: 'rabbit', color: 'exp-pill-3' },
+    { label: 'Chalet Estate', id: 'chalet', color: 'exp-pill-4' },
   ];
 
   const toggleMenu = () => setIsOpen(o => !o);
@@ -93,12 +93,14 @@ export default function Navbar() {
               <p className="discover-title">Featured Projects</p>
               <div className="experience-pills">
                 {projectItems.map((proj) => (
-                  <button
+                  <Link
                     key={proj.label}
+                    href={`/projects?id=${proj.id}`}
+                    onClick={() => setIsOpen(false)}
                     className={`experience-pill ${proj.color}`}
                   >
                     <span className="experience-pill-label">{proj.label}</span>
-                  </button>
+                  </Link>
                 ))}
               </div>
             </div>
@@ -181,7 +183,7 @@ export default function Navbar() {
               >
                 Projects
               </Link>
-              <a
+              {/* <a
                 href="#blog"
                 className="footer-text-link"
                 onClick={(e) => {
@@ -191,7 +193,7 @@ export default function Navbar() {
                 }}
               >
                 Blog
-              </a>
+              </a> */}
               <Link
                 href="/contact"
                 className="footer-text-link"

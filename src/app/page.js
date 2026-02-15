@@ -10,23 +10,10 @@ import Contact from '@/components/Sections/Contact';
 import ProjectGalleryCSS from '@/components/Home/ProjectGalleryCSS';
 import ProjectHeader from '@/components/Home/ProjectHeader';
 import Testimonials from '@/components/Sections/Testimonials';
-import ThemeTransition from '@/components/Home/ThemeTransition';
 
 export default function Home() {
-  const [isLightTheme, setIsLightTheme] = useState(false);
-
-  // Apply light theme class to body
-  useEffect(() => {
-    if (isLightTheme) {
-      document.body.classList.add('light-theme');
-    } else {
-      document.body.classList.remove('light-theme');
-    }
-  }, [isLightTheme]);
-
   return (
     <main id="smooth-scroll-container" className="relative w-full overflow-y-clip">
-      <ThemeTransition />
       <ScrollController />
 
       {/* Shared Background - Scrolls with page, extends into About */}
@@ -44,16 +31,16 @@ export default function Home() {
       <div className="relative z-10">
         <HeroSection />
         <About />
-        <ProjectHeader isLightTheme={isLightTheme} />
+        <ProjectHeader />
 
-        <ProjectGalleryCSS setLightTheme={setIsLightTheme} />
+        <ProjectGalleryCSS />
 
         <Testimonials />
 
         {/* <Projects /> */}
         {/* <Testimonials /> */}
-        <Blog />
-        <Contact />
+        {/* <Blog /> */}
+        {/* <Contact /> */}
       </div>
     </main>
   );

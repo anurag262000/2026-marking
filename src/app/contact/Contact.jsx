@@ -2,7 +2,7 @@
 
 import React, { useRef, useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import TextReveal from "@/components/Projects/TextReveal";
+// import TextReveal from "@/components/Projects/TextReveal";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Link from "next/link";
@@ -206,20 +206,11 @@ const ContactPage = () => {
             </div>
 
             <h1 className="text-5xl md:text-7xl lg:text-8xl font-helvetica font-thin italic mb-6 leading-tight">
-              <TextReveal mode="words" stagger={0.08} duration={1}>
                 Let's Work Together
-              </TextReveal>
             </h1>
 
             <p className="text-lg md:text-xl text-white/60 font-orbitron uppercase tracking-widest max-w-2xl mx-auto">
-              <TextReveal
-                mode="chars"
-                stagger={0.02}
-                duration={0.5}
-                trigger="top 70%"
-              >
                 Have a project in mind? Let's talk
-              </TextReveal>
             </p>
           </div>
         </section>

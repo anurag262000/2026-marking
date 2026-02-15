@@ -1,18 +1,14 @@
 @import url('https://fonts.googleapis.com/css2?family=Bitcount+Single:wght@100..900&family=Orbitron:wght@400..900&display=swap');
 @import "tailwindcss";
 
-@theme {
-  --color-primary: #000000;
-  --color-secondary: #111111;
-  --color-accent: #3b82f6;
-}
+
 
 /* Theme Custom Properties */
 :root {
   --foreground: #ffffff;
-  --background: #000000;
+  --background: #272727;
   --foreground-muted: rgba(255, 255, 255, 0.7);
-  --background-muted: rgba(0, 0, 0, 0.8);
+  --background-muted: rgba(44, 44, 44, 0.8);
   --border-color: rgba(255, 255, 255, 0.1);
   --card-bg: rgba(255, 255, 255, 0.05);
 }
@@ -44,7 +40,7 @@ body {
   margin: 0;
   min-height: 100vh;
   /* overflow-x: hidden; Removed to fix sticky scroll issues */
-  background-color: #000000;
+  background-color: #131313;
   color: #ffffff;
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;

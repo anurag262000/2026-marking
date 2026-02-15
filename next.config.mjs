@@ -12,6 +12,10 @@ const nextConfig = {
         protocol: 'https',
         hostname: 'assets.mixkit.co',
       },
+      {
+        protocol: 'https',
+        hostname: 'res.cloudinary.com',
+      },
     ],
   },
 };
