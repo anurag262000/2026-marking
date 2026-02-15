@@ -98,21 +98,16 @@ export default function Testimonials() {
         const clonedTestimonials = Array.from(cards).map(card => card.cloneNode(true));
         clonedTestimonials.forEach(clone => carousel.appendChild(clone));
 
-        // Only enable auto-scroll on desktop (not mobile)
-        if (!isMobile) {
-            animationRef.current = gsap.to(carousel, {
-                x: -totalWidth,
-                duration: 30,
-                ease: 'none',
-                repeat: -1,
-                modifiers: {
-                    x: gsap.utils.unitize(x => parseFloat(x) % totalWidth)
-                }
-            });
-        } else {
-            // On mobile, set initial position but no animation
-            gsap.set(carousel, { x: 0 });
-        }
+        // Enable auto-scroll on all devices
+        animationRef.current = gsap.to(carousel, {
+            x: -totalWidth,
+            duration: isMobile ? 20 : 30, // Slightly faster on mobile due to smaller screen width
+            ease: 'none',
+            repeat: -1,
+            modifiers: {
+                x: gsap.utils.unitize(x => parseFloat(x) % totalWidth)
+            }
+        });
 
         return () => {
             if (animationRef.current) {
@@ -207,11 +202,11 @@ export default function Testimonials() {
                     onTouchMove={handleDragMove}
                     onTouchEnd={handleDragEnd}
                 >
-                    <div ref={carouselRef} className="flex gap-8 will-change-transform">
+                    <div ref={carouselRef} className="flex gap-6 md:gap-8 will-change-transform">
                         {testimonials.map((testimonial) => (
                             <div
                                 key={testimonial.id}
-                                className="group relative flex-shrink-0 w-[450px] min-h-[320px] p-10 bg-white/[0.02] backdrop-blur-md border border-white/10 rounded-lg overflow-hidden transition-all duration-[400ms] ease-[cubic-bezier(0.4,0,0.2,1)] hover:-translate-y-2 hover:border-blue-400/40 hover:shadow-[0_20px_40px_rgba(0,0,0,0.4),0_0_40px_rgba(96,165,250,0.1)]"
+                                className="group relative flex-shrink-0 w-[320px] md:w-[450px] min-h-[300px] md:min-h-[320px] p-6 md:p-10 bg-white/[0.02] backdrop-blur-md border border-white/10 rounded-lg overflow-hidden transition-all duration-[400ms] ease-[cubic-bezier(0.4,0,0.2,1)] hover:-translate-y-2 hover:border-blue-400/40 hover:shadow-[0_20px_40px_rgba(0,0,0,0.4),0_0_40px_rgba(96,165,250,0.1)]"
                             >
                                 {/* Gradient Overlay on Hover */}
                                 <div className="absolute inset-0 bg-gradient-to-br from-blue-400/5 to-purple-600/5 opacity-0 group-hover:opacity-100 transition-opacity duration-400 pointer-events-none" />

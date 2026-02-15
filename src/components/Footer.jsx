@@ -2,18 +2,32 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { AuroraCore } from "@/components/ui/AuroraCore";
+import Link from "next/link";
 import { FiGithub, FiLinkedin, FiInstagram, FiTwitter, FiMail } from "react-icons/fi";
 
-const FooterLink = ({ href, children }) => (
-  <a
-    href={href}
-    target="_blank"
-    rel="noopener noreferrer"
-    className="block text-white/60 hover:text-white transition-colors duration-300 font-inter text-sm md:text-base mb-2 uppercase tracking-wider"
-  >
-    {children}
-  </a>
-);
+const FooterLink = ({ href, children, isExternal = false }) => {
+  if (isExternal) {
+    return (
+      <a
+        href={href}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="block text-white/60 hover:text-white transition-colors duration-300 font-inter text-sm md:text-base mb-2 uppercase tracking-wider"
+      >
+        {children}
+      </a>
+    );
+  }
+
+  return (
+    <Link
+      href={href}
+      className="block text-white/60 hover:text-white transition-colors duration-300 font-inter text-sm md:text-base mb-2 uppercase tracking-wider"
+    >
+      {children}
+    </Link>
+  );
+};
 
 const FooterSection = ({ title, children }) => (
   <div className="flex flex-col gap-4">
@@ -52,11 +66,6 @@ export default function Footer() {
           </span>
         </motion.div>
       </div>
-
-      {/* 2. Wide Banner / Visual Separator */}
-      {/* 2. Wide Banner / Visual Separator */}
-      {/* Background Aurora Effect */}
-
 
       {/* 2. Wide Banner / Visual Separator */}
       <motion.div
@@ -109,38 +118,33 @@ export default function Footer() {
             className="absolute top-0 left-0 w-1/3 h-full bg-gradient-to-r from-transparent via-white/5 to-transparent skew-x-[-20deg] pointer-events-none mix-blend-overlay"
         />
 
-        {/* Center overlay text (Optional, if we want static readable text on top, but user asked for the banner text itself to be the focus.
-            The user said "centered headline... Animate the headline with a very slow... drift".
-            So the drifting text IS the headline. I will utilize the drifting text as the main focus.)
-        */}
-
       </motion.div>
 
       {/* 3. Three Column Footer Content */}
-      <div className="w-full max-w-[1600px] mx-auto grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-8 mb-20 px-4">
+      <div className="w-full max-w-[1600px] mx-auto grid grid-cols-2 md:grid-cols-3 gap-12 md:gap-8 mb-20 px-4">
 
         {/* Column 1: Explore */}
         <FooterSection title="Explore">
-          <FooterLink href="#home">Home</FooterLink>
-          <FooterLink href="#about">About</FooterLink>
-          <FooterLink href="#projects">Work</FooterLink>
-          <FooterLink href="#blog">Notes</FooterLink>
+          <FooterLink href="/">Home</FooterLink>
+          <FooterLink href="/#about">About</FooterLink>
+          <FooterLink href="/projects">Projects</FooterLink>
+          <FooterLink href="/contact">Contact</FooterLink>
         </FooterSection>
 
         {/* Column 2: Follow */}
         <FooterSection title="Follow">
-          <FooterLink href="https://instagram.com/yourhandle">Instagram</FooterLink>
-          <FooterLink href="https://linkedin.com/in/anuragmishra26">LinkedIn</FooterLink>
-          <FooterLink href="https://github.com/anurag262000">GitHub</FooterLink>
-          <FooterLink href="https://twitter.com/yourhandle">X / Twitter</FooterLink>
+          <FooterLink href="https://github.com/anurag262000" isExternal>GitHub</FooterLink>
+          <FooterLink href="https://www.linkedin.com/in/anuragmishra26" isExternal>LinkedIn</FooterLink>
         </FooterSection>
 
-        {/* Column 3: Contact */}
-        <FooterSection title="Contact">
-           <a href="mailto:anuragmishra262000@gmail.com" className="text-xl md:text-2xl font-bold font-orbitron text-white hover:text-blue-400 transition-colors break-all">
-             anuragmishra262000<br/>@gmail.com
-           </a>
-        </FooterSection>
+        {/* Column 3: Contact (Full width on mobile) */}
+        <div className="col-span-2 md:col-span-1">
+          <FooterSection title="Contact">
+             <a href="mailto:anuragmishra262000@gmail.com" className="text-xl md:text-2xl font-bold font-orbitron text-white hover:text-blue-400 transition-colors break-all">
+               anuragmishra262000<br/>@gmail.com
+             </a>
+          </FooterSection>
+        </div>
 
       </div>
 
