@@ -37,7 +37,7 @@ const ContactPage = () => {
   const canvasRef = useRef(null);
   const formRef = useRef(null);
 
-  // ... (Particles and GSAP effects remain the same, preserving them) 
+  // ... (Particles and GSAP effects remain the same, preserving them)
   // Animated particle background implementation...
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -160,9 +160,9 @@ const ContactPage = () => {
     }
 
     // EmailJS Configuration
-    const serviceId = "service_9nh1qbx"; // Replace with actual Service ID
-    const templateId = "template_enrie8m"; // Replace with actual Template ID
-    const publicKey = "-OQAEjLTyf0-nLXIc"; // Replace with actual Public Key
+    const serviceId = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID;
+    const templateId = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID;
+    const publicKey = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY;
 
     // Template parameters matching the user's template
     const templateParams = {
