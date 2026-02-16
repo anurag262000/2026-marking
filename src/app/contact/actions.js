@@ -23,6 +23,7 @@ export async function sendEmail(formData) {
       user_company: formData.company,
       user_message: formData.message,
     },
+    accessToken: process.env.NEXT_EMAILJS_PRIVATE_KEY, // Required for strict mode
   };
 
   try {
@@ -39,7 +40,7 @@ export async function sendEmail(formData) {
       console.error('EmailJS Error:', errorText);
       return {
         success: false,
-        message: 'Failed to send email. Please try again later.',
+        message: `EmailJS Error: ${errorText}`, // Return the actual error to the client
       };
     }
 
