@@ -4,54 +4,54 @@ import React, { useRef, useEffect, useState } from 'react';
 import { gsap } from 'gsap';
 
 const testimonials = [
-  {
-    id: 1,
-    name: 'Priya',
-    role: 'Frontend Developer',
-    company: 'Indiefluence',
-    image: '/testimonials/priya.jpg',
-    quote: 'Anurag leads from the front. His architectural clarity and structured thinking make complex projects manageable for the entire team. Working under his guidance significantly improved my approach to scalable frontend systems.'
-  },
-  {
-    id: 2,
-    name: 'Yogesh',
-    role: 'Full Stack Developer',
-    company: 'Indiefluence',
-    image: '/testimonials/yogesh.jpg',
-    quote: 'Anurag combines leadership with deep hands-on involvement. He does not just design systems — he actively codes critical components, ensuring architectural integrity across projects.'
-  },
-  {
-    id: 3,
-    name: 'Sumit',
-    role: 'UI/UX Designer',
-    company: 'Indiefluence',
-    image: '/testimonials/sumit.jpg',
-    quote: 'Collaborating with Anurag ensures design ideas are executed with technical precision. He respects design systems while optimizing for performance and scalability.'
-  },
-  {
-    id: 4,
-    name: 'Riya Sharma',
-    role: 'Full Stack Intern',
-    company: 'Indiefluence',
-    image: '/testimonials/riya.jpg',
-    quote: 'As an intern, I learned how production-grade systems are architected. Anurag encourages ownership and explains architectural decisions clearly, which accelerated my growth.'
-  },
-  {
-    id: 5,
-    name: 'Yash Choudhary',
-    role: 'Full Stack Developer (Ex-Intern)',
-    company: 'Indiefluence',
-    image: '/testimonials/yash.jpg',
-    quote: 'Anurag sets high engineering standards while remaining approachable. His mentorship played a key role in shaping my understanding of scalable backend architecture.'
-  },
-  {
-    id: 6,
-    name: 'Aayushi Verma',
-    role: 'Content Strategist',
-    company: 'Independent Client',
-    image: '/testimonials/aayushi.jpg',
-    quote: 'Anurag developed my portfolio with exceptional attention to structure and performance. His ability to translate creative vision into a fast and elegant website is impressive.'
-  }
+    {
+        id: 1,
+        name: 'Priya',
+        role: 'Frontend Developer',
+        company: 'Indiefluence',
+        image: '/testimonials/priya.jpg',
+        quote: 'Anurag leads from the front. His architectural clarity and structured thinking make complex projects manageable for the entire team. Working under his guidance significantly improved my approach to scalable frontend systems.'
+    },
+    {
+        id: 2,
+        name: 'Yogesh',
+        role: 'Full Stack Developer',
+        company: 'Indiefluence',
+        image: '/testimonials/yogesh.jpg',
+        quote: 'Anurag combines leadership with deep hands-on involvement. He does not just design systems — he actively codes critical components, ensuring architectural integrity across projects.'
+    },
+    {
+        id: 3,
+        name: 'Sumit',
+        role: 'UI/UX Designer',
+        company: 'Indiefluence',
+        image: '/testimonials/sumit.jpg',
+        quote: 'Collaborating with Anurag ensures design ideas are executed with technical precision. He respects design systems while optimizing for performance and scalability.'
+    },
+    {
+        id: 4,
+        name: 'Riya Sharma',
+        role: 'Full Stack Intern',
+        company: 'Indiefluence',
+        image: '/testimonials/riya.jpg',
+        quote: 'As an intern, I learned how production-grade systems are architected. Anurag encourages ownership and explains architectural decisions clearly, which accelerated my growth.'
+    },
+    {
+        id: 5,
+        name: 'Yash Choudhary',
+        role: 'Full Stack Developer (Ex-Intern)',
+        company: 'Indiefluence',
+        image: '/testimonials/yash.jpg',
+        quote: 'Anurag sets high engineering standards while remaining approachable. His mentorship played a key role in shaping my understanding of scalable backend architecture.'
+    },
+    {
+        id: 6,
+        name: 'Aayushi Verma',
+        role: 'Content Strategist',
+        company: 'Independent Client',
+        image: '/testimonials/aayushi.jpg',
+        quote: 'Anurag developed my portfolio with exceptional attention to structure and performance. His ability to translate creative vision into a fast and elegant website is impressive.'
+    }
 ];
 
 export default function Testimonials() {
@@ -89,7 +89,14 @@ export default function Testimonials() {
 
         if (cards.length === 0) return;
 
-        // Calculate total width
+        if (isMobile) {
+            // Mobile: Standard horizontal scroll, no cloning, no auto-scroll
+            gsap.killTweensOf(carousel);
+            gsap.set(carousel, { clearProps: "all" });
+            return;
+        }
+
+        // Desktop: Cloning & Infinite Auto-Scroll
         const cardWidth = cards[0].offsetWidth;
         const gap = 32; // 2rem gap
         const totalWidth = (cardWidth + gap) * testimonials.length;
@@ -101,7 +108,7 @@ export default function Testimonials() {
         // Enable auto-scroll on all devices
         animationRef.current = gsap.to(carousel, {
             x: -totalWidth,
-            duration: isMobile ? 20 : 30, // Slightly faster on mobile due to smaller screen width
+            duration: 30,
             ease: 'none',
             repeat: -1,
             modifiers: {
@@ -112,6 +119,14 @@ export default function Testimonials() {
         return () => {
             if (animationRef.current) {
                 animationRef.current.kill();
+            }
+            // Remove clones on cleanup
+            if (!isMobile) {
+                clonedTestimonials.forEach(clone => {
+                    if (clone.parentNode === carousel) {
+                        carousel.removeChild(clone);
+                    }
+                });
             }
         };
     }, [isMobile]);
@@ -132,18 +147,20 @@ export default function Testimonials() {
 
     // Touch/Drag handlers
     const handleDragStart = (e) => {
+        if (isMobile) return; // Allow native scroll on mobile
+
         const clientX = e.type.includes('mouse') ? e.clientX : e.touches[0].clientX;
         dragStateRef.current.isDragging = true;
         dragStateRef.current.startX = clientX;
 
         // Only pause animation on desktop (where animation exists)
-        if (animationRef.current && !isMobile) {
+        if (animationRef.current) {
             gsap.to(animationRef.current, { timeScale: 0, duration: 0.3, ease: 'power2.out' });
         }
     };
 
     const handleDragMove = (e) => {
-        if (!dragStateRef.current.isDragging) return;
+        if (isMobile || !dragStateRef.current.isDragging) return;
 
         const clientX = e.type.includes('mouse') ? e.clientX : e.touches[0].clientX;
         const diff = clientX - dragStateRef.current.startX;
@@ -158,12 +175,12 @@ export default function Testimonials() {
     };
 
     const handleDragEnd = () => {
-        if (!dragStateRef.current.isDragging) return;
+        if (isMobile || !dragStateRef.current.isDragging) return;
 
         dragStateRef.current.isDragging = false;
 
         // Only resume animation on desktop
-        if (animationRef.current && !isMobile) {
+        if (animationRef.current) {
             gsap.to(animationRef.current, { timeScale: 1, duration: 0.5, ease: 'power2.in' });
         }
 
@@ -180,7 +197,7 @@ export default function Testimonials() {
 
             <div className="max-w-[1400px] mx-auto px-8 md:px-6 relative z-10">
                 {/* Header */}
-                <div className="text-center mb-16">
+                <div className="text-center md:mb-16">
                     <h2 className="text-4xl md:text-6xl font-black uppercase bg-gradient-to-br from-white to-blue-400 bg-clip-text font-weight-200 text-transparent mb-4 tracking-tight font-bitcount">
                         People's Opinion
                     </h2>
@@ -192,7 +209,7 @@ export default function Testimonials() {
                 {/* Carousel Container */}
                 <div
                     ref={containerRef}
-                    className="relative w-full overflow-hidden cursor-grab active:cursor-grabbing py-8 touch-pan-y"
+                    className="relative w-full overflow-hidden md:overflow-hidden cursor-grab active:cursor-grabbing py-8 touch-pan-y"
                     onMouseEnter={handleMouseEnter}
                     onMouseLeave={handleMouseLeave}
                     onMouseDown={handleDragStart}
@@ -202,11 +219,19 @@ export default function Testimonials() {
                     onTouchMove={handleDragMove}
                     onTouchEnd={handleDragEnd}
                 >
-                    <div ref={carouselRef} className="flex gap-6 md:gap-8 will-change-transform">
+                    <div
+                        ref={carouselRef}
+                        className={`flex gap-6 md:gap-8 will-change-transform ${isMobile
+                                ? 'overflow-x-auto snap-x snap-mandatory px-6 scrollbar-hide w-full'
+                                : 'w-max'
+                            }`}
+                        style={isMobile ? { scrollbarWidth: 'none', msOverflowStyle: 'none' } : {}}
+                    >
                         {testimonials.map((testimonial) => (
                             <div
                                 key={testimonial.id}
-                                className="group relative flex-shrink-0 w-[320px] md:w-[450px] min-h-[300px] md:min-h-[320px] p-6 md:p-10 bg-white/[0.02] backdrop-blur-md border border-white/10 rounded-lg overflow-hidden transition-all duration-[400ms] ease-[cubic-bezier(0.4,0,0.2,1)] hover:-translate-y-2 hover:border-blue-400/40 hover:shadow-[0_20px_40px_rgba(0,0,0,0.4),0_0_40px_rgba(96,165,250,0.1)]"
+                                className={`group relative flex-shrink-0 min-h-[300px] md:min-h-[320px] p-6 md:p-10 bg-white/[0.02] backdrop-blur-md border border-white/10 rounded-lg overflow-hidden transition-all duration-[400ms] ease-[cubic-bezier(0.4,0,0.2,1)] hover:-translate-y-2 hover:border-blue-400/40 hover:shadow-[0_20px_40px_rgba(0,0,0,0.4),0_0_40px_rgba(96,165,250,0.1)] ${isMobile ? 'w-[85vw] snap-center' : 'w-[450px]'
+                                    }`}
                             >
                                 {/* Gradient Overlay on Hover */}
                                 <div className="absolute inset-0 bg-gradient-to-br from-blue-400/5 to-purple-600/5 opacity-0 group-hover:opacity-100 transition-opacity duration-400 pointer-events-none" />
