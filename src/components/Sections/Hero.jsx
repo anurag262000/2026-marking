@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { FiGithub, FiLinkedin, FiMail } from "react-icons/fi";
 import Typewriter from "typewriter-effect";
-import WeaponRack from "../Sections/WeaponRack";
+import WeaponRack from "./WeaponRack";
 
 export default function HeroSection() {
   return (

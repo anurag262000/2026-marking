@@ -6,7 +6,7 @@ import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import projects from '@/components/Home/projectsExtended.json';
+import projects from '@/data/projects.json';
 import { LuArrowUpRight } from 'react-icons/lu';
 
 gsap.registerPlugin(ScrollTrigger);
