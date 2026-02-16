@@ -46,7 +46,7 @@ export default function AboutCombined() {
               <div className="absolute -top-2 -left-2 w-8 h-8 border-t-2 border-l-2 border-blue-500/50" />
               <div className="absolute -bottom-2 -right-2 w-8 h-8 border-b-2 border-r-2 border-blue-500/50" />
 
-              <div className="relative aspect-[4/5] overflow-hidden border border-white/10 bg-black/40 backdrop-blur-sm grayscale hover:grayscale-0 transition-all duration-700 rounded-sm">
+              <div className="relative aspect-[4/5] overflow-hidden border border-white/10 bg-black/40 backdrop-blur-sm grayscale-0 md:grayscale hover:grayscale-0 transition-all duration-700 rounded-sm">
                 <Image
                   src="/Headshot.png"
                   alt="Anurag Mishra"
