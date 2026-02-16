@@ -6,30 +6,41 @@
 
 .navbar-header {
   position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
+  top: 1.5rem;
+  right: 1.5rem;
+  /* Right aligned with some margin */
+  left: auto;
+  /* No longer full width */
   z-index: 50;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  padding: 1.5rem 2.5rem;
+  justify-content: flex-end;
+  /* Align items to the right */
+  gap: 1.5rem;
+  /* Space between logo and hamburger */
+  padding: 0.75rem 1.5rem;
+  /* Compact padding */
 
-  /* transparent when closed */
-  background: transparent;
-  border-bottom: 1px solid transparent;
-  backdrop-filter: none;
-  -webkit-backdrop-filter: none;
+  /* Enhanced Glassmorphism */
+  background: rgba(15, 15, 15, 0.7);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 999px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
 
   transition: all 0.3s ease;
 }
 
-/* glass background only when menu is open */
+/* Simplify active state since base style has glass */
 .navbar-header.active {
-  background: rgba(0, 0, 0, 0.4);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  background: rgba(0, 0, 0, 0.0);
+  /* Transparent when menu open to see menu bg? Or keep it? Let's check menu overlay z-index. Menu is 40, Header 50. */
+  /* If menu overlay is full screen black, header should probably blend or stay on top. */
+  /* Actually, if menu is open, maybe we want it to look the same or disappear? */
+  /* Let's keep it visible on top. The user said "black glass morhphsim effect both desktop and mobile". */
+  /* If the menu has its own background, maybe we don't need to change much here, or just ensure it stays consistent. */
+  border-color: rgba(255, 255, 255, 0.1);
 }
 
 .nav-logo-link {
