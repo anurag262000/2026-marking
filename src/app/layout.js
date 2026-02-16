@@ -1,4 +1,5 @@
 import './globals.css';
+import { ClerkProvider } from '@clerk/nextjs';
 import ClientRootLayout from '@/components/layout/ClientRootLayout';
 
 export const metadata = {
@@ -49,12 +50,14 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
-      <body suppressHydrationWarning>
-        <ClientRootLayout>
-            {children}
-        </ClientRootLayout>
-      </body>
-    </html>
+    <ClerkProvider>
+      <html lang="en">
+        <body suppressHydrationWarning>
+          <ClientRootLayout>
+              {children}
+          </ClientRootLayout>
+        </body>
+      </html>
+    </ClerkProvider>
   );
 }

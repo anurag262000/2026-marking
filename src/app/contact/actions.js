@@ -17,11 +17,11 @@ export async function sendEmail(formData) {
     template_id: templateId,
     user_id: publicKey,
     template_params: {
-      user_name: formData.name,
-      user_email: formData.email,
-      user_phone: formData.phone,
-      user_company: formData.company,
-      user_message: formData.message,
+      user_name: formData.get('name'),
+      user_email: formData.get('email'),
+      user_phone: formData.get('phone'),
+      user_company: formData.get('company'),
+      user_message: formData.get('message'),
     },
     accessToken: process.env.NEXT_EMAILJS_PRIVATE_KEY, // Required for strict mode
   };

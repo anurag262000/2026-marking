@@ -1,4 +1,4 @@
-import ContactPage from "./Contact";
+import ContactPage from "@/components/sections/Contact";
 
 export const metadata = {
   title: "Contact",
