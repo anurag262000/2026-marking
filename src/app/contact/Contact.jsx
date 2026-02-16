@@ -583,7 +583,7 @@ const ContactPage = () => {
                     </motion.button>
                   </form>
                 </motion.div>
-              </div> // End right side
+              </div>
 
             </div>
           </div>

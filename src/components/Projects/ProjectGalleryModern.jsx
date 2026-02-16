@@ -8,6 +8,7 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import projects from '@/components/Home/projectsExtended.json';
 import { LuArrowUpRight } from 'react-icons/lu';
+// import { useLenis } from '@studio-freight/react-lenis'; // Removed to avoid re-render conflict
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -16,24 +17,37 @@ function ProjectGalleryContent({ setLightTheme }) {
   const [activeIndex, setActiveIndex] = useState(0);
   const searchParams = useSearchParams();
   const initialId = searchParams.get('id');
+  // const lenis = useLenis(); // Removed
 
   // Handle deep linking to specific project
   useEffect(() => {
     if (initialId && projects.length > 0) {
       const index = projects.findIndex(p => p.id === initialId);
       if (index !== -1) {
-        setTimeout(() => {
-          const isMobile = window.innerWidth < 768;
-          if (isMobile) {
-            const element = document.getElementById(`project-${initialId}`);
-            if (element) {
-              element.scrollIntoView({ behavior: 'smooth' });
+        // Poll for lenis instance availability
+        const checkLenis = setInterval(() => {
+          const lenis = window.lenis;
+          // Also check if layout is ready (e.g., container height > window height)
+          const isLayoutReady = document.body.scrollHeight > window.innerHeight;
+
+          if (lenis && isLayoutReady) {
+            clearInterval(checkLenis);
+            const isMobile = window.innerWidth < 768;
+
+            if (isMobile) {
+              const element = document.getElementById(`project-${initialId}`);
+              if (element) {
+                lenis.scrollTo(element, { duration: 2, lock: true });
+              }
+            } else {
+              const targetScroll = window.innerHeight * (2 + index);
+              lenis.scrollTo(targetScroll, { duration: 2, lock: true });
             }
-          } else {
-            const targetScroll = window.innerHeight * (2 + index);
-            window.scrollTo({ top: targetScroll, behavior: 'smooth' });
           }
-        }, 800);
+        }, 100);
+
+        // Clear interval after 3 seconds to avoid infinite loop
+        setTimeout(() => clearInterval(checkLenis), 3000);
       }
     }
   }, [initialId]);

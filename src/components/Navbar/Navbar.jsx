@@ -96,6 +96,7 @@ export default function Navbar() {
                   <Link
                     key={proj.label}
                     href={`/projects?id=${proj.id}`}
+                    scroll={false}
                     onClick={() => setIsOpen(false)}
                     className={`experience-pill ${proj.color}`}
                   >
