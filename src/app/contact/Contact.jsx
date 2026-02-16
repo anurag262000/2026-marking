@@ -11,7 +11,7 @@ if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
 }
 
-import emailjs from "@emailjs/browser"; // Import EmailJS
+import { sendEmail } from "./actions"; // Import Server Action
 
 // ... (existing helper code if needed could stay, but we are replacing the component mostly)
 
@@ -159,35 +159,32 @@ const ContactPage = () => {
       return;
     }
 
-    // EmailJS Configuration
-    const serviceId = process.env.NEXT_EMAILJS_SERVICE_ID;
-    const templateId = process.env.NEXT_EMAILJS_TEMPLATE_ID;
-    const publicKey = process.env.NEXT_EMAILJS_KEY;
-
-    // Template parameters matching the user's template
-    const templateParams = {
-      user_name: formData.name,
-      user_email: formData.email,
-      user_phone: formData.phone,
-      user_company: formData.company,
-      user_message: formData.message,
-    };
-
     try {
-      await emailjs.send(serviceId, templateId, templateParams, publicKey);
-
-      console.log("Form submitted successfully");
-      setFormStatus({ submitting: false, submitted: true, error: false, errorMessage: "" });
-      setShowSuccessPopup(true); // Show success popup
-
-      // Reset form
-      setFormData({
-        name: "",
-        email: "",
-        phone: "",
-        company: "",
-        message: "",
+      // Call Server Action
+      const result = await sendEmail({
+        name: formData.name,
+        email: formData.email,
+        phone: formData.phone,
+        company: formData.company,
+        message: formData.message,
       });
+
+      if (result.success) {
+        console.log("Form submitted successfully");
+        setFormStatus({ submitting: false, submitted: true, error: false, errorMessage: "" });
+        setShowSuccessPopup(true); // Show success popup
+
+        // Reset form
+        setFormData({
+          name: "",
+          email: "",
+          phone: "",
+          company: "",
+          message: "",
+        });
+      } else {
+        throw new Error(result.message || "Failed to send message.");
+      }
 
     } catch (error) {
       console.error("FAILED...", error);
@@ -195,7 +192,7 @@ const ContactPage = () => {
         submitting: false,
         submitted: false,
         error: true,
-        errorMessage: "Failed to send message. Please try again later."
+        errorMessage: error.message || "Failed to send message. Please try again later."
       });
     }
   };
