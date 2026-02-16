@@ -11,12 +11,16 @@ if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
 }
 
+import { sendEmail } from "./actions"; // Import Server Action
+
+// ... (existing helper code if needed could stay, but we are replacing the component mostly)
+
 const ContactPage = () => {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
+    phone: "", // Added phone field
     company: "",
-    budget: "",
     message: "",
   });
 
@@ -24,13 +28,17 @@ const ContactPage = () => {
     submitting: false,
     submitted: false,
     error: false,
+    errorMessage: "", // Added to show specific errors
   });
+
+  const [showSuccessPopup, setShowSuccessPopup] = useState(false); // State for popup
 
   const [focusedField, setFocusedField] = useState(null);
   const canvasRef = useRef(null);
   const formRef = useRef(null);
 
-  // Animated particle background
+  // ... (Particles and GSAP effects remain the same, preserving them)
+  // Animated particle background implementation...
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -116,59 +124,137 @@ const ContactPage = () => {
   }, []);
 
   const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
+    const { name, value } = e.target;
+
+    // Only allow numbers for phone field
+    if (name === 'phone') {
+      const numericValue = value.replace(/\D/g, '');
+      // Limit to 10 digits
+      if (numericValue.length <= 10) {
+        setFormData({
+          ...formData,
+          [name]: numericValue,
+        });
+      }
+    } else {
+      setFormData({
+        ...formData,
+        [name]: value,
+      });
+    }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setFormStatus({ submitting: true, submitted: false, error: false });
+    setFormStatus({ submitting: true, submitted: false, error: false, errorMessage: "" });
 
-    // Simulate API call
-    setTimeout(() => {
-      console.log("Form submitted:", formData);
-      setFormStatus({ submitting: false, submitted: true, error: false });
+    // validate phone number
+    if (formData.phone.length !== 10) {
+      setFormStatus({
+        submitting: false,
+        submitted: false,
+        error: true,
+        errorMessage: "Please enter a valid 10-digit phone number."
+      });
+      return;
+    }
 
-      // Reset form after 3 seconds
-      setTimeout(() => {
+    try {
+      // Call Server Action
+      const result = await sendEmail({
+        name: formData.name,
+        email: formData.email,
+        phone: formData.phone,
+        company: formData.company,
+        message: formData.message,
+      });
+
+      if (result.success) {
+        console.log("Form submitted successfully");
+        setFormStatus({ submitting: false, submitted: true, error: false, errorMessage: "" });
+        setShowSuccessPopup(true); // Show success popup
+
+        // Reset form
         setFormData({
           name: "",
           email: "",
+          phone: "",
           company: "",
-          budget: "",
           message: "",
         });
-        setFormStatus({ submitting: false, submitted: false, error: false });
-      }, 3000);
-    }, 2000);
+      } else {
+        throw new Error(result.message || "Failed to send message.");
+      }
+
+    } catch (error) {
+      console.error("FAILED...", error);
+      setFormStatus({
+        submitting: false,
+        submitted: false,
+        error: true,
+        errorMessage: error.message || "Failed to send message. Please try again later."
+      });
+    }
   };
 
-  const budgetOptions = [
-    "< $5,000",
-    "$5,000 - $10,000",
-    "$10,000 - $25,000",
-    "$25,000 - $50,000",
-    "$50,000+",
-  ];
+  const closePopup = () => {
+    setShowSuccessPopup(false);
+    setFormStatus({ ...formStatus, submitted: false });
+  };
 
   return (
     <div className="relative min-h-screen bg-black text-white overflow-hidden">
-      {/* Animated background */}
+      {/* Animated background and gradients ... */}
       <canvas
         ref={canvasRef}
         className="absolute inset-0 z-0"
         style={{ opacity: 0.3 }}
       />
-
-      {/* Gradient overlays */}
       <div className="absolute inset-0 bg-gradient-to-br from-orange-500/10 via-transparent to-purple-500/10 z-0" />
       <div className="absolute inset-0 bg-dot-thick-neutral-800 z-0" />
 
-      {/* Main content */}
+      {/* Success Popup */}
+      <AnimatePresence>
+        {showSuccessPopup && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4"
+          >
+            <motion.div
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              className="bg-zinc-950/90 backdrop-blur-xl border border-white/10 rounded-3xl p-8 md:p-10 max-w-md w-full text-center shadow-[0_0_50px_rgba(0,0,0,0.5)] relative overflow-hidden"
+            >
+              <div className="absolute inset-0 bg-gradient-to-br from-orange-500/10 to-purple-500/10 pointer-events-none" />
+
+              <div className="w-16 h-16 bg-green-500/20 rounded-full flex items-center justify-center mx-auto mb-6">
+                <svg className="w-8 h-8 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                </svg>
+              </div>
+
+              <h3 className="text-3xl md:text-4xl font-helvetica font-light mb-4 text-white">Message Sent!</h3>
+              <p className="text-white/80 mb-8 font-orbitron text-0.9rem tracking-wider leading-relaxed">
+                Thank you for reaching out.<br />
+                I'll get back to you as soon as possible.
+              </p>
+
+              <button
+                onClick={closePopup}
+                className="w-full bg-white text-black font-orbitron uppercase tracking-widest py-4 rounded-xl hover:bg-gray-200 transition-colors font-bold shadow-lg"
+              >
+                Close
+              </button>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       <div className="relative z-10">
-        {/* Hero Section */}
+        {/* ... Hero Section code ... */}
         <section className="relative min-h-[60vh] flex items-center justify-center pt-32 pb-20">
           <div className="container mx-auto px-6 md:px-12 text-center">
             {/* Back button */}
@@ -206,11 +292,11 @@ const ContactPage = () => {
             </div>
 
             <h1 className="text-5xl md:text-7xl lg:text-8xl font-helvetica font-thin italic mb-6 leading-tight">
-                Let's Work Together
+              Let's Work Together
             </h1>
 
             <p className="text-lg md:text-xl text-white/60 font-orbitron uppercase tracking-widest max-w-2xl mx-auto">
-                Have a project in mind? Let's talk
+              Have a project in mind? Let's talk
             </p>
           </div>
         </section>
@@ -222,6 +308,7 @@ const ContactPage = () => {
 
               {/* Left Side - Info */}
               <div className="lg:col-span-2 space-y-8">
+                {/* ... Intro text ... */}
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
@@ -272,6 +359,7 @@ const ContactPage = () => {
                       Social
                     </p>
                     <div className="flex gap-4">
+                      {/* ... Social Links ... */}
                       <a
                         href="https://github.com/anurag262000"
                         target="_blank"
@@ -327,6 +415,14 @@ const ContactPage = () => {
                   <div className="absolute inset-0 bg-gradient-to-r from-orange-500/0 via-orange-500/20 to-orange-500/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
 
                   <form onSubmit={handleSubmit} className="space-y-6 relative z-10">
+
+                    {/* Explicit Error Message Display */}
+                    {formStatus.error && (
+                      <div className="bg-red-500/10 border border-red-500/20 text-red-500 px-4 py-3 rounded-lg text-sm font-orbitron">
+                        {formStatus.errorMessage}
+                      </div>
+                    )}
+
                     {/* Name Field */}
                     <div className="form-field">
                       <label
@@ -344,11 +440,10 @@ const ContactPage = () => {
                         onFocus={() => setFocusedField("name")}
                         onBlur={() => setFocusedField(null)}
                         required
-                        className={`w-full bg-white/5 border ${
-                          focusedField === "name"
-                            ? "border-orange-500"
-                            : "border-white/20"
-                        } rounded-lg px-4 py-3 text-white placeholder-white/30 focus:outline-none focus:border-orange-500 transition-all duration-300`}
+                        className={`w-full bg-white/5 border ${focusedField === "name"
+                          ? "border-orange-500"
+                          : "border-white/20"
+                          } rounded-lg px-4 py-3 text-white placeholder-white/30 focus:outline-none focus:border-orange-500 transition-all duration-300`}
                         placeholder="John Doe"
                       />
                     </div>
@@ -370,17 +465,42 @@ const ContactPage = () => {
                         onFocus={() => setFocusedField("email")}
                         onBlur={() => setFocusedField(null)}
                         required
-                        className={`w-full bg-white/5 border ${
-                          focusedField === "email"
-                            ? "border-orange-500"
-                            : "border-white/20"
-                        } rounded-lg px-4 py-3 text-white placeholder-white/30 focus:outline-none focus:border-orange-500 transition-all duration-300`}
+                        className={`w-full bg-white/5 border ${focusedField === "email"
+                          ? "border-orange-500"
+                          : "border-white/20"
+                          } rounded-lg px-4 py-3 text-white placeholder-white/30 focus:outline-none focus:border-orange-500 transition-all duration-300`}
                         placeholder="john@example.com"
+                      />
+                    </div>
+
+                    {/* Phone Field */}
+                    <div className="form-field">
+                      <label
+                        htmlFor="phone"
+                        className="block text-sm font-orbitron uppercase tracking-wider text-white/70 mb-2"
+                      >
+                        Phone Number *
+                      </label>
+                      <input
+                        type="tel"
+                        id="phone"
+                        name="phone"
+                        value={formData.phone}
+                        onChange={handleChange}
+                        onFocus={() => setFocusedField("phone")}
+                        onBlur={() => setFocusedField(null)}
+                        required
+                        className={`w-full bg-white/5 border ${focusedField === "phone"
+                          ? "border-orange-500"
+                          : "border-white/20"
+                          } rounded-lg px-4 py-3 text-white placeholder-white/30 focus:outline-none focus:border-orange-500 transition-all duration-300`}
+                        placeholder="9876543210"
                       />
                     </div>
 
                     {/* Company Field */}
                     <div className="form-field">
+                      {/* Wrapper to match layout */}
                       <label
                         htmlFor="company"
                         className="block text-sm font-orbitron uppercase tracking-wider text-white/70 mb-2"
@@ -395,50 +515,14 @@ const ContactPage = () => {
                         onChange={handleChange}
                         onFocus={() => setFocusedField("company")}
                         onBlur={() => setFocusedField(null)}
-                        className={`w-full bg-white/5 border ${
-                          focusedField === "company"
-                            ? "border-orange-500"
-                            : "border-white/20"
-                        } rounded-lg px-4 py-3 text-white placeholder-white/30 focus:outline-none focus:border-orange-500 transition-all duration-300`}
+                        className={`w-full bg-white/5 border ${focusedField === "company"
+                          ? "border-orange-500"
+                          : "border-white/20"
+                          } rounded-lg px-4 py-3 text-white placeholder-white/30 focus:outline-none focus:border-orange-500 transition-all duration-300`}
                         placeholder="Your Company"
                       />
                     </div>
 
-                    {/* Budget Field */}
-                    <div className="form-field">
-                      <label
-                        htmlFor="budget"
-                        className="block text-sm font-orbitron uppercase tracking-wider text-white/70 mb-2"
-                      >
-                        Project Budget
-                      </label>
-                      <select
-                        id="budget"
-                        name="budget"
-                        value={formData.budget}
-                        onChange={handleChange}
-                        onFocus={() => setFocusedField("budget")}
-                        onBlur={() => setFocusedField(null)}
-                        className={`w-full bg-white/5 border ${
-                          focusedField === "budget"
-                            ? "border-orange-500"
-                            : "border-white/20"
-                        } rounded-lg px-4 py-3 text-white focus:outline-none focus:border-orange-500 transition-all duration-300`}
-                      >
-                        <option value="" className="bg-zinc-900">
-                          Select a range
-                        </option>
-                        {budgetOptions.map((option) => (
-                          <option
-                            key={option}
-                            value={option}
-                            className="bg-zinc-900"
-                          >
-                            {option}
-                          </option>
-                        ))}
-                      </select>
-                    </div>
 
                     {/* Message Field */}
                     <div className="form-field">
@@ -457,11 +541,10 @@ const ContactPage = () => {
                         onBlur={() => setFocusedField(null)}
                         required
                         rows={6}
-                        className={`w-full bg-white/5 border ${
-                          focusedField === "message"
-                            ? "border-orange-500"
-                            : "border-white/20"
-                        } rounded-lg px-4 py-3 text-white placeholder-white/30 focus:outline-none focus:border-orange-500 transition-all duration-300 resize-none`}
+                        className={`w-full bg-white/5 border ${focusedField === "message"
+                          ? "border-orange-500"
+                          : "border-white/20"
+                          } rounded-lg px-4 py-3 text-white placeholder-white/30 focus:outline-none focus:border-orange-500 transition-all duration-300 resize-none`}
                         placeholder="Tell me about your project..."
                       />
                     </div>
@@ -478,23 +561,6 @@ const ContactPage = () => {
                         <>
                           <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
                           Sending...
-                        </>
-                      ) : formStatus.submitted ? (
-                        <>
-                          <svg
-                            className="w-5 h-5"
-                            fill="none"
-                            stroke="currentColor"
-                            viewBox="0 0 24 24"
-                          >
-                            <path
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              strokeWidth={2}
-                              d="M5 13l4 4L19 7"
-                            />
-                          </svg>
-                          Message Sent!
                         </>
                       ) : (
                         <>
@@ -517,7 +583,8 @@ const ContactPage = () => {
                     </motion.button>
                   </form>
                 </motion.div>
-              </div>
+              </div> // End right side
+
             </div>
           </div>
         </section>

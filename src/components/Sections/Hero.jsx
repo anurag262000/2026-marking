@@ -22,7 +22,7 @@ export default function HeroSection() {
 
 
           {/* Separated Main Headline */}
-          <div className="flex flex-col items-center select-none max-w-[2500px] mb-10 md:mb-14">
+          <div className="flex flex-col items-center select-none max-w-[2500px] mt-16 md:mt-0 mb-10 md:mb-14">
             <h1 className="flex  flex-col items-center max-w-[2500px]">
               <motion.span
                 initial={{ opacity: 0, x: -30 }}
@@ -102,7 +102,7 @@ export default function HeroSection() {
           className="w-1 h-1 rounded-full bg-blue-500/50"
         />
       </motion.div> */}
-      <WeaponRack/>
+      <WeaponRack />
     </section>
   );
 }
