@@ -25,12 +25,15 @@ export default function RootLayout({ children }) {
 
   return (
     <html lang="en">
+      <head>
+        <link rel="icon" href="/a-favicon.png" sizes="any" />
+      </head>
       <body suppressHydrationWarning>
         <SmoothScroll>
-            <Preloader />
-            <Navbar />
-            {children}
-            <Footer />
+          <Preloader />
+          <Navbar />
+          {children}
+          <Footer />
         </SmoothScroll>
       </body>
     </html>

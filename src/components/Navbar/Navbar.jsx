@@ -203,10 +203,11 @@ export default function Navbar() {
                 Contact
               </Link>
               <a
-                href="#"
+                href="/Aburag-mishra-Resumes-1.pdf"
                 className="footer-text-link"
                 target="_blank"
                 rel="noreferrer"
+                onClick={() => setIsOpen(false)}
               >
                 Resume
               </a>
