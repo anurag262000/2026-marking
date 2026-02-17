@@ -1,16 +1,35 @@
 'use client';
 
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import { motion } from 'framer-motion';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { AuroraCore } from '@/components/ui/AuroraCore';
 import { LuArrowRight, LuMail, LuPhone, LuLinkedin, LuGithub, LuTwitter } from 'react-icons/lu';
-
-gsap.registerPlugin(ScrollTrigger);
+import { FiCheckCircle, FiAlertCircle, FiLoader } from 'react-icons/fi';
+import { sendEmail } from '@/app/contact/actions';
 
 export default function Contact() {
   const containerRef = useRef(null);
+  const [status, setStatus] = useState('idle'); // idle, loading, success, error
+  const [errorMessage, setErrorMessage] = useState('');
+
+  async function handleSubmit(formData) {
+    setStatus('loading');
+    setErrorMessage('');
+
+    try {
+        const result = await sendEmail(formData);
+
+        if (result.success) {
+            setStatus('success');
+        } else {
+            setStatus('error');
+            setErrorMessage(result.message || 'Failed to send message.');
+        }
+    } catch (e) {
+        setStatus('error');
+        setErrorMessage('An unexpected error occurred.');
+    }
+  }
 
   return (
     <section id="contact" ref={containerRef} className="relative w-full min-h-screen flex items-center justify-center bg-black py-20 overflow-hidden">
@@ -91,7 +110,7 @@ export default function Contact() {
                             </div>
                             <div>
                                 <p className="text-xs uppercase tracking-widest text-white/40 mb-1">Phone</p>
-                                <p className="font-orbitron text-sm md:text-base tracking-wider">+91 999 999 9999</p>
+                                <p className="font-orbitron text-sm md:text-base tracking-wider">+91 8818094811</p>
                             </div>
                         </div>
                     </div>
@@ -109,42 +128,103 @@ export default function Contact() {
             <div className="w-full md:w-1/2 bg-white/[0.02] p-8 md:p-16 border-t md:border-t-0 md:border-l border-white/10 relative">
                  <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-5 pointer-events-none" />
 
-                 <form className="relative z-10 space-y-6">
-                    <div className="space-y-2">
-                        <label className="text-xs uppercase tracking-widest text-white/50 font-orbitron ml-1">Your Name</label>
-                        <input
-                            type="text"
-                            className="w-full bg-white/5 border border-white/10 rounded-lg p-4 text-white placeholder-white/20 focus:outline-none focus:border-blue-500/50 focus:bg-blue-500/5 transition-all font-inter"
-                            placeholder="John Doe"
-                        />
+                 {status === 'success' ? (
+                    <div className="relative z-10 h-full flex flex-col items-center justify-center text-center space-y-6 animate-in fade-in zoom-in duration-500">
+                        <div className="w-20 h-20 bg-green-500/10 rounded-full flex items-center justify-center border border-green-500/20">
+                            <FiCheckCircle className="w-10 h-10 text-green-500" />
+                        </div>
+                        <div>
+                            <h3 className="text-2xl font-bold font-helvetica text-white mb-2">Message Sent!</h3>
+                            <p className="text-white/60 max-w-xs mx-auto">Thanks for reaching out. I'll get back to you as soon as possible.</p>
+                        </div>
+                        <button
+                            onClick={() => setStatus('idle')}
+                            className="text-sm font-orbitron text-blue-400 hover:text-blue-300 uppercase tracking-widest"
+                        >
+                            Send another
+                        </button>
                     </div>
+                 ) : (
+                     <form action={handleSubmit} className="relative z-10 space-y-6">
+                        <div className="space-y-2">
+                            <label className="text-xs uppercase tracking-widest text-white/50 font-orbitron ml-1">Your Name</label>
+                            <input
+                                name="name"
+                                type="text"
+                                required
+                                className="w-full bg-white/5 border border-white/10 rounded-lg p-4 text-white placeholder-white/20 focus:outline-none focus:border-blue-500/50 focus:bg-blue-500/5 transition-all font-inter"
+                                placeholder="John Doe"
+                            />
+                        </div>
 
-                    <div className="space-y-2">
-                        <label className="text-xs uppercase tracking-widest text-white/50 font-orbitron ml-1">Email Address</label>
-                        <input
-                            type="email"
-                            className="w-full bg-white/5 border border-white/10 rounded-lg p-4 text-white placeholder-white/20 focus:outline-none focus:border-blue-500/50 focus:bg-blue-500/5 transition-all font-inter"
-                            placeholder="john@example.com"
-                        />
-                    </div>
+                        <div className="space-y-2">
+                            <label className="text-xs uppercase tracking-widest text-white/50 font-orbitron ml-1">Email Address</label>
+                            <input
+                                name="email"
+                                type="email"
+                                required
+                                className="w-full bg-white/5 border border-white/10 rounded-lg p-4 text-white placeholder-white/20 focus:outline-none focus:border-blue-500/50 focus:bg-blue-500/5 transition-all font-inter"
+                                placeholder="john@example.com"
+                            />
+                        </div>
 
-                    <div className="space-y-2">
-                        <label className="text-xs uppercase tracking-widest text-white/50 font-orbitron ml-1">Message</label>
-                        <textarea
-                            rows="5"
-                            className="w-full bg-white/5 border border-white/10 rounded-lg p-4 text-white placeholder-white/20 focus:outline-none focus:border-blue-500/50 focus:bg-blue-500/5 transition-all font-inter resize-none"
-                            placeholder="Tell me about your project..."
-                        ></textarea>
-                    </div>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div className="space-y-2">
+                                <label className="text-xs uppercase tracking-widest text-white/50 font-orbitron ml-1">Phone Number</label>
+                                <input
+                                    name="phone"
+                                    type="tel"
+                                    className="w-full bg-white/5 border border-white/10 rounded-lg p-4 text-white placeholder-white/20 focus:outline-none focus:border-blue-500/50 focus:bg-blue-500/5 transition-all font-inter"
+                                    placeholder="+1 (555) 000-0000"
+                                />
+                            </div>
+                            <div className="space-y-2">
+                                <label className="text-xs uppercase tracking-widest text-white/50 font-orbitron ml-1">Company (Optional)</label>
+                                <input
+                                    name="company"
+                                    type="text"
+                                    className="w-full bg-white/5 border border-white/10 rounded-lg p-4 text-white placeholder-white/20 focus:outline-none focus:border-blue-500/50 focus:bg-blue-500/5 transition-all font-inter"
+                                    placeholder="Company Name"
+                                />
+                            </div>
+                        </div>
 
-                    <button
-                        type="submit"
-                        className="w-full py-5 bg-gradient-to-r from-blue-600 to-blue-500 text-white font-bold font-orbitron uppercase tracking-widest rounded-lg hover:shadow-[0_0_20px_rgba(37,99,235,0.3)] transition-all transform hover:-translate-y-1 flex items-center justify-center gap-2"
-                    >
-                        Send Message
-                        <LuArrowRight className="w-5 h-5" />
-                    </button>
-                 </form>
+                        <div className="space-y-2">
+                            <label className="text-xs uppercase tracking-widest text-white/50 font-orbitron ml-1">Message</label>
+                            <textarea
+                                name="message"
+                                rows="5"
+                                required
+                                className="w-full bg-white/5 border border-white/10 rounded-lg p-4 text-white placeholder-white/20 focus:outline-none focus:border-blue-500/50 focus:bg-blue-500/5 transition-all font-inter resize-none"
+                                placeholder="Tell me about your project..."
+                            ></textarea>
+                        </div>
+
+                        {status === 'error' && (
+                            <div className="p-4 bg-red-500/10 border border-red-500/20 rounded-lg flex items-center gap-3 text-red-400 text-sm">
+                                <FiAlertCircle className="w-5 h-5 flex-shrink-0" />
+                                <p>{errorMessage}</p>
+                            </div>
+                        )}
+
+                        <button
+                            type="submit"
+                            disabled={status === 'loading'}
+                            className="w-full py-5 bg-gradient-to-r from-blue-600 to-blue-500 text-white font-bold font-orbitron uppercase tracking-widest rounded-lg hover:shadow-[0_0_20px_rgba(37,99,235,0.3)] disabled:opacity-50 disabled:cursor-not-allowed transition-all transform hover:-translate-y-1 flex items-center justify-center gap-2"
+                        >
+                            {status === 'loading' ? (
+                                <>
+                                    <FiLoader className="w-5 h-5 animate-spin" /> Sending...
+                                </>
+                            ) : (
+                                <>
+                                    Send Message
+                                    <LuArrowRight className="w-5 h-5" />
+                                </>
+                            )}
+                        </button>
+                     </form>
+                 )}
             </div>
 
         </div>

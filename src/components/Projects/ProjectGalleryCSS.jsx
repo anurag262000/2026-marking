@@ -6,7 +6,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import projects from './projectsExtended.json';
+import projects from '@/data/projects.json';
 
 gsap.registerPlugin(ScrollTrigger);
 
