@@ -52,9 +52,11 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body suppressHydrationWarning>
-        <ClientRootLayout>
-            {children}
-        </ClientRootLayout>
+        <ClerkProvider>
+            <ClientRootLayout>
+                {children}
+            </ClientRootLayout>
+        </ClerkProvider>
       </body>
     </html>
   );
