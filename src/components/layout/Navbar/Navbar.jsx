@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import { SignedIn, SignedOut, SignInButton, UserButton } from '@clerk/nextjs';
 import './Navbar.css';
 
 export default function Navbar() {
@@ -11,8 +12,9 @@ export default function Navbar() {
   const menuItems = [
     { name: 'Home', number: '00', href: '/', type: 'link' },
     { name: 'Projects', number: '01', href: '/projects', type: 'link' },
-    { name: 'About', number: '02', href: '/#about', type: 'scroll' },
-    { name: 'Contact', number: '03', href: '/contact', type: 'link' },
+    { name: 'Review', number: '02', href: '/review', type: 'link' },
+    { name: 'About', number: '03', href: '/#about', type: 'scroll' },
+    { name: 'Contact', number: '04', href: '/contact', type: 'link' },
   ];
 
   const socialItems = [
@@ -88,6 +90,36 @@ export default function Navbar() {
 
         <div className="menu-shell">
           <aside className="menu-left">
+
+            <div className="discover-block">
+              <p className="discover-title">Account</p>
+              <div className="experience-pills">
+                <SignedOut>
+                    <SignInButton
+                        mode="modal"
+                        forceRedirectUrl="/review?write_review=true"
+                        signUpForceRedirectUrl="/review?write_review=true"
+                    >
+                        <button className="experience-pill exp-pill-1 w-full justify-center">
+                            <span className="experience-pill-label">Login / Sign Up</span>
+                        </button>
+                    </SignInButton>
+                </SignedOut>
+                <SignedIn>
+                    <div className="flex items-center gap-4 py-2">
+                        <UserButton afterSignOutUrl="/" appearance={{
+                            elements: {
+                                userButtonAvatarBox: "w-10 h-10 ring-2 ring-white/20"
+                            }
+                        }}/>
+                        <div className="flex flex-col">
+                            <span className="text-white font-bold text-sm">Welcome Back</span>
+                            <span className="text-white/40 text-xs uppercase tracking-wider font-orbitron">Manage Account</span>
+                        </div>
+                    </div>
+                </SignedIn>
+              </div>
+            </div>
 
             <div className="discover-block">
               <p className="discover-title">Featured Projects</p>

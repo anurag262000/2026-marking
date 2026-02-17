@@ -1,58 +1,10 @@
-import { supabase } from '@/lib/supabase';
-import Link from 'next/link';
-import { notFound } from 'next/navigation';
-import { FiArrowLeft, FiCalendar, FiClock } from 'react-icons/fi';
+import LikeButton from '@/components/blog/LikeButton';
+import CommentSection from '@/components/blog/CommentSection';
 
-export const revalidate = 60;
-
-import { incrementBlogView } from '@/app/admin/blogs/actions';
-
-export async function generateMetadata({ params }) {
-    const { slug } = await params;
-    const { data: blog } = await supabase
-        .from('blogs')
-        .select('title, excerpt, seo_title, seo_description, tags, image_url')
-        .eq('slug', slug)
-        .single();
-
-    if (!blog) return { title: 'Blog Not Found' };
-
-    return {
-        title: blog.seo_title || blog.title,
-        description: blog.seo_description || blog.excerpt,
-        keywords: blog.tags,
-        openGraph: {
-            title: blog.seo_title || blog.title,
-            description: blog.seo_description || blog.excerpt,
-            images: blog.image_url ? [{ url: blog.image_url }] : [],
-            type: 'article',
-            tags: blog.tags
-        }
-    };
-}
+// ... existing imports ...
 
 export default async function BlogPostPage({ params }) {
-  const { slug } = await params;
-
-  // Increment view (fire and forget)
-  incrementBlogView(slug);
-
-  const { data: blog, error } = await supabase
-    .from('blogs')
-    .select('*')
-    .eq('slug', slug)
-    .single();
-
-  if (error || !blog) {
-    notFound();
-  }
-
-  // Simple date formatting
-  const date = new Date(blog.created_at).toLocaleDateString('en-US', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric'
-  });
+  // ... existing code ...
 
   return (
     <article className="min-h-screen bg-black text-white pt-32 pb-20">
@@ -64,12 +16,15 @@ export default async function BlogPostPage({ params }) {
             </Link>
 
             <header className="mb-10">
-                <div className="flex flex-wrap gap-2 mb-6">
-                    {blog.tags?.map((tag, i) => (
-                        <span key={i} className="text-[10px] font-orbitron uppercase tracking-wider text-blue-500 border border-blue-500/30 px-3 py-1 rounded-full bg-blue-500/5">
-                            {tag}
-                        </span>
-                    ))}
+                <div className="flex flex-wrap items-center justify-between gap-4 mb-6">
+                    <div className="flex flex-wrap gap-2">
+                        {blog.tags?.map((tag, i) => (
+                            <span key={i} className="text-[10px] font-orbitron uppercase tracking-wider text-blue-500 border border-blue-500/30 px-3 py-1 rounded-full bg-blue-500/5">
+                                {tag}
+                            </span>
+                        ))}
+                    </div>
+                    <LikeButton blogSlug={slug} />
                 </div>
                 <h1 className="text-4xl md:text-6xl font-black font-helvetica mb-8 leading-tight">{blog.title}</h1>
 
@@ -94,7 +49,7 @@ export default async function BlogPostPage({ params }) {
                 </div>
             )}
 
-            <div className="prose prose-invert prose-lg max-w-none">
+            <div className="prose prose-invert prose-lg max-w-none mb-20">
                 {/*
                   CAUTION: This renders raw HTML if the user typed it, or just text.
                   For a real blog, you'd want a Markdown renderer like 'react-markdown'.
@@ -104,6 +59,8 @@ export default async function BlogPostPage({ params }) {
                     {blog.content}
                 </div>
             </div>
+
+            <CommentSection blogSlug={slug} />
 
         </div>
     </article>

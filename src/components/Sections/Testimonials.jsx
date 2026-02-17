@@ -1,8 +1,10 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import { motion } from 'framer-motion';
 import { getApprovedTestimonials } from '@/app/admin/testimonials/actions';
+
+
+
 
 export default function Testimonials() {
   const [testimonials, setTestimonials] = useState([]);
@@ -10,7 +12,7 @@ export default function Testimonials() {
   useEffect(() => {
     async function fetchTestimonials() {
       const data = await getApprovedTestimonials();
-      if (data) setTestimonials(data);
+      if (data) setTestimonials(data.slice(0, 6));
     }
     fetchTestimonials();
   }, []);
@@ -19,13 +21,12 @@ export default function Testimonials() {
 
   return (
     <section className="py-20 md:py-32 bg-[#050505] overflow-hidden">
-        <div className="max-w-7xl mx-auto px-6 mb-16 text-center">
-            <h2 className="text-3xl md:text-5xl font-black font-helvetica text-white mb-6 uppercase">
-                Client <span className="text-blue-500">Feedback</span>
+        <div className="max-w-7xl mx-auto px-6 mb-16 text-center relative z-50">
+            <h2 className="text-3xl md:text-5xl font-black font-bitcount text-white mb-6 uppercase">
+                Professional <span className="text-blue-500">Endorsements</span>
             </h2>
             <div className="h-1 w-24 bg-white/20 mx-auto rounded-full" />
         </div>
-
         {/* Marquee Wrapper */}
         <div className="relative w-full overflow-hidden">
 
