@@ -4,6 +4,7 @@ import About from '@/components/sections/About';
 import ProjectGalleryCSS from '@/components/projects/ProjectGalleryCSS';
 import ProjectHeader from '@/components/projects/ProjectHeader';
 import Testimonials from '@/components/sections/Testimonials';
+// test commit
 
 export default function HomeLogic() {
   return (
