@@ -21,12 +21,12 @@ export default async function AdminDashboard() {
   const pendingTestimonials = testimonials?.filter(t => !t.approved).length || 0;
 
   return (
-    <div className="min-h-screen bg-[#050505] text-white p-6 md:p-12 font-inter selection:bg-orange-500/30">
+    <div className="min-h-screen bg-[#050505] text-white p-6 md:p-12 font-inter selection:bg-blue-500/30">
 
         {/* Header */}
         <header className="flex flex-col md:flex-row justify-between items-start md:items-center mb-16 gap-6">
             <div>
-                <span className="text-orange-500 font-orbitron text-xs uppercase tracking-[0.2em] mb-2 block">System Command</span>
+                <span className="text-blue-500 font-orbitron text-xs uppercase tracking-[0.2em] mb-2 block">System Command</span>
                 <h1 className="text-4xl md:text-5xl font-black font-helvetica tracking-tight">Admin<span className="text-white/20">Panel</span></h1>
             </div>
             <div className="flex items-center gap-6 bg-white/5 px-6 py-3 rounded-full border border-white/10 backdrop-blur-md">
@@ -37,15 +37,15 @@ export default async function AdminDashboard() {
 
         {/* Analytics Grid */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-16">
-            <div className="bg-white/5 border border-white/10 rounded-2xl p-6 relative overflow-hidden group hover:border-orange-500/30 transition-colors">
-                <div className="absolute top-0 right-0 p-32 bg-orange-500/10 blur-[80px] rounded-full pointer-events-none" />
+            <div className="bg-white/5 border border-white/10 rounded-2xl p-6 relative overflow-hidden group hover:border-blue-500/30 transition-colors">
+                <div className="absolute top-0 right-0 p-32 bg-blue-500/10 blur-[80px] rounded-full pointer-events-none" />
                 <div className="relative z-10">
                     <div className="flex items-center gap-3 text-white/40 mb-2">
                         <FiEye /> <span className="text-xs uppercase tracking-widest font-orbitron">Total Views</span>
                     </div>
                     <div className="text-4xl font-bold font-helvetica">{totalViews.toLocaleString()}</div>
                     <div className="mt-4 h-1 w-full bg-white/10 rounded-full overflow-hidden">
-                        <div className="h-full bg-orange-500 w-[70%]" />
+                        <div className="h-full bg-blue-500 w-[70%]" />
                     </div>
                 </div>
             </div>
@@ -93,7 +93,7 @@ export default async function AdminDashboard() {
                     {blogs?.slice(0, 5).map(blog => (
                         <div key={blog.id} className="group bg-white/5 border border-white/10 p-5 rounded-xl flex justify-between items-center hover:bg-white/10 transition-colors">
                             <div>
-                                <h3 className="font-bold text-lg mb-1 group-hover:text-orange-400 transition-colors">{blog.title}</h3>
+                                <h3 className="font-bold text-lg mb-1 group-hover:text-blue-400 transition-colors">{blog.title}</h3>
                                 <div className="flex gap-3 text-xs text-white/40 font-mono">
                                     <span>{blog.views || 0} views</span>
                                     <span>•</span>

@@ -36,7 +36,7 @@ export default async function AdminTestimonialsPage() {
                         {t.image_url ? (
                             <img src={t.image_url} alt={t.name} className="w-12 h-12 rounded-full object-cover border-2 border-white/10" />
                         ) : (
-                            <div className="w-12 h-12 rounded-full bg-gradient-to-br from-orange-500 to-purple-600 flex items-center justify-center font-bold text-lg">
+                            <div className="w-12 h-12 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center font-bold text-lg">
                                 {t.name[0]}
                             </div>
                         )}

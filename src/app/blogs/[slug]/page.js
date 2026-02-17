@@ -66,7 +66,7 @@ export default async function BlogPostPage({ params }) {
             <header className="mb-10">
                 <div className="flex flex-wrap gap-2 mb-6">
                     {blog.tags?.map((tag, i) => (
-                        <span key={i} className="text-[10px] font-orbitron uppercase tracking-wider text-orange-500 border border-orange-500/30 px-3 py-1 rounded-full bg-orange-500/5">
+                        <span key={i} className="text-[10px] font-orbitron uppercase tracking-wider text-blue-500 border border-blue-500/30 px-3 py-1 rounded-full bg-blue-500/5">
                             {tag}
                         </span>
                     ))}
@@ -89,7 +89,7 @@ export default async function BlogPostPage({ params }) {
             </header>
 
             {blog.image_url && (
-                <div className="mb-16 rounded-3xl overflow-hidden border border-white/10 shadow-2xl shadow-orange-500/5">
+                <div className="mb-16 rounded-3xl overflow-hidden border border-white/10 shadow-2xl shadow-blue-500/5">
                     <img src={blog.image_url} alt={blog.title} className="w-full h-auto" />
                 </div>
             )}

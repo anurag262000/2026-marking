@@ -19,7 +19,7 @@ export default function NewBlogPage() {
                   type="text"
                   name="title"
                   required
-                  className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white focus:border-orange-500 outline-none transition-colors text-xl font-bold"
+                  className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white focus:border-blue-500 outline-none transition-colors text-xl font-bold"
                   placeholder="Article Title..."
                 />
               </div>
@@ -30,7 +30,7 @@ export default function NewBlogPage() {
                   type="text"
                   name="slug"
                   required
-                  className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white focus:border-orange-500 outline-none transition-colors font-mono text-sm"
+                  className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white focus:border-blue-500 outline-none transition-colors font-mono text-sm"
                   placeholder="article-slug-url"
                 />
               </div>
@@ -40,7 +40,7 @@ export default function NewBlogPage() {
                 <textarea
                   name="excerpt"
                   rows={3}
-                  className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white focus:border-orange-500 outline-none transition-colors"
+                  className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white focus:border-blue-500 outline-none transition-colors"
                   placeholder="Short summary for cards..."
                 />
               </div>
@@ -51,7 +51,7 @@ export default function NewBlogPage() {
                   name="content"
                   required
                   rows={20}
-                  className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white focus:border-orange-500 outline-none transition-colors font-mono text-sm"
+                  className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white focus:border-blue-500 outline-none transition-colors font-mono text-sm"
                   placeholder="# Heading..."
                 />
               </div>
@@ -66,7 +66,7 @@ export default function NewBlogPage() {
                     <input
                       type="text"
                       name="image_url"
-                      className="w-full bg-black/50 border border-white/10 rounded-lg px-3 py-2 text-xs text-white focus:border-orange-500 outline-none"
+                      className="w-full bg-black/50 border border-white/10 rounded-lg px-3 py-2 text-xs text-white focus:border-blue-500 outline-none"
                       placeholder="https://..."
                     />
                   </div>
@@ -79,7 +79,7 @@ export default function NewBlogPage() {
                     <input
                       type="text"
                       name="tags"
-                      className="w-full bg-black/50 border border-white/10 rounded-lg px-3 py-2 text-xs text-white focus:border-orange-500 outline-none"
+                      className="w-full bg-black/50 border border-white/10 rounded-lg px-3 py-2 text-xs text-white focus:border-blue-500 outline-none"
                       placeholder="Design, React, AI..."
                     />
                   </div>
@@ -92,7 +92,7 @@ export default function NewBlogPage() {
                     <input
                       type="text"
                       name="seo_title"
-                      className="w-full bg-black/50 border border-white/10 rounded-lg px-3 py-2 text-xs text-white focus:border-orange-500 outline-none"
+                      className="w-full bg-black/50 border border-white/10 rounded-lg px-3 py-2 text-xs text-white focus:border-blue-500 outline-none"
                       placeholder="Same as title if empty"
                     />
                   </div>
@@ -101,7 +101,7 @@ export default function NewBlogPage() {
                     <textarea
                       name="seo_description"
                       rows={3}
-                      className="w-full bg-black/50 border border-white/10 rounded-lg px-3 py-2 text-xs text-white focus:border-orange-500 outline-none"
+                      className="w-full bg-black/50 border border-white/10 rounded-lg px-3 py-2 text-xs text-white focus:border-blue-500 outline-none"
                       placeholder="Meta description for search engines..."
                     />
                   </div>
@@ -109,7 +109,7 @@ export default function NewBlogPage() {
 
               <button
                 type="submit"
-                className="w-full bg-orange-500 hover:bg-orange-600 text-white font-orbitron uppercase tracking-wilder py-4 rounded-lg transition-colors font-bold shadow-lg shadow-orange-500/20"
+                className="w-full bg-blue-500 hover:bg-blue-600 text-white font-orbitron uppercase tracking-wilder py-4 rounded-lg transition-colors font-bold shadow-lg shadow-blue-500/20"
               >
                 Publish Article
               </button>

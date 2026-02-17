@@ -20,7 +20,7 @@ export default async function AdminBlogsPage() {
           <h1 className="text-3xl font-bold font-helvetica">Manage Blogs</h1>
           <Link
             href="/admin/blogs/new"
-            className="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-lg font-orbitron text-sm uppercase tracking-wider transition-colors"
+            className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg font-orbitron text-sm uppercase tracking-wider transition-colors"
           >
             Create New
           </Link>

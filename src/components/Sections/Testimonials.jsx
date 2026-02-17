@@ -21,7 +21,7 @@ export default function Testimonials() {
     <section className="py-20 md:py-32 bg-[#050505] overflow-hidden">
         <div className="max-w-7xl mx-auto px-6 mb-16 text-center">
             <h2 className="text-3xl md:text-5xl font-black font-helvetica text-white mb-6 uppercase">
-                Client <span className="text-orange-500">Feedback</span>
+                Client <span className="text-blue-500">Feedback</span>
             </h2>
             <div className="h-1 w-24 bg-white/20 mx-auto rounded-full" />
         </div>
@@ -43,7 +43,7 @@ export default function Testimonials() {
                             {t.image_url ? (
                                 <img src={t.image_url} alt={t.name} className="w-12 h-12 rounded-full object-cover" />
                             ) : (
-                                <div className="w-12 h-12 rounded-full bg-gradient-to-tr from-orange-500 to-purple-600" />
+                                <div className="w-12 h-12 rounded-full bg-gradient-to-tr from-blue-500 to-purple-600" />
                             )}
                             <div>
                                 <h4 className="font-bold text-white text-lg">{t.name}</h4>
