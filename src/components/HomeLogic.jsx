@@ -1,9 +1,9 @@
-import HeroSection from '@/components/sections/Hero';
-import { AuroraCore } from "@/components/ui/AuroraCore";
-import About from '@/components/sections/About';
-import ProjectGalleryCSS from '@/components/projects/ProjectGalleryCSS';
-import ProjectHeader from '@/components/projects/ProjectHeader';
-import Testimonials from '@/components/sections/Testimonials';
+import HeroSection from '@/components/Sections/Hero';
+import { AuroraCore } from '@/components/ui/AuroraCore';
+import About from '@/components/Sections/About';
+import ProjectGalleryCSS from '@/components/Projects/ProjectGalleryCSS';
+import ProjectHeader from '@/components/Projects/ProjectHeader';
+import Testimonials from '@/components/Sections/Testimonials';
 // test commit
 
 export default function HomeLogic() {
