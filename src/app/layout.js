@@ -46,6 +46,9 @@ export const metadata = {
       'max-snippet': -1,
     },
   },
+  icons: {
+    icon: '/icon.png',
+  },
 };
 
 export default function RootLayout({ children }) {
@@ -53,9 +56,9 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body suppressHydrationWarning>
         <ClerkProvider>
-            <ClientRootLayout>
-                {children}
-            </ClientRootLayout>
+          <ClientRootLayout>
+            {children}
+          </ClientRootLayout>
         </ClerkProvider>
       </body>
     </html>
