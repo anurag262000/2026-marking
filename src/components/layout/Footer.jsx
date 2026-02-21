@@ -54,11 +54,11 @@ export default function Footer() {
           viewport={{ once: true }}
           className="flex flex-wrap justify-center items-baseline gap-2 md:gap-8 leading-[0.8]"
         >
-          <span className="text-[15vw] md:text-[12rem] lg:text-[14rem] font-black font-orbitron tracking-tighter text-white">
+          <span className="text-[12vw] md:text-[12rem] lg:text-[14rem] font-black font-orbitron tracking-tighter text-white">
             LET'S
           </span>
            {/* Stylized 'DO' - using italic/accent color to mimic handwriting/difference */}
-          <span className="text-[15vw] md:text-[12rem] lg:text-[14rem]  font-orbitron italic text-white/80 tracking-tighter relative z-10 ">
+          <span className="text-[12vw] md:text-[12rem] lg:text-[14rem]  font-orbitron italic text-white/80 tracking-tighter relative z-10 ">
             WORK
           </span>
           <span className="text-[15vw] md:text-[12rem] lg:text-[14rem] font-black font-orbitron text-accent stroke-text-active">
@@ -72,7 +72,7 @@ export default function Footer() {
         initial={{ opacity: 0, scale: 0.95 }}
         whileInView={{ opacity: 1, scale: 1 }}
         viewport={{ once: true }}
-        className="w-full max-w-[1800px] mx-auto h-[200px] md:h-[400px] rounded-[3rem] bg-[#111] relative overflow-hidden mb-20 group border border-white/5 z-10"
+        className="w-full max-w-[1800px] mx-auto h-[120px] md:h-[400px] rounded-[3rem] bg-[#111] relative overflow-hidden mb-20 group border border-white/5 z-10"
       >
       {/* Background Aurora Effect */}
       <div className="absolute inset-0 w-full h-full z-0 pointer-events-none opacity-50 blur-3xl">
@@ -97,7 +97,7 @@ export default function Footer() {
              {[...Array(6)].map((_, i) => (
                 <span
                     key={i}
-                    className="font-orbitron font-bold text-gray-500 text-[6rem] md:text-[10rem] lg:text-[12rem] uppercase tracking-tighter transition-all duration-500 group-hover:text-[#333] group-hover:tracking-widest group-hover:drop-shadow-[0_0_15px_rgba(255,255,255,0.1)] select-none"
+                    className="font-orbitron font-bold text-gray-500 text-[4rem] md:text-[10rem] lg:text-[12rem] uppercase tracking-tighter transition-all duration-500 group-hover:text-[#333] group-hover:tracking-widest group-hover:drop-shadow-[0_0_15px_rgba(255,255,255,0.1)] select-none"
                     style={{ willChange: "transform" }}
                 >
                     CREATE SOMETHING EPIC

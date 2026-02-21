@@ -153,7 +153,7 @@ export default function ReviewPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#050505] text-white p-6 md:p-12 relative overflow-hidden">
+    <div className="min-h-screen bg-[#050505] text-white p-6 lg:p-12 relative overflow-hidden">
       {/* Background Gradients */}
       <div className="absolute top-0 right-0 p-96 bg-blue-500/5 blur-[150px] rounded-full pointer-events-none -translate-y-1/2 translate-x-1/2 fixed" />
       <div className="absolute bottom-0 left-0 p-96 bg-purple-500/5 blur-[150px] rounded-full pointer-events-none translate-y-1/2 -translate-x-1/2 fixed" />
