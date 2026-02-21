@@ -6,6 +6,7 @@ import { getApprovedTestimonials } from "@/app/admin/testimonials/actions";
 import { useUser, SignInButton } from "@clerk/nextjs";
 import { FiSend, FiX, FiPlus, FiLinkedin, FiInstagram } from "react-icons/fi";
 import Link from "next/link";
+import HomeTestimonials from "@/components/Sections/HomeTestimonials";
 
 export default function ReviewPage() {
   const { isLoaded, isSignedIn, user } = useUser();
@@ -187,67 +188,6 @@ export default function ReviewPage() {
           </button>
         </div>
 
-        {/* Masonry Grid */}
-        <div className="columns-1 md:columns-2 lg:columns-3 gap-6 space-y-6">
-          {reviews.map((review, i) => (
-            <div
-              key={i}
-              className="break-inside-avoid bg-white/5 border border-white/10 rounded-3xl p-8 backdrop-blur-sm hover:bg-white/10 transition-colors duration-300 group"
-            >
-              <div className="flex items-start justify-between mb-6">
-                <div className="flex items-center gap-3">
-                  {review.image_url ? (
-                    <img
-                      src={review.image_url}
-                      alt={review.name}
-                      className="w-10 h-10 rounded-full object-cover ring-2 ring-white/10"
-                    />
-                  ) : (
-                    <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-blue-500 to-purple-600 ring-2 ring-white/10" />
-                  )}
-                  <div>
-                    <h4 className="font-bold text-white text-sm">
-                      {review.name}
-                    </h4>
-                    <p className="text-[10px] text-white/50 uppercase tracking-widest font-orbitron">
-                      {review.role}{" "}
-                      {review.company ? `@ ${review.company}` : ""}
-                    </p>
-                  </div>
-                </div>
-                {review.social_link && (
-                  <a
-                    href={review.social_link}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="text-white/20 hover:text-blue-400 transition-colors"
-                  >
-                    {review.social_link.includes("instagram") ? (
-                      <FiInstagram />
-                    ) : (
-                      <FiLinkedin />
-                    )}
-                  </a>
-                )}
-              </div>
-              <p className="text-white/80 leading-relaxed font-light text-sm italic relative">
-                <span className="absolute -top-4 -left-2 text-4xl text-white/10 font-serif">
-                  "
-                </span>
-                {review.content}
-                <span className="absolute -bottom-4 -right-2 text-4xl text-white/10 font-serif">
-                  "
-                </span>
-              </p>
-            </div>
-          ))}
-        </div>
-
-        {reviews.length === 0 && (
-          <div className="text-center py-20 text-white/30 italic font-light">
-            Loading reviews...
-          </div>
-        )}
       </div>
 
       {/* Modal */}
@@ -404,6 +344,8 @@ export default function ReviewPage() {
           </div>
         </div>
       )}
+      {/* Dynamic Testimonial Section */}
+      <HomeTestimonials theme="dark" showHeading={false} className="py-0 md:py-0" />
     </div>
   );
 }

@@ -229,7 +229,7 @@ const MobileVerticalColumn = ({ testimonials, theme = 'light' }) => {
   );
 };
 
-export default function HomeTestimonials({ theme = 'light' }) {
+export default function HomeTestimonials({ theme = 'light', showHeading = true, className = "" }) {
   const [testimonials, setTestimonials] = useState([]);
   const [isMobile, setIsMobile] = useState(false);
   const isDark = theme === 'dark';
@@ -254,17 +254,33 @@ export default function HomeTestimonials({ theme = 'light' }) {
   if (testimonials.length === 0) return null;
 
   return (
-    <section className={`md:py-24 py-10 ${isDark ? 'bg-black' : 'bg-white'} relative overflow-hidden flex flex-col items-center`}>
-      {/* Background Heading */}
-      <div className="w-full max-w-[1920px] px-6 mb-12 relative">
-        <h2 className={`text-[12vw] md:text-[12vw] font-black ${isDark ? 'text-white/12' : 'text-gray-900/5'} text-center tracking-tighter uppercase leading-[0.7] absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full pointer-events-none select-none`}>
-          Testimonials
-        </h2>
-        <h2 className={`text-5xl md:text-8xl font-black ${isDark ? 'text-white' : 'text-gray-900'} text-center tracking-tighter uppercase leading-[0.8] relative z-10 py-0`}>
-          {isMobile ? 'Feedback' : 'Reviews'}
-        </h2>
-      </div>
+    <section className={`${className || 'py-12 md:py-24'} relative overflow-hidden transition-colors duration-700 ${isDark ? 'bg-black' : 'bg-white'}`}>
+      {showHeading && (
+        <>
+          {/* Large Background Text */}
+          <div className="absolute top-10 left-1/2 -translate-x-1/2 w-full text-center pointer-events-none select-none z-0">
+            <h2 className={`text-[12vw] font-black uppercase tracking-tighter leading-none opacity-[0.03] ${isDark ? 'text-white' : 'text-black'}`}>
+              Testimonials
+            </h2>
+          </div>
 
+          {/* Section Header */}
+          <div className="max-w-7xl mx-auto px-6 mb-16 relative z-10">
+            <div className="flex flex-col items-center text-center">
+              <div className="flex items-center gap-3 mb-4">
+                <div className="h-[1px] w-8 bg-blue-500"></div>
+                <span className="text-blue-500 font-bold uppercase tracking-[0.3em] text-xs">Feedback</span>
+                <div className="h-[1px] w-8 bg-blue-500"></div>
+              </div>
+              <h3 className={`text-4xl md:text-6xl font-black uppercase font-bitcount ${isDark ? 'text-white' : 'text-gray-900'}`}>
+                Reviews
+              </h3>
+            </div>
+          </div>
+        </>
+      )}
+
+      {/* Main Content Area */}
       {isMobile ? (
         <MobileVerticalColumn testimonials={testimonials} theme={theme} />
       ) : (

@@ -26,9 +26,7 @@ export default function HomeLogic() {
         <About />
         <ProjectHeader />
         <ProjectGalleryCSS />
-        {/* Theme Comparison: One white, one black */}
         <HomeTestimonials theme="light" />
-        <HomeTestimonials theme="dark" />
       </div>
     </main>
   );
