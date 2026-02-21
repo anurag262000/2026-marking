@@ -187,7 +187,6 @@ export default function ReviewPage() {
             <div className="absolute inset-0 rounded-full ring-2 ring-white/20 group-hover:ring-blue-400 group-hover:scale-105 transition-all duration-300" />
           </button>
         </div>
-
       </div>
 
       {/* Modal */}
@@ -346,7 +345,12 @@ export default function ReviewPage() {
         </div>
       )}
       {/* Dynamic Testimonial Section */}
-      <HomeTestimonials theme="dark" showHeading={false} className="py-0 md:py-0" mobilePadding={false} />
+      <HomeTestimonials
+        theme="dark"
+        showHeading={false}
+        className="py-0 md:py-0"
+        mobilePadding={false}
+      />
     </div>
   );
 }
