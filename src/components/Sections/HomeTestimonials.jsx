@@ -162,7 +162,7 @@ const Column = ({ testimonials, speed = 1, theme = 'light' }) => {
 /**
  * Mobile Vertical scrolling column with Tap-to-Pause
  */
-const MobileVerticalColumn = ({ testimonials, theme = 'light' }) => {
+const MobileVerticalColumn = ({ testimonials, theme = 'light', mobilePadding = true }) => {
   const containerRef = useRef(null);
   const [isPaused, setIsPaused] = useState(false);
   const isDark = theme === 'dark';
@@ -215,7 +215,7 @@ const MobileVerticalColumn = ({ testimonials, theme = 'light' }) => {
       >
         <div className="w-full">
           {repeatedTestimonials.map((t, i) => (
-            <div key={`${t.id}-${i}`} className="mb-6 px-4">
+            <div key={`${t.id}-${i}`} className={`mb-6 ${mobilePadding ? 'px-4' : 'px-0'}`}>
               <TestimonialCard t={t} theme={theme} isMobile={true} />
             </div>
           ))}
@@ -225,7 +225,7 @@ const MobileVerticalColumn = ({ testimonials, theme = 'light' }) => {
   );
 };
 
-export default function HomeTestimonials({ theme = 'light', showHeading = true, className = "" }) {
+export default function HomeTestimonials({ theme = 'light', showHeading = true, className = "", mobilePadding = true }) {
   const [testimonials, setTestimonials] = useState([]);
   const [isMobile, setIsMobile] = useState(false);
   const isDark = theme === 'dark';
@@ -264,7 +264,7 @@ export default function HomeTestimonials({ theme = 'light', showHeading = true, 
 
       {/* Main Content Area */}
       {isMobile ? (
-        <MobileVerticalColumn testimonials={testimonials} theme={theme} />
+        <MobileVerticalColumn testimonials={testimonials} theme={theme} mobilePadding={mobilePadding} />
       ) : (
         <div className="w-full max-w-7xl mx-auto px-4 relative flex flex-col md:flex-row gap-0">
           <Column testimonials={testimonials} speed={2} theme={theme} />

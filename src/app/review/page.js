@@ -346,7 +346,7 @@ export default function ReviewPage() {
         </div>
       )}
       {/* Dynamic Testimonial Section */}
-      <HomeTestimonials theme="dark" showHeading={false} className="py-0 md:py-0" />
+      <HomeTestimonials theme="dark" showHeading={false} className="py-0 md:py-0" mobilePadding={false} />
     </div>
   );
 }
