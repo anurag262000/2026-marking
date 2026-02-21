@@ -178,7 +178,7 @@ const MobileVerticalColumn = ({ testimonials, theme = 'light' }) => {
       if (isPaused) return;
       
       const moveAmount = container.scrollHeight / 2;
-      container.scrollTop += 0.8; // Control speed here
+      container.scrollTop += 2.5; // Control speed here
       
       if (container.scrollTop >= moveAmount) {
         container.scrollTop = 0;

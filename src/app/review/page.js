@@ -243,7 +243,7 @@ export default function ReviewPage() {
                     onMouseLeave={handleMouseLeave}
                     onMouseUp={handleMouseUp}
                     onMouseMove={handleMouseMove}
-                    className="flex gap-3 overflow-x-auto px-2 scrollbar-hide py-2 cursor-grab active:cursor-grabbing"
+                    className="flex gap-3 overflow-x-auto px-2 scrollbar-hide py-2 cursor-grab active:cursor-grabbing select-none"
                   >
                     {avatarOptions.map(
                       (opt) =>
@@ -258,7 +258,8 @@ export default function ReviewPage() {
                             <img
                               src={opt.url}
                               alt={opt.label}
-                              className="w-full h-full rounded-full object-cover"
+                              draggable="false"
+                              className="w-full h-full rounded-full object-cover pointer-events-none"
                             />
                             {opt.id === "user" && (
                               <span className="absolute -bottom-1 -right-1 bg-blue-600 text-[8px] px-1.5 py-0.5 rounded-full text-white font-bold tracking-tighter border border-[#1a1a1a]">
