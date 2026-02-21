@@ -3,7 +3,7 @@ import { AuroraCore } from '@/components/ui/AuroraCore';
 import About from '@/components/Sections/About';
 import ProjectGalleryCSS from '@/components/Projects/ProjectGalleryCSS';
 import ProjectHeader from '@/components/Projects/ProjectHeader';
-import Testimonials from '@/components/Sections/Testimonials';
+import HomeTestimonials from '@/components/Sections/HomeTestimonials';
 // test commit
 
 export default function HomeLogic() {
@@ -26,7 +26,9 @@ export default function HomeLogic() {
         <About />
         <ProjectHeader />
         <ProjectGalleryCSS />
-        <Testimonials />
+        {/* Theme Comparison: One white, one black */}
+        <HomeTestimonials theme="light" />
+        <HomeTestimonials theme="dark" />
       </div>
     </main>
   );
