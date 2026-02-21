@@ -163,63 +163,59 @@ const Column = ({ testimonials, speed = 1, theme = 'light' }) => {
  * Mobile Vertical scrolling column with Tap-to-Pause
  */
 const MobileVerticalColumn = ({ testimonials, theme = 'light' }) => {
-  const scrollRef = useRef(null);
+  const containerRef = useRef(null);
   const [isPaused, setIsPaused] = useState(false);
-  const animationRef = useRef(null);
   const isDark = theme === 'dark';
   
   const repeatedTestimonials = React.useMemo(() => getRepeatedTestimonials(testimonials), [testimonials]);
 
   useEffect(() => {
-    if (!scrollRef.current || repeatedTestimonials.length === 0) return;
+    const container = containerRef.current;
+    if (!container || repeatedTestimonials.length === 0) return;
 
-    const scrollContainer = scrollRef.current;
-    gsap.set(scrollContainer, { y: 0 });
-    
-    const moveAmount = scrollContainer.scrollHeight / 2;
-    // Mobile speed adjustment
-    const duration = moveAmount / 150; 
-
-    animationRef.current = gsap.to(scrollContainer, {
-      y: -moveAmount,
-      duration: duration,
-      ease: "none",
-      repeat: -1,
-    });
-
-    if (isPaused) animationRef.current.pause();
-
-    return () => {
-      if (animationRef.current) animationRef.current.kill();
+    // Use ticker for smooth, frame-based scroll increment
+    const ticker = () => {
+      if (isPaused) return;
+      
+      const moveAmount = container.scrollHeight / 2;
+      container.scrollTop += 0.8; // Control speed here
+      
+      if (container.scrollTop >= moveAmount) {
+        container.scrollTop = 0;
+      }
     };
+
+    gsap.ticker.add(ticker);
+    return () => gsap.ticker.remove(ticker);
   }, [repeatedTestimonials, isPaused]);
 
   const togglePause = () => {
     setIsPaused(!isPaused);
-    if (animationRef.current) {
-      if (!isPaused) animationRef.current.pause();
-      else animationRef.current.play();
-    }
   };
 
   return (
     <div className="w-full max-w-sm mx-auto px-0 flex flex-col items-center">
       {/* Interaction Hint */}
       <div className={`mb-4 px-4 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-widest ${isDark ? 'bg-white/10 text-white/50' : 'bg-black/5 text-black/40'} animate-pulse`}>
-        Tap card to {isPaused ? 'Resume' : 'Pause'}
+        {isPaused ? 'Scroll to read • Tap to Resume' : 'Tap to Pause & Scroll'}
       </div>
 
       <div 
-        className="relative w-full h-[450px] overflow-hidden cursor-pointer" 
+        ref={containerRef}
+        className={`relative w-full h-[480px] ${isPaused ? 'overflow-y-auto' : 'overflow-hidden'} cursor-pointer transition-all duration-500`} 
         onClick={togglePause}
         style={{
-          maskImage: `linear-gradient(to bottom, transparent, black 20%, black 80%, transparent)`,
-          WebkitMaskImage: `linear-gradient(to bottom, transparent, black 20%, black 80%, transparent)`
+          maskImage: isPaused
+            ? `linear-gradient(to bottom, transparent, black 5%, black 95%, transparent)`
+            : `linear-gradient(to bottom, transparent, black 20%, black 80%, transparent)`,
+          WebkitMaskImage: isPaused
+            ? `linear-gradient(to bottom, transparent, black 5%, black 95%, transparent)`
+            : `linear-gradient(to bottom, transparent, black 20%, black 80%, transparent)`
         }}
       >
-        <div className="absolute w-full" ref={scrollRef}>
+        <div className="w-full">
           {repeatedTestimonials.map((t, i) => (
-            <div key={`${t.id}-${i}`} className="mb-6 opacity-90">
+            <div key={`${t.id}-${i}`} className="mb-6 px-4">
               <TestimonialCard t={t} theme={theme} isMobile={true} />
             </div>
           ))}
