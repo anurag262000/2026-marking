@@ -49,6 +49,18 @@ export default function ReviewPage() {
         }
     }, [user]);
 
+    // Prevent body scroll when modal is open
+    useEffect(() => {
+        if (isModalOpen) {
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = 'unset';
+        }
+        return () => {
+            document.body.style.overflow = 'unset';
+        };
+    }, [isModalOpen]);
+
     async function handleSubmit(formData) {
         setIsSubmitting(true);
         setMessage(null);
@@ -140,8 +152,15 @@ export default function ReviewPage() {
 
             {/* Modal */}
             {isModalOpen && (
-                <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md">
-                    <div onClick={(e) => e.stopPropagation()} className="bg-[#1a1a1a] border border-white/20 rounded-3xl p-6 md:p-8 max-w-md w-full relative shadow-2xl shadow-blue-500/10 animate-fade-in-up max-h-[85vh] overflow-y-auto hide-scrollbar">
+                <div 
+                    className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md cursor-pointer"
+                    onClick={() => setIsModalOpen(false)}
+                >
+                    <div 
+                        onClick={(e) => e.stopPropagation()} 
+                        data-lenis-prevent
+                        className="bg-[#1a1a1a] border border-white/20 rounded-3xl p-6 md:p-8 max-w-md w-full relative shadow-2xl shadow-blue-500/10 animate-fade-in-up max-h-[85vh] overflow-y-auto hide-scrollbar"
+                    >
                         <button
                             onClick={() => setIsModalOpen(false)}
                             className="absolute top-4 right-4 text-white/60 hover:text-white transition-colors bg-white/10 p-2 rounded-full hover:bg-white/20"
