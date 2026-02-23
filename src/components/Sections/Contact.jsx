@@ -1,7 +1,7 @@
 'use client';
 
-import React, { useRef, useState } from 'react';
-import { motion } from 'framer-motion';
+import React, { useRef, useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { AuroraCore } from '@/components/ui/AuroraCore';
 import { LuArrowRight, LuMail, LuPhone, LuLinkedin, LuGithub, LuTwitter } from 'react-icons/lu';
 import { FiCheckCircle, FiAlertCircle, FiLoader } from 'react-icons/fi';
@@ -11,6 +11,12 @@ export default function Contact() {
   const containerRef = useRef(null);
   const [status, setStatus] = useState('idle'); // idle, loading, success, error
   const [errorMessage, setErrorMessage] = useState('');
+  const [isPageLoading, setIsPageLoading] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setIsPageLoading(false), 1800);
+    return () => clearTimeout(timer);
+  }, []);
 
   async function handleSubmit(formData) {
     setStatus('loading');
@@ -32,7 +38,59 @@ export default function Contact() {
   }
 
   return (
-    <section id="contact" ref={containerRef} className="relative w-full min-h-screen flex items-center justify-center bg-black py-20 overflow-hidden">
+    <>
+      {/* Page Entry Loader */}
+      <AnimatePresence>
+        {isPageLoading && (
+          <motion.div
+            key="contact-loader"
+            initial={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.6, ease: 'easeInOut' }}
+            className="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-black"
+          >
+            {/* Animated ring */}
+            <div className="relative mb-8">
+              <motion.div
+                animate={{ rotate: 360 }}
+                transition={{ duration: 1.4, repeat: Infinity, ease: 'linear' }}
+                className="w-20 h-20 rounded-full border-2 border-transparent border-t-blue-500 border-r-blue-500/40"
+              />
+              <motion.div
+                animate={{ rotate: -360 }}
+                transition={{ duration: 2, repeat: Infinity, ease: 'linear' }}
+                className="absolute inset-2 rounded-full border-2 border-transparent border-t-purple-500 border-r-purple-500/40"
+              />
+              {/* Center icon */}
+              <div className="absolute inset-0 flex items-center justify-center">
+                <LuMail className="w-6 h-6 text-white/80" />
+              </div>
+            </div>
+
+            {/* Label */}
+            <motion.p
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2 }}
+              className="font-orbitron text-xs uppercase tracking-[0.4em] text-white/50 mb-6"
+            >
+              Contact
+            </motion.p>
+
+            {/* Progress bar */}
+            <div className="w-40 h-0.5 bg-white/10 rounded-full overflow-hidden">
+              <motion.div
+                initial={{ scaleX: 0, originX: 0 }}
+                animate={{ scaleX: 1 }}
+                transition={{ duration: 1.5, ease: 'easeInOut' }}
+                className="h-full bg-gradient-to-r from-blue-500 to-purple-500 rounded-full"
+              />
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      <section id="contact" ref={containerRef} className="relative w-full min-h-screen flex items-center justify-center bg-black pb-20 overflow-hidden pt-28">
 
         {/* Background Aurora - Reused for consistency */}
         <div className="absolute inset-0 w-full h-full pointer-events-none opacity-30 blur-3xl">
@@ -229,5 +287,6 @@ export default function Contact() {
 
         </div>
     </section>
+    </>
   );
 }

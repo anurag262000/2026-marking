@@ -203,7 +203,7 @@ const ContactPage = () => {
   };
 
   return (
-    <div className="relative min-h-screen bg-black text-white overflow-hidden">
+    <div className="relative min-h-screen bg-black text-white overflow-hidden ">
       {/* Animated background and gradients ... */}
       <canvas
         ref={canvasRef}
@@ -302,7 +302,7 @@ const ContactPage = () => {
         </section>
 
         {/* Contact Form Section */}
-        <section className="relative py-20">
+        <section className="relative py-20 ">
           <div className="container mx-auto px-6 md:px-12">
             <div className="grid grid-cols-1 lg:grid-cols-5 gap-12 lg:gap-16">
 
