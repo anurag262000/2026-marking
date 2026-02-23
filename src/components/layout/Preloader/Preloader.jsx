@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
+import { usePathname } from 'next/navigation';
 import { motion } from 'framer-motion';
 import styles from './Preloader.module.css';
 
@@ -10,10 +11,25 @@ const NUM_BARS = 7;
 const barDelays = [0.3, 0.1, 0.45, 0, 0.25, 0.15, 0.4];
 
 const Preloader = () => {
+    const pathname = usePathname();
     const [count, setCount] = useState(0);
     const [loading, setLoading] = useState(true);
     const [exitAnimation, setExitAnimation] = useState(false);
     const preloaderRef = useRef(null);
+
+    // Skip preloader on contact page
+    const isContactPage = pathname === '/contact';
+
+    useEffect(() => {
+        if (isContactPage) {
+            setLoading(false);
+            return;
+        }
+        // Reset state on navigation to trigger animation
+        setCount(0);
+        setExitAnimation(false);
+        setLoading(true);
+    }, [pathname, isContactPage]);
 
     useEffect(() => {
         if (loading) {
@@ -27,6 +43,8 @@ const Preloader = () => {
     }, [loading]);
 
     useEffect(() => {
+        if (!loading || exitAnimation || isContactPage) return;
+
         const interval = setInterval(() => {
             setCount((prev) => {
                 if (prev >= 100) {
@@ -36,10 +54,10 @@ const Preloader = () => {
                 }
                 return prev + 1;
             });
-        }, 40);
+        }, 30); // Slightly faster for navigation
 
         return () => clearInterval(interval);
-    }, []);
+    }, [pathname, loading, exitAnimation, isContactPage]);
 
     // When exit starts, make preloader bg transparent so bars reveal content
     useEffect(() => {
@@ -60,7 +78,7 @@ const Preloader = () => {
         }
     }, [exitAnimation]);
 
-    if (!loading) return null;
+    if (!loading || isContactPage) return null;
 
     return (
         <div ref={preloaderRef} className={styles.preloader}>

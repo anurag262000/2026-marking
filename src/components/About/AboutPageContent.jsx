@@ -60,22 +60,32 @@ const experienceTimeline = [
 
 const freelanceServices = [
   {
-    title: "Portfolio Architecture",
+    title: "Full-Stack Web Systems",
+    icon: <FiGlobe />,
+    description: "Building production-ready, scalable web applications with robust backend architectures and high-performance frontends.",
+    tech: ["Next.js", "Node.js", "PostgreSQL", "System Design"],
+    color: "from-blue-500/20"
+  },
+  {
+    title: "Mobile (React Native)",
+    icon: <FiSmartphone />,
+    description: "Developing cross-platform mobile experiences that feel native, with a focus on smooth performance and clean UI.",
+    tech: ["React Native", "Expo", "Performance Tuning"],
+    color: "from-purple-500/20"
+  },
+  {
+    title: "Personal Branding (Portfolios)",
     icon: <FiMonitor />,
-    description: "Engineering elite-level digital portfolios. I focus on high-performance animations and cinematic storytelling to elevate personal brands.",
-    tech: ["Next.js", "GSAP", "Performance Engineering"]
+    description: "Crafting unique, cinematic portfolios for clients to showcase their skills with heavy animations and premium aesthetics.",
+    tech: ["GSAP", "Framer Motion", "Storytelling"],
+    color: "from-orange-500/20"
   },
   {
-    title: "UI Engineering (Figma)",
+    title: "UI Design (Figma)",
     icon: <FiFigma />,
-    description: "Translating client visions into pixel-perfect Figma designs. I create comprehensive design systems that bridge the gap between concept and code.",
-    tech: ["Figma", "Design Systems", "Prototyping"]
-  },
-  {
-    title: "Enterprise Solutions",
-    icon: <FiLayers />,
-    description: "Developing custom software solutions for diverse business needs, ensuring modularity and long-term scalability.",
-    tech: ["Modular Code", "Security", "Scalable Infrastructure"]
+    description: "Designing end-to-end user interfaces in Figma, creating complete design systems and interactive prototypes based on client requirements.",
+    tech: ["Figma", "Design Systems", "UX Research"],
+    color: "from-green-500/20"
   }
 ];
 
@@ -168,13 +178,13 @@ export default function AboutPageContent() {
       gsap.from(".service-card", {
         scrollTrigger: {
           trigger: freelanceRef.current,
-          start: "top 75%",
+          start: "top 80%",
         },
-        y: 70,
+        y: 40,
         opacity: 0,
-        stagger: 0.2,
-        duration: 1.2,
-        ease: "power3.out"
+        stagger: 0.1,
+        duration: 0.8,
+        ease: "power2.out"
       });
 
       // Parallax effect on backgrounds
@@ -221,17 +231,17 @@ export default function AboutPageContent() {
               
               <div className="hero-subtitle space-y-6 max-w-3xl">
                 <p className="text-xl md:text-2xl text-white/80 font-light leading-relaxed">
-                  A high-performance <span className="text-white font-medium italic underline decoration-blue-500 underline-offset-4">Software Engineer</span> building the next generation of scalable digital systems. I specialize in backend architecture and full-spectrum technical leadership.
+                  A high-performance <span className="text-white font-medium italic underline decoration-blue-500 underline-offset-4">Software Engineer</span> who speaks fluent JavaScript and slightly broken "Team Leader-ese". I architect systems that work harder than I do after my third cup of coffee.
                 </p>
                 <p className="text-white/50 text-base md:text-lg font-light leading-relaxed">
-                  With a solid foundation from <span className="font-orbitron text-white/70 underline underline-offset-8">BCA at JMIT</span>, I've evolved from a Backend Intern to a Team Leader, steering complex missions across various technical domains. I focus on creating robust, secure, and highly scalable software solutions.
+                  Armed with a <span className="font-orbitron text-white/70 underline underline-offset-8">Bachelor of Computer Application</span> from the prestigious <span className="text-white/80 font-medium">Seth Jai Parkash Mukand Lal Institute of Engineering & Technology, Radaur</span> (Affiliated to <span className="text-blue-400 italic">Kurukshetra University</span>). I've evolved from a Backend Intern to a Team Leader, specializing in turning complex problems into elegant code and "it works on my machine" into "it works for everyone."
                 </p>
                 <div className="flex flex-wrap gap-6 pt-6">
                   <div className="flex items-center gap-2 text-white/40 text-xs font-orbitron tracking-widest uppercase">
-                    <FiMapPin className="text-blue-500" /> Kurukshetra, IN
+                    <FiMapPin className="text-blue-500" /> Yamunanagar, Haryana
                   </div>
                   <div className="flex items-center gap-2 text-white/40 text-xs font-orbitron tracking-widest uppercase">
-                    <FiBookOpen className="text-blue-500" /> JMIT Alumni
+                    <FiBookOpen className="text-blue-500" /> JMIT Radaur Alumnus
                   </div>
                 </div>
               </div>
@@ -317,8 +327,8 @@ export default function AboutPageContent() {
 
       {/* 4. FREELANCE & SERVICES - CINEMATIC UI */}
       <section ref={freelanceRef} className="py-32 md:py-48 bg-white/[0.01] border-y border-white/5 relative overflow-hidden">
-        <div className="absolute top-0 left-0 w-full h-full opacity-[0.03] select-none pointer-events-none parallax-bg flex items-center justify-center">
-           <span className="text-[25vw] font-black font-orbitron whitespace-nowrap">MISSION_CORE</span>
+        <div className="absolute top-0 left-0 w-full h-full opacity-[0.015] select-none pointer-events-none parallax-bg flex items-center justify-center">
+           <span className="text-[25vw] font-black font-orbitron whitespace-nowrap text-white/50">MISSION_CORE</span>
         </div>
 
         <div className="container mx-auto px-6 lg:px-12 relative z-10">
@@ -334,22 +344,33 @@ export default function AboutPageContent() {
             </div>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid md:grid-cols-2 gap-8">
             {freelanceServices.map((service, i) => (
-              <div key={i} className="service-card group relative p-12 bg-black/60 backdrop-blur-xl border border-white/5 hover:border-blue-500/50 transition-all duration-700">
-                <div className="relative z-10">
-                  <div className="text-5xl text-blue-500 group-hover:text-white group-hover:scale-110 transition-all duration-500 mb-10">
-                    {service.icon}
+              <div key={i} className="service-card group relative p-12 bg-black/90 backdrop-blur-3xl border border-white/10 hover:border-blue-500 transition-all duration-700 shadow-2xl">
+                {/* Gradient Accent Background */}
+                <div className={`absolute inset-0 bg-gradient-to-br ${service.color} to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700`} />
+                
+                <div className="relative z-10 flex flex-col h-full">
+                  <div className="flex items-start justify-between mb-10">
+                    <div className="text-5xl text-blue-500 group-hover:text-white group-hover:scale-110 transition-all duration-500">
+                      {service.icon}
+                    </div>
+                    <div className="text-[10px] font-orbitron text-white/20 group-hover:text-white/50 uppercase tracking-[0.4em]">
+                      Service_0{i + 1}
+                    </div>
                   </div>
-                  <h3 className="text-3xl font-black font-orbitron mb-6 uppercase leading-tight tracking-tighter">
+                  
+                  <h3 className="text-3xl font-black font-orbitron mb-6 uppercase leading-tight tracking-tighter group-hover:text-blue-400 transition-colors">
                     {service.title}
                   </h3>
-                  <p className="text-white/40 text-base font-light mb-10 group-hover:text-white/70 transition-colors leading-relaxed">
+                  
+                  <p className="text-white/60 text-base font-light mb-10 group-hover:text-white transition-colors leading-relaxed">
                     {service.description}
                   </p>
-                  <div className="flex flex-wrap gap-3">
+                  
+                  <div className="flex flex-wrap gap-3 mt-auto">
                     {service.tech.map((t, idx) => (
-                      <span key={idx} className="text-[9px] uppercase font-bold tracking-[0.2em] text-white/20 group-hover:text-blue-400 transition-colors">
+                      <span key={idx} className="text-[9px] uppercase font-bold tracking-[0.2em] text-white/40 group-hover:text-white transition-colors">
                         / {t}
                       </span>
                     ))}
