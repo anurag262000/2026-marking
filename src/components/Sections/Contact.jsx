@@ -3,7 +3,7 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { AuroraCore } from '@/components/ui/AuroraCore';
-import { LuArrowRight, LuMail, LuPhone, LuLinkedin, LuGithub, LuTwitter } from 'react-icons/lu';
+import { LuArrowRight, LuMail, LuPhone, LuLinkedin, LuGithub } from 'react-icons/lu';
 import { FiCheckCircle, FiAlertCircle, FiLoader } from 'react-icons/fi';
 import { sendEmail } from '@/app/contact/actions';
 
@@ -107,7 +107,7 @@ export default function Contact() {
         <div className="relative w-[95%] max-w-7xl bg-[#0a0a0a] rounded-[2rem] border border-white/10 overflow-hidden shadow-2xl flex flex-col md:flex-row z-10">
 
             {/* Left: Content & Info */}
-            <div className="w-full md:w-1/2 p-8 md:p-16 relative flex flex-col justify-between min-h-[500px]">
+            <div className="w-full md:w-1/2 p-6 md:p-16 relative flex flex-col justify-between min-h-[500px]">
                 {/* Decorative gradients */}
                 <div className="absolute top-0 left-0 w-1/2 h-1/2 bg-blue-500/5 blur-3xl pointer-events-none" />
 
@@ -152,32 +152,31 @@ export default function Contact() {
                     className="mt-12 space-y-8"
                 >
                     <div className="flex flex-col gap-6">
-                        <a href="mailto:anuragmishra262000@gmail.com" className="group flex items-center gap-4 text-white/80 hover:text-white transition-colors">
-                            <div className="w-12 h-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center group-hover:bg-blue-500/20 group-hover:border-blue-500/40 transition-all">
-                                <LuMail className="w-5 h-5" />
+                        <a href="mailto:anuragmishra262000@gmail.com" className="group flex items-center gap-4 text-white/80 hover:text-white transition-colors min-w-0">
+                            <div className="w-12 h-12 min-w-[3rem] min-h-[3rem] rounded-full bg-white/5 border border-white/10 flex items-center justify-center flex-shrink-0 group-hover:bg-blue-500/20 group-hover:border-blue-500/40 transition-all">
+                                <LuMail className="w-5 h-5 flex-shrink-0" />
                             </div>
-                            <div>
+                            <div className="min-w-0 overflow-hidden">
                                 <p className="text-xs uppercase tracking-widest text-white/40 mb-1">Email</p>
-                                <p className="font-orbitron text-sm md:text-base tracking-wider">anuragmishra262000@gmail.com</p>
+                                <p className="font-orbitron text-sm md:text-base tracking-wider break-all leading-snug">anuragmishra262000@gmail.com</p>
                             </div>
                         </a>
 
-                        <div className="flex items-center gap-4 text-white/80">
-                            <div className="w-12 h-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center">
-                                <LuPhone className="w-5 h-5" />
+                        <a href="https://wa.me/918818094811" target="_blank" rel="noopener noreferrer" className="group flex items-center gap-4 text-white/80 hover:text-white transition-colors">
+                            <div className="w-12 h-12 min-w-[3rem] min-h-[3rem] rounded-full bg-white/5 border border-white/10 flex items-center justify-center flex-shrink-0 group-hover:bg-green-500/20 group-hover:border-green-500/40 transition-all">
+                                <LuPhone className="w-5 h-5 flex-shrink-0" />
                             </div>
                             <div>
-                                <p className="text-xs uppercase tracking-widest text-white/40 mb-1">Phone</p>
+                                <p className="text-xs uppercase tracking-widest text-white/40 mb-1">WhatsApp</p>
                                 <p className="font-orbitron text-sm md:text-base tracking-wider">+91 8818094811</p>
                             </div>
-                        </div>
+                        </a>
                     </div>
 
                     {/* Socials */}
                     <div className="flex gap-4 pt-4 border-t border-white/10">
-                        <a href="#" className="p-3 bg-white/5 rounded-full hover:bg-white/10 hover:text-blue-400 transition-all"><LuLinkedin className="w-5 h-5" /></a>
-                        <a href="#" className="p-3 bg-white/5 rounded-full hover:bg-white/10 hover:text-blue-400 transition-all"><LuGithub className="w-5 h-5" /></a>
-                        <a href="#" className="p-3 bg-white/5 rounded-full hover:bg-white/10 hover:text-blue-400 transition-all"><LuTwitter className="w-5 h-5" /></a>
+                        <a href="https://www.linkedin.com/in/anuragmishra26" target="_blank" rel="noopener noreferrer" className="p-3 bg-white/5 rounded-full hover:bg-white/10 hover:text-blue-400 transition-all"><LuLinkedin className="w-5 h-5" /></a>
+                        <a href="https://github.com/anurag262000" target="_blank" rel="noopener noreferrer" className="p-3 bg-white/5 rounded-full hover:bg-white/10 hover:text-blue-400 transition-all"><LuGithub className="w-5 h-5" /></a>
                     </div>
                 </motion.div>
             </div>
