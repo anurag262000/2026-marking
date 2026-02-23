@@ -346,6 +346,31 @@ body.light-theme * {
   transition: background-color 0.6s ease;
 }
 
+/* Global Scrollbar Styling */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #131313;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #2a2a2a;
+  border: 2px solid #131313;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #3a3a3a;
+}
+
+/* For Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #2a2a2a #131313;
+}
+
 /* Hide scrollbar for Chrome, Safari and Opera */
 .hide-scrollbar::-webkit-scrollbar,
 .scrollbar-hide::-webkit-scrollbar {
