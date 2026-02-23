@@ -283,6 +283,24 @@ body.light-theme * {
     var(--animation-direction, forwards) linear infinite;
 }
 
+/* Gradient text shimmer */
+@keyframes gradient-shift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.animate-gradient {
+  background-size: 200% auto;
+  animation: gradient-shift 4s ease infinite;
+}
+
 /* Optional: For the vertical text in the image section if you decide to add it back */
 .vertical-text {
   writing-mode: vertical-rl;
@@ -340,4 +358,3 @@ body.light-theme * {
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
 }
-
