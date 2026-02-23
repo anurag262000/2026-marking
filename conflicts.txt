@@ -1,0 +1,4 @@
+./src/app/contact/Contact.jsx
+./src/app/projects/Projects.jsx
+./src/components/Projects/ProjectGalleryCSS.jsx
+./src/components/Projects/ProjectGalleryModern.jsx
