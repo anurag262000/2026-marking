@@ -292,11 +292,19 @@ const ContactPage = () => {
             </div>
 
             <h1 className="text-5xl md:text-7xl lg:text-8xl font-helvetica font-thin italic mb-6 leading-tight">
+<<<<<<< Updated upstream
               Let's Work Together
             </h1>
 
             <p className="text-lg md:text-xl text-white/60 font-orbitron uppercase tracking-widest max-w-2xl mx-auto">
               Have a project in mind? Let's talk
+=======
+                Let's Work Together
+            </h1>
+
+            <p className="text-lg md:text-xl text-white/60 font-orbitron uppercase tracking-widest max-w-2xl mx-auto">
+                Have a project in mind? Let's talk
+>>>>>>> Stashed changes
             </p>
           </div>
         </section>

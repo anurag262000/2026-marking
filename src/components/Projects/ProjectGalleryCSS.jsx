@@ -274,7 +274,11 @@ export default function ProjectGalleryCSS() {
                 <div className="absolute inset-0 bg-gradient-to-br from-blue-900/20 via-transparent to-purple-900/20" />
 
                 <div className="text-center relative z-10">
+<<<<<<< Updated upstream:src/components/Projects/ProjectGalleryCSS.jsx
                    <h1 className="text-6xl desk:text-8xl font-black text-white/10 font-orbitron tracking-tighter uppercase mb-4">
+=======
+                   <h1 className="text-6xl md:text-8xl font-black text-white/10 font-orbitron tracking-tighter uppercase mb-4">
+>>>>>>> Stashed changes:src/components/Home/ProjectGalleryCSS.jsx
                       FIN
                    </h1>
                    <p className="text-white/40 font-mono tracking-widest text-sm uppercase">
@@ -372,10 +376,18 @@ export default function ProjectGalleryCSS() {
                View my complete project history and source code on GitHub.
              </p>
              <Link
+<<<<<<< Updated upstream:src/components/Projects/ProjectGalleryCSS.jsx
                 href="/projects"
                 className="w-full py-4 bg-white text-black font-orbitron text-xs uppercase tracking-widest rounded-lg font-bold mb-3"
              >
                View All Projects ↗
+=======
+                href="https://github.com/anuragmishra262000"
+                target="_blank"
+                className="w-full py-4 bg-white text-black font-orbitron text-xs uppercase tracking-widest rounded-lg font-bold mb-3"
+             >
+               GitHub
+>>>>>>> Stashed changes:src/components/Home/ProjectGalleryCSS.jsx
              </Link>
              <Link
                 href="/contact"
