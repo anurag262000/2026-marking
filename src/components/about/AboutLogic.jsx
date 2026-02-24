@@ -3,19 +3,13 @@
 import React, { useRef, useEffect } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-
-// Import Section Components
 import AboutHero from "./AboutHero";
-import AboutEducation from "./AboutEducation";
-import AboutExperience from "./AboutExperience";
-import AboutFreelancing from "./AboutFreelancing";
-import AboutTechStack from "./AboutTechStack";
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
 }
 
-export default function AboutPage() {
+export default function AboutLogic() {
   const containerRef = useRef(null);
 
   useEffect(() => {
@@ -31,22 +25,14 @@ export default function AboutPage() {
       });
       gsap.from(".hero-img", {
         opacity: 0,
-        x: 60,
+        y: 60,
         scale: 0.95,
         duration: 1,
         ease: "power3.out",
         delay: 0.25,
       });
-      gsap.from(".hero-badge", {
-        opacity: 0,
-        y: -16,
-        duration: 0.6,
-        stagger: 0.1,
-        ease: "power2.out",
-        delay: 0.5,
-      });
 
-      // Section reveals
+      // Section reveals (for future sections)
       gsap.utils.toArray(".reveal-section").forEach((el) => {
         gsap.from(el, {
           opacity: 0,
@@ -58,55 +44,6 @@ export default function AboutPage() {
             start: "top 82%",
             once: true,
           },
-        });
-      });
-
-      // Timeline cards stagger
-      gsap.utils.toArray(".timeline-card").forEach((el, i) => {
-        gsap.from(el, {
-          opacity: 0,
-          x: -40,
-          duration: 0.7,
-          ease: "power3.out",
-          scrollTrigger: {
-            trigger: el,
-            start: "top 85%",
-            once: true,
-          },
-          delay: i * 0.1,
-        });
-      });
-
-      // Freelance cards
-      gsap.utils.toArray(".free-card").forEach((el, i) => {
-        gsap.from(el, {
-          opacity: 0,
-          y: 40,
-          scale: 0.97,
-          duration: 0.65,
-          ease: "power3.out",
-          scrollTrigger: {
-            trigger: el,
-            start: "top 88%",
-            once: true,
-          },
-          delay: i * 0.1,
-        });
-      });
-
-      // Stack rows
-      gsap.utils.toArray(".stack-row").forEach((el, i) => {
-        gsap.from(el, {
-          opacity: 0,
-          x: -24,
-          duration: 0.5,
-          ease: "power2.out",
-          scrollTrigger: {
-            trigger: el,
-            start: "top 90%",
-            once: true,
-          },
-          delay: i * 0.08,
         });
       });
     }, containerRef);
@@ -123,10 +60,6 @@ export default function AboutPage() {
 
       <div className="relative z-10">
         <AboutHero />
-        <AboutEducation />
-        <AboutExperience />
-        <AboutFreelancing />
-        <AboutTechStack />
       </div>
     </div>
   );
