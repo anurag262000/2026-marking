@@ -4,6 +4,7 @@ import React, { useRef, useEffect } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import AboutHero from "./AboutHero";
+import AboutInfo from "./AboutInfo";
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
@@ -60,6 +61,7 @@ export default function AboutLogic() {
 
       <div className="relative z-10">
         <AboutHero />
+        <AboutInfo />
       </div>
     </div>
   );
