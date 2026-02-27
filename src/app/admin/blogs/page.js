@@ -38,6 +38,7 @@ export default async function AdminBlogsPage() {
                 </div>
                 <div className="flex gap-4">
                   <Link href={`/blogs/${blog.slug}`} target="_blank" className="text-blue-400 hover:text-blue-300 text-sm font-orbitron uppercase">View</Link>
+                  <Link href={`/admin/blogs/edit/${blog.id}`} className="text-yellow-400 hover:text-yellow-300 text-sm font-orbitron uppercase">Edit</Link>
                   <form action={async () => {
                       'use server';
                       await deleteBlog(blog.id);

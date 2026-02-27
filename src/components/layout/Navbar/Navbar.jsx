@@ -12,9 +12,10 @@ export default function Navbar() {
   const menuItems = [
     { name: 'Home', number: '00', href: '/', type: 'link' },
     { name: 'Projects', number: '01', href: '/projects', type: 'link' },
-    { name: 'Review', number: '02', href: '/review', type: 'link' },
-    { name: 'About', number: '03', href: '/about', type: 'link' },
-    { name: 'Contact', number: '04', href: '/contact', type: 'link' },
+    { name: 'Blogs', number: '02', href: '/blogs', type: 'link' },
+    { name: 'Review', number: '03', href: '/review', type: 'link' },
+    { name: 'About', number: '04', href: '/about', type: 'link' },
+    { name: 'Contact', number: '05', href: '/contact', type: 'link' },
   ];
 
   const socialItems = [

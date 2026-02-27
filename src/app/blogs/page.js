@@ -15,6 +15,9 @@ export default async function BlogsPage() {
     console.error('Error fetching blogs:', error);
   }
 
+  console.log('Fetched Blogs Count:', blogs?.length);
+
+
   return (
     <div className="min-h-screen bg-black text-white pt-32 pb-20 px-6">
       <div className="max-w-7xl mx-auto">

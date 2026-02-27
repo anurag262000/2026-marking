@@ -1,10 +1,32 @@
+import { supabase } from '@/lib/supabase';
+import Link from 'next/link';
+import { FiArrowLeft, FiCalendar, FiClock } from 'react-icons/fi';
 import LikeButton from '@/components/blog/LikeButton';
 import CommentSection from '@/components/blog/CommentSection';
 
-// ... existing imports ...
-
 export default async function BlogPostPage({ params }) {
-  // ... existing code ...
+  const { slug } = await params;
+
+  const { data: blog, error } = await supabase
+    .from('blogs')
+    .select('*')
+    .eq('slug', slug)
+    .single();
+
+  if (error || !blog) {
+    return (
+      <div className="min-h-screen bg-black text-white flex flex-col items-center justify-center">
+        <h1 className="text-2xl font-bold mb-4">Article Not Found</h1>
+        <Link href="/blogs" className="text-blue-500 hover:underline">Back to Blogs</Link>
+      </div>
+    );
+  }
+
+  const date = new Date(blog.created_at).toLocaleDateString('en-US', {
+    month: 'long',
+    day: 'numeric',
+    year: 'numeric'
+  });
 
   return (
     <article className="min-h-screen bg-black text-white pt-32 pb-20">
@@ -35,7 +57,7 @@ export default async function BlogPostPage({ params }) {
                    </div>
                    <div className="flex items-center gap-2">
                         <FiClock />
-                        <span>{Math.ceil(blog.content.length / 1000)} min read</span>
+                        <span>{blog.content ? Math.ceil(blog.content.length / 1000) : 0} min read</span>
                    </div>
                    <div className="ml-auto font-mono text-xs opacity-50">
                         {blog.views || 0} views
