@@ -1,5 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Bitcount+Single:wght@100..900&family=Orbitron:wght@400..900&display=swap");
 @import "tailwindcss";
+@plugin "@tailwindcss/typography";
+
 @theme {
   --breakpoint-desk: 1101px;
   --breakpoint-3xl: 1920px;

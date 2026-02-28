@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { FiArrowLeft, FiCalendar, FiClock } from 'react-icons/fi';
 import LikeButton from '@/components/blog/LikeButton';
 import CommentSection from '@/components/blog/CommentSection';
+import ReactMarkdown from 'react-markdown';
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
@@ -70,15 +71,8 @@ export default async function BlogPostPage({ params }) {
                 </div>
             )}
 
-            <div className="prose prose-invert prose-lg max-w-none mb-20">
-                {/*
-                  CAUTION: This renders raw HTML if the user typed it, or just text.
-                  For a real blog, you'd want a Markdown renderer like 'react-markdown'.
-                  For now, we'll just display it as text with line breaks preserved.
-                */}
-                <div className="whitespace-pre-wrap font-light leading-relaxed text-white/80">
-                    {blog.content}
-                </div>
+            <div className="prose prose-invert prose-lg max-w-none mb-20 selection:bg-blue-500/30">
+                <ReactMarkdown>{blog.content}</ReactMarkdown>
             </div>
 
             <CommentSection blogSlug={slug} />

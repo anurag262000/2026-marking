@@ -3,8 +3,8 @@ import { UserButton } from "@clerk/nextjs";
 import { currentUser } from "@clerk/nextjs/server";
 import Link from 'next/link';
 import { FiEye, FiFileText, FiMessageSquare, FiTrendingUp, FiCheckCircle, FiTrash2 } from 'react-icons/fi';
-import { deleteBlog } from './blogs/actions';
-import { deleteTestimonial, toggleTestimonialApproval } from './testimonials/actions';
+import { deleteBlog } from '@/actions/blogs';
+import { deleteTestimonial, toggleTestimonialApproval } from '@/actions/testimonials';
 
 export const revalidate = 0;
 
