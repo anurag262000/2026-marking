@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter, useParams } from 'next/navigation';
-import { updateBlog, getBlogById } from '../../actions';
+import { updateBlog, getBlogById } from '@/actions/blogs';
 
 export default function EditBlogPage() {
   const router = useRouter();

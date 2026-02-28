@@ -1,4 +1,4 @@
-import { supabase } from '@/lib/supabase';
+import { getBlogBySlug } from '@/actions/blogs';
 import Link from 'next/link';
 import { FiArrowLeft, FiCalendar, FiClock } from 'react-icons/fi';
 import LikeButton from '@/components/blog/LikeButton';
@@ -10,13 +10,9 @@ export const revalidate = 0;
 export default async function BlogPostPage({ params }) {
   const { slug } = await params;
 
-  const { data: blog, error } = await supabase
-    .from('blogs')
-    .select('*')
-    .eq('slug', slug)
-    .single();
+  const blog = await getBlogBySlug(slug);
 
-  if (error || !blog) {
+  if (!blog) {
     return (
       <div className="min-h-screen bg-black text-white flex flex-col items-center justify-center">
         <h1 className="text-2xl font-bold mb-4">Article Not Found</h1>
@@ -35,7 +31,7 @@ export default async function BlogPostPage({ params }) {
     <article className="min-h-screen bg-black text-white pt-32 pb-20">
         {/* Progress Bar (Optional, simpler to just skip complex scroll hooks for now) */}
 
-        <div className="max-w-3xl mx-auto px-6">
+        <div className="max-w-7xl mx-auto px-6">
             <Link href="/blogs" className="inline-flex items-center text-white/40 hover:text-white mb-12 transition-colors font-orbitron text-xs uppercase tracking-widest">
                 <FiArrowLeft className="mr-2" /> Back to Articles
             </Link>
@@ -70,7 +66,7 @@ export default async function BlogPostPage({ params }) {
 
             {blog.image_url && (
                 <div className="mb-16 rounded-3xl overflow-hidden border border-white/10 shadow-2xl shadow-blue-500/5">
-                    <img src={blog.image_url} alt={blog.title} className="w-full h-auto" />
+                    <img src={blog.image_url} alt={blog.title} className="w-full h-[500px] object-fit" />
                 </div>
             )}
 

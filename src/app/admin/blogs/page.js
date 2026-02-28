@@ -1,6 +1,6 @@
 import { supabase } from '@/lib/supabase';
 import Link from 'next/link';
-import { deleteBlog } from './actions';
+import { deleteBlog } from '@/actions/blogs';
 
 export default async function AdminBlogsPage() {
   // Fetch blogs - checking for empty

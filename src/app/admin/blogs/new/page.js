@@ -1,6 +1,6 @@
 'use client';
 
-import { createBlog } from '../actions';
+import { createBlog } from '@/actions/blogs';
 import { useState } from 'react';
 
 export default function NewBlogPage() {
