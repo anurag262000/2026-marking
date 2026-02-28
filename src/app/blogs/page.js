@@ -39,7 +39,7 @@ export default async function BlogsPage() {
                     <img
                       src={blog.image_url}
                       alt={blog.title}
-                      className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500"
+                      className="w-full h-full object-cover object-top transform group-hover:scale-105 transition-transform duration-500"
                     />
                     <div className="absolute top-4 left-4 flex gap-2">
                       {blog.tags?.slice(0, 2).map((tag, i) => (
