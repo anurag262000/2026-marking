@@ -7,14 +7,18 @@ export default function NewBlogPage() {
   const [previewUrl, setPreviewUrl] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
+  const [status, setStatus] = useState(null);
+
   async function handleSubmit(e) {
     e.preventDefault();
     setIsSubmitting(true);
+    setStatus({ type: 'info', message: 'Optimizing and publishing article...' });
+    
     const formData = new FormData(e.target);
     const result = await createBlog(formData);
 
     if (result && !result.success) {
-      alert(result.message || 'Failed to create article');
+      setStatus({ type: 'error', message: result.message || 'Failed to create article' });
       setIsSubmitting(false);
     }
   }
@@ -22,7 +26,17 @@ export default function NewBlogPage() {
   return (
     <div className="min-h-screen bg-black text-white p-6 md:p-12 font-inter">
       <div className="max-w-4xl mx-auto">
-        <h1 className="text-3xl font-bold font-helvetica mb-8">Create New Article</h1>
+        <h1 className="text-3xl font-bold font-helvetica mb-2">Create New Article</h1>
+        <p className="text-white/40 text-sm mb-8">Fill in the details below to publish your story.</p>
+
+        {status && (
+          <div className={`mb-8 p-4 rounded-lg flex items-center gap-3 border ${
+            status.type === 'error' ? 'bg-red-500/10 border-red-500/20 text-red-400' : 'bg-blue-500/10 border-blue-500/20 text-blue-400'
+          }`}>
+            <div className={`w-2 h-2 rounded-full ${status.type === 'error' ? 'bg-red-500' : 'bg-blue-500 animate-pulse'}`} />
+            <span className="text-sm font-medium">{status.message}</span>
+          </div>
+        )}
 
         <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-3 gap-8">
 

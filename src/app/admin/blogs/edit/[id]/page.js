@@ -11,6 +11,7 @@ export default function EditBlogPage() {
   const [loading, setLoading] = useState(true);
   const [previewUrl, setPreviewUrl] = useState(null);
   const [isUpdating, setIsUpdating] = useState(false);
+  const [status, setStatus] = useState(null);
 
   useEffect(() => {
     async function fetchBlog() {
@@ -28,13 +29,15 @@ export default function EditBlogPage() {
   async function handleSubmit(e) {
     e.preventDefault();
     setIsUpdating(true);
+    setStatus({ type: 'info', message: 'Updating article and processing media...' });
+    
     const formData = new FormData(e.target);
     const result = await updateBlog(id, formData);
     
     if (result.success) {
       router.push('/admin/blogs');
     } else {
-      alert(result.message || 'Failed to update article');
+      setStatus({ type: 'error', message: result.message || 'Failed to update article' });
       setIsUpdating(false);
     }
   }
@@ -45,7 +48,17 @@ export default function EditBlogPage() {
   return (
     <div className="min-h-screen bg-black text-white p-6 md:p-12 font-inter">
       <div className="max-w-4xl mx-auto">
-        <h1 className="text-3xl font-bold font-helvetica mb-8 text-blue-500">Edit Article</h1>
+        <h1 className="text-3xl font-bold font-helvetica mb-2 text-blue-500">Edit Article</h1>
+        <p className="text-white/40 text-sm mb-8">Update the content, media, or settings for this post.</p>
+
+        {status && (
+          <div className={`mb-8 p-4 rounded-lg flex items-center gap-3 border ${
+            status.type === 'error' ? 'bg-red-500/10 border-red-500/20 text-red-400' : 'bg-blue-500/10 border-blue-500/20 text-blue-400'
+          }`}>
+            <div className={`w-2 h-2 rounded-full ${status.type === 'error' ? 'bg-red-500' : 'bg-blue-500 animate-pulse'}`} />
+            <span className="text-sm font-medium">{status.message}</span>
+          </div>
+        )}
 
         <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {/* Main Content - Left Col */}

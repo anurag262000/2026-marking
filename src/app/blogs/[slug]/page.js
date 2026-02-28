@@ -66,8 +66,12 @@ export default async function BlogPostPage({ params }) {
             </header>
 
             {blog.image_url && (
-                <div className="mb-16 rounded-3xl overflow-hidden border border-white/10 shadow-2xl shadow-blue-500/5">
-                    <img src={blog.image_url} alt={blog.title} className="w-full h-[500px] object-fit" />
+                <div className="mb-16 rounded-3xl overflow-hidden border border-white/10 shadow-2xl">
+                    <img 
+                        src={blog.image_url} 
+                        alt={blog.title} 
+                        className="w-full h-auto" 
+                    />
                 </div>
             )}
 

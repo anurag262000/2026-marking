@@ -44,6 +44,7 @@ export async function createBlog(formData) {
       const buffer = Buffer.from(bytes);
 
       const webpBuffer = await sharp(buffer)
+        .resize({ width: 1920, withoutEnlargement: true })
         .webp({ quality: 80 })
         .toBuffer();
 
@@ -136,6 +137,7 @@ export async function updateBlog(id, formData) {
       const buffer = Buffer.from(bytes);
 
       const webpBuffer = await sharp(buffer)
+        .resize({ width: 1920, withoutEnlargement: true })
         .webp({ quality: 80 })
         .toBuffer();
 
