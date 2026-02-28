@@ -76,7 +76,9 @@ export default async function BlogPostPage({ params }) {
             )}
 
             <div className="prose prose-invert prose-lg max-w-none mb-20 selection:bg-blue-500/30">
-                <ReactMarkdown>{blog.content}</ReactMarkdown>
+                <ReactMarkdown>
+                    {blog.content?.replace(/^#\s+.*(\r?\n|$)/, '')}
+                </ReactMarkdown>
             </div>
 
             <CommentSection blogSlug={slug} />

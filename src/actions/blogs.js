@@ -208,6 +208,42 @@ export async function deleteBlog(id) {
         return { success: false, message: 'Unauthorized' };
     }
 
+    // 1. Fetch the blog to get image_url
+    const { data: blog, error: fetchError } = await adminSupabase
+        .from('blogs')
+        .select('image_url')
+        .eq('id', id)
+        .single();
+
+    if (!fetchError && blog?.image_url) {
+        try {
+            // Extract the file path from the public URL
+            // URL looks like: .../storage/v1/object/public/blog-images/blog-covers/filename.webp
+            const urlParts = blog.image_url.split('/blog-images/');
+            if (urlParts.length > 1) {
+                // Decode URI component to handle spaces (%20) and other special characters
+                const filePath = decodeURIComponent(urlParts[1]);
+                console.log('DEBUG: Attempting to delete image from storage. Path:', filePath);
+                
+                // 2. Delete the image from Supabase Storage
+                const { error: storageError } = await adminSupabase.storage
+                    .from('blog-images')
+                    .remove([filePath]);
+                
+                if (storageError) {
+                    console.error('ERROR deleting image from storage:', storageError);
+                } else {
+                    console.log('SUCCESS: Image deleted from storage.');
+                }
+            } else {
+                console.warn('WARN: Could not extract storage path from image_url:', blog.image_url);
+            }
+        } catch (err) {
+            console.error('Failed to parse image URL for deletion:', err);
+        }
+    }
+
+    // 3. Delete the blog record from database
     const { error } = await adminSupabase.from('blogs').delete().eq('id', id);
 
     if (error) {
