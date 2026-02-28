@@ -5,13 +5,26 @@ import { useState } from 'react';
 
 export default function NewBlogPage() {
   const [previewUrl, setPreviewUrl] = useState(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  async function handleSubmit(e) {
+    e.preventDefault();
+    setIsSubmitting(true);
+    const formData = new FormData(e.target);
+    const result = await createBlog(formData);
+
+    if (result && !result.success) {
+      alert(result.message || 'Failed to create article');
+      setIsSubmitting(false);
+    }
+  }
 
   return (
     <div className="min-h-screen bg-black text-white p-6 md:p-12 font-inter">
       <div className="max-w-4xl mx-auto">
         <h1 className="text-3xl font-bold font-helvetica mb-8">Create New Article</h1>
 
-        <form action={createBlog} className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-3 gap-8">
 
           {/* Main Content - Left Col */}
           <div className="md:col-span-2 space-y-6">
@@ -128,9 +141,10 @@ export default function NewBlogPage() {
 
               <button
                 type="submit"
-                className="w-full bg-blue-500 hover:bg-blue-600 text-white font-orbitron uppercase tracking-wilder py-4 rounded-lg transition-colors font-bold shadow-lg shadow-blue-500/20"
+                disabled={isSubmitting}
+                className="w-full bg-blue-500 hover:bg-blue-600 disabled:opacity-50 text-white font-orbitron uppercase tracking-wilder py-4 rounded-lg transition-colors font-bold shadow-lg shadow-blue-500/20"
               >
-                Publish Article
+                {isSubmitting ? 'Publishing...' : 'Publish Article'}
               </button>
           </div>
 

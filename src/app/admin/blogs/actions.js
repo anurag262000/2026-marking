@@ -1,6 +1,6 @@
 'use server';
 
-import { supabase } from '@/lib/supabase';
+import { supabase, adminSupabase } from '@/lib/supabase';
 import { auth, currentUser } from '@clerk/nextjs/server';
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
@@ -50,11 +50,10 @@ export async function createBlog(formData) {
       const filePath = `blog-covers/${fileName}`;
 
       // Upload to Supabase Storage
-      const { data: uploadData, error: uploadError } = await supabase.storage
+      const { data: uploadData, error: uploadError } = await adminSupabase.storage
         .from('blog-images')
         .upload(filePath, webpBuffer, {
-          contentType: 'image/webp',
-          upsert: true
+          contentType: 'image/webp'
         });
 
       if (uploadError) {
@@ -63,15 +62,15 @@ export async function createBlog(formData) {
       }
 
       // Get Public URL
-      const { data: { publicUrl } } = supabase.storage
+      const { data: { publicUrl } } = adminSupabase.storage
         .from('blog-images')
         .getPublicUrl(filePath);
       
       image_url = publicUrl;
     } catch (err) {
-      console.error('Image Processing Error:', err);
-      // If sharp fails (e.g. missing native dependencies on some environments), fallback or alert
-      // return { success: false, message: 'Image optimization failed. Please try again or use a different format.' };
+      console.error('CRITICAL: Image Processing Error:', err);
+      // Let's add a more descriptive error for the user
+      return { success: false, message: `Image optimization failed: ${err.message}. Check if 'sharp' is installed properly.` };
     }
   }
 
@@ -85,7 +84,7 @@ export async function createBlog(formData) {
     return { success: false, message: 'Title, Slug, and Content are required.' };
   }
 
-  const { data, error } = await supabase
+  const { data, error } = await adminSupabase
     .from('blogs')
     .insert([
       {
@@ -135,7 +134,7 @@ export async function deleteBlog(id) {
         return { success: false, message: 'Unauthorized' };
     }
 
-    const { error } = await supabase.from('blogs').delete().eq('id', id);
+    const { error } = await adminSupabase.from('blogs').delete().eq('id', id);
 
     if (error) {
         return { success: false, message: error.message };
@@ -162,10 +161,14 @@ export async function updateBlog(id, formData) {
   const content = formData.get('content');
   const imageFile = formData.get('image');
   let image_url = formData.get('existing_image_url');
+  
+  console.log('Update Request - ID:', id);
+  console.log('Detected Image File:', imageFile?.name, 'Size:', imageFile?.size);
 
   // Handle New Image if provided
   if (imageFile && imageFile.size > 0) {
     try {
+      console.log('Processing new image for update...');
       const { Buffer } = await import('node:buffer');
       const sharpModule = await import('sharp');
       const sharp = sharpModule.default;
@@ -177,25 +180,33 @@ export async function updateBlog(id, formData) {
         .webp({ quality: 80 })
         .toBuffer();
 
+      console.log('Image converted to WebP. Buffer size:', webpBuffer.length);
+
       const fileName = `${Date.now()}-${slug}.webp`;
       const filePath = `blog-covers/${fileName}`;
 
-      const { error: uploadError } = await supabase.storage
+      const { error: uploadError } = await adminSupabase.storage
         .from('blog-images')
         .upload(filePath, webpBuffer, {
-          contentType: 'image/webp',
-          upsert: true
+          contentType: 'image/webp'
         });
 
-      if (!uploadError) {
-        const { data: { publicUrl } } = supabase.storage
+      if (uploadError) {
+        console.error('Storage Upload Error in Update:', uploadError);
+        return { success: false, message: `Storage Error: ${uploadError.message}` };
+      } else {
+        const { data: { publicUrl } } = adminSupabase.storage
           .from('blog-images')
           .getPublicUrl(filePath);
         image_url = publicUrl;
+        console.log('New Image URL generated:', image_url);
       }
     } catch (err) {
-      console.error('Update Image Error:', err);
+      console.error('CRITICAL: Update Image Processing Exception:', err);
+      return { success: false, message: `Image optimization failed: ${err.message}` };
     }
+  } else {
+    console.log('No new image uploaded. Keeping existing URL:', image_url);
   }
 
   const seo_title = formData.get('seo_title') || title;
@@ -203,26 +214,50 @@ export async function updateBlog(id, formData) {
   const tagsString = formData.get('tags');
   const tags = tagsString ? tagsString.split(',').map(t => t.trim()).filter(Boolean) : [];
 
-  const { error } = await supabase
+  const updateData = {
+    title,
+    slug,
+    excerpt,
+    content,
+    image_url,
+    seo_title,
+    seo_description,
+    tags,
+  };
+
+  console.log('Executing database update with:', updateData);
+
+  const { error } = await adminSupabase
     .from('blogs')
-    .update({
-      title,
-      slug,
-      excerpt,
-      content,
-      image_url,
-      seo_title,
-      seo_description,
-      tags,
-    })
+    .update(updateData)
     .eq('id', id);
 
   if (error) {
+    console.error('Database Update Error:', error);
     return { success: false, message: error.message };
   }
 
+  console.log('Database update successful');
+
+  // Multi-level revalidation to crush any cache
   revalidatePath('/blogs');
   revalidatePath(`/blogs/${slug}`);
   revalidatePath('/admin/blogs');
+  revalidatePath('/', 'layout'); // Revalidate everything if needed
+  
   return { success: true };
+}
+
+export async function getBlogById(id) {
+  const { data, error } = await supabase
+    .from('blogs')
+    .select('*')
+    .eq('id', id)
+    .single();
+  
+  if (error) {
+    console.error('Fetch Blog Error:', error);
+    return null;
+  }
+  return data;
 }

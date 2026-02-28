@@ -4,6 +4,9 @@ import { FiArrowLeft, FiCalendar, FiClock } from 'react-icons/fi';
 import LikeButton from '@/components/blog/LikeButton';
 import CommentSection from '@/components/blog/CommentSection';
 
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+
 export default async function BlogPostPage({ params }) {
   const { slug } = await params;
 

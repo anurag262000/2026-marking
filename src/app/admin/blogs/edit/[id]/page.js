@@ -2,8 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter, useParams } from 'next/navigation';
-import { supabase } from '@/lib/supabase';
-import { updateBlog } from '../../actions';
+import { updateBlog, getBlogById } from '../../actions';
 
 export default function EditBlogPage() {
   const router = useRouter();
@@ -15,11 +14,7 @@ export default function EditBlogPage() {
 
   useEffect(() => {
     async function fetchBlog() {
-      const { data, error } = await supabase
-        .from('blogs')
-        .select('*')
-        .eq('id', id)
-        .single();
+      const data = await getBlogById(id);
       
       if (data) {
         setBlog(data);
