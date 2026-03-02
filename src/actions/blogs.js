@@ -133,6 +133,52 @@ export async function updateBlog(id, formData) {
       const sharpModule = await import('sharp');
       const sharp = sharpModule.default;
 
+      // --- MOVE OLD IMAGE TO TRASH ---
+      if (image_url) {
+        try {
+          const urlParts = image_url.split('/blog-images/');
+          if (urlParts.length > 1) {
+            const filePath = decodeURIComponent(urlParts[1]);
+            console.log('DEBUG: Moving old image to trash. Path:', filePath);
+
+            // 1. Download from blog-images
+            const { data: fileData, error: downloadError } = await adminSupabase.storage
+              .from('blog-images')
+              .download(filePath);
+
+            if (downloadError) {
+              console.error('ERROR downloading old image for trash:', downloadError);
+            } else {
+              // 2. Upload to trash-images
+              const { error: trashUploadError } = await adminSupabase.storage
+                .from('trash-images')
+                .upload(filePath, fileData, {
+                  contentType: 'image/webp',
+                  upsert: true
+                });
+
+              if (trashUploadError) {
+                console.error('ERROR uploading to trash-images:', trashUploadError);
+              } else {
+                // 3. Delete from blog-images
+                const { error: removeError } = await adminSupabase.storage
+                  .from('blog-images')
+                  .remove([filePath]);
+                
+                if (removeError) {
+                  console.error('ERROR removing old image from blog-images:', removeError);
+                } else {
+                  console.log('SUCCESS: Old image moved to trash-images.');
+                }
+              }
+            }
+          }
+        } catch (trashErr) {
+          console.error('Non-critical error moving image to trash:', trashErr);
+          // We continue because we still want to upload the new image
+        }
+      }
+
       const bytes = await imageFile.arrayBuffer();
       const buffer = Buffer.from(bytes);
 
