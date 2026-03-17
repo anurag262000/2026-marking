@@ -235,7 +235,7 @@ export default function Navbar() {
                 Contact
               </Link>
               <a
-                href="/Aburag-mishra-Resumes-1.pdf"
+                href="/Anurag-Mishra-Resume.pdf"
                 className="footer-text-link"
                 target="_blank"
                 rel="noreferrer"
