@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import ProjectGalleryModern from "@/components/Projects/ProjectGalleryModern";
+import { ReactLenis } from "@studio-freight/react-lenis";
 import Link from "next/link";
 
 import { useRef, useLayoutEffect } from "react";
@@ -83,14 +84,10 @@ export default function ProjectsPage() {
   }, []);
 
   return (
+    <ReactLenis root options={{ lerp: 0.05, duration: 1.2, smoothWheel: true }}>
       <main className="relative w-full min-h-screen bg-black text-white overflow-x-hidden transition-colors duration-700">
 
         {/* HERO SECTION: EXPANDING BANNER */}
-        {/* Initially full viewport height, but content centered */}
-        {/* HERO SECTION: EXPANDING BANNER */}
-        {/* Reduced height as requested */}
-        {/* HERO SECTION: EXPANDING BANNER */}
-        {/* Initially full viewport height, container pins and inner element expands */}
         <section ref={heroRef} className="relative w-full h-screen flex items-center justify-center overflow-hidden bg-black z-20">
             <div
                 ref={bannerRef}
@@ -145,7 +142,7 @@ export default function ProjectsPage() {
 
         {/* The New Gallery takes over the main display */}
         <ProjectGalleryModern setLightTheme={setIsLightTheme} />
-
       </main>
+    </ReactLenis>
   );
 }

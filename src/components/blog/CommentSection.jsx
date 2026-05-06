@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { submitComment, getComments, deleteComment } from '@/app/actions/blog-engagement';
+import { submitComment, getComments, deleteComment } from '@/actions/blogs';
 import { useUser, SignInButton } from '@clerk/nextjs';
 import { FiMessageSquare, FiTrash2, FiSend } from 'react-icons/fi';
 

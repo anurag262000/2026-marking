@@ -1,6 +1,7 @@
 import { supabase } from '@/lib/supabase';
 import Link from 'next/link';
-import { deleteBlog } from './actions';
+import { deleteBlog } from '@/actions/blogs';
+import DeleteBlogButton from './DeleteBlogButton';
 
 export default async function AdminBlogsPage() {
   // Fetch blogs - checking for empty
@@ -38,12 +39,8 @@ export default async function AdminBlogsPage() {
                 </div>
                 <div className="flex gap-4">
                   <Link href={`/blogs/${blog.slug}`} target="_blank" className="text-blue-400 hover:text-blue-300 text-sm font-orbitron uppercase">View</Link>
-                  <form action={async () => {
-                      'use server';
-                      await deleteBlog(blog.id);
-                  }}>
-                      <button className="text-red-400 hover:text-red-300 text-sm font-orbitron uppercase">Delete</button>
-                  </form>
+                  <Link href={`/admin/blogs/edit/${blog.id}`} className="text-yellow-400 hover:text-yellow-300 text-sm font-orbitron uppercase">Edit</Link>
+                  <DeleteBlogButton blogId={blog.id} />
                 </div>
               </div>
             ))

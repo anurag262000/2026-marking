@@ -26,6 +26,7 @@
     "react": "19.2.3",
     "react-dom": "19.2.3",
     "react-icons": "^5.5.0",
+    "sharp": "^0.34.5",
     "tailwind-merge": "^3.4.0",
     "three": "^0.182.0",
     "tweakpane": "^4.0.5",
@@ -33,9 +34,11 @@
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
+    "@tailwindcss/typography": "^0.5.19",
     "babel-plugin-react-compiler": "1.0.0",
     "eslint": "^9",
     "eslint-config-next": "16.1.4",
+    "react-markdown": "^10.1.0",
     "tailwindcss": "^4"
   }
 }

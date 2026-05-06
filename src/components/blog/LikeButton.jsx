@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { toggleLike, getLikeStatus } from '@/app/actions/blog-engagement';
+import { toggleLike, getLikeStatus } from '@/actions/blogs';
 import { FiHeart } from 'react-icons/fi';
 import { useUser, SignInButton } from '@clerk/nextjs';
 

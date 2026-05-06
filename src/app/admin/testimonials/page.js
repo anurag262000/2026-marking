@@ -1,7 +1,7 @@
 import { supabase } from '@/lib/supabase';
 import Link from 'next/link';
 import { FiCheck, FiX, FiTrash2, FiArrowLeft, FiEye, FiEyeOff } from 'react-icons/fi';
-import { deleteTestimonial, toggleTestimonialApproval } from './actions';
+import { deleteTestimonial, toggleTestimonialApproval } from '@/actions/testimonials';
 
 export const revalidate = 0;
 

@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useEffect, useRef, useState } from 'react';
-import { getApprovedTestimonials } from '@/app/admin/testimonials/actions';
+import { getApprovedTestimonials } from '@/actions/testimonials';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
 

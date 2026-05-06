@@ -1,8 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import { submitTestimonial } from "@/app/actions/testimonials";
-import { getApprovedTestimonials } from "@/app/admin/testimonials/actions";
+import { submitTestimonial, getApprovedTestimonials } from '@/actions/testimonials';
 import { useUser, SignInButton } from "@clerk/nextjs";
 import { FiSend, FiX, FiPlus, FiLinkedin, FiInstagram } from "react-icons/fi";
 import Link from "next/link";

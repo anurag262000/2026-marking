@@ -6,9 +6,8 @@ import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import projects from '@/data/projects.json';
-import { LuArrowUpRight } from 'react-icons/lu';
-// import { useLenis } from '@studio-freight/react-lenis'; // Removed to avoid re-render conflict
+import projects from '@/components/Home/projectsExtended.json';
+import { LuArrowUpRight, LuGithub, LuGlobe, LuLayers, LuCpu, LuZap, LuBox } from 'react-icons/lu';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -17,7 +16,6 @@ function ProjectGalleryContent({ setLightTheme }) {
   const [activeIndex, setActiveIndex] = useState(0);
   const searchParams = useSearchParams();
   const initialId = searchParams.get('id');
-  // const lenis = useLenis(); // Removed
 
   // Handle deep linking to specific project
   useEffect(() => {
@@ -95,7 +93,7 @@ function ProjectGalleryContent({ setLightTheme }) {
                 onUpdate: (self) => {
                   const newIndex = Math.min(
                     totalSlides - 1,
-                    Math.floor(self.progress * totalSlides)
+                    Math.floor(self.progress * (totalSlides))
                   );
 
                   // Use functional update to avoid stale closure
@@ -199,6 +197,24 @@ function ProjectGalleryContent({ setLightTheme }) {
                 <p className="text-sm md:text-base 4xl:text-3xl leading-relaxed text-white/80 border-l-2 border-blue-500/30 pl-4">{project.challenge}</p>
               </div>
 
+              {/* Added Solution & Impact block from stash */}
+              <div className="space-y-4">
+                 <h3 className="text-xs uppercase tracking-widest text-white/30 font-bold">The Solution & Impact</h3>
+                 <div className="grid grid-cols-2 gap-4">
+                    {project.metric && (
+                      <div className="bg-white/5 p-4 rounded-lg border border-white/5">
+                          <div className="text-2xl md:text-3xl font-orbitron text-blue-400 mb-1">{project.metric}</div>
+                          <div className="text-[10px] uppercase tracking-wider text-white/50">{project.metricLabel}</div>
+                      </div>
+                    )}
+
+                    <div className="bg-white/5 p-4 rounded-lg border border-white/5">
+                        <LuCpu className="w-6 h-6 text-purple-400 mb-2" />
+                        <div className="text-[10px] uppercase tracking-wider text-white/50">{project.keyHighlight}</div>
+                    </div>
+                 </div>
+              </div>
+
               <div className="flex flex-wrap gap-2 pt-4">
                 {project.technologies.slice(0, 5).map(tech => (
                   <span key={tech} className="px-3 py-1 text-[10px] 4xl:text-lg font-orbitron uppercase tracking-wider border border-white/10 rounded-full text-white/60">
@@ -228,6 +244,7 @@ function ProjectGalleryContent({ setLightTheme }) {
               fill
               className="object-cover"
             />
+            <div className="absolute inset-0 bg-gradient-to-l from-transparent via-black/10 to-[#0a0a0a] z-10 hidden desk:block"></div>
             <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a] via-transparent to-transparent opacity-40 desk:hidden"></div>
           </div>
 

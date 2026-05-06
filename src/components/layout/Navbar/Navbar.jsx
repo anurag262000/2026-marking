@@ -12,18 +12,16 @@ export default function Navbar() {
   const menuItems = [
     { name: 'Home', number: '00', href: '/', type: 'link' },
     { name: 'Projects', number: '01', href: '/projects', type: 'link' },
-    { name: 'Review', number: '02', href: '/review', type: 'link' },
-    { name: 'About', number: '03', href: '/#about', type: 'scroll' },
-    { name: 'Contact', number: '04', href: '/contact', type: 'link' },
+    // { name: 'Blogs', number: '02', href: '/blogs', type: 'link' },
+    { name: 'Review', number: '03', href: '/review', type: 'link' },
+    // { name: 'About', number: '04', href: '/about', type: 'link' },
+    { name: 'Contact', number: '05', href: '/contact', type: 'link' },
   ];
 
   const socialItems = [
     { label: 'GitHub', href: 'https://github.com/anurag262000' },
     { label: 'LinkedIn', href: 'https://www.linkedin.com/in/anuragmishra26' },
-    // { label: 'Portfolio', href: 'https://anurag.dev' },
   ];
-
-
 
   const projectItems = [
     { label: 'Myro.bot', id: 'myro', color: 'exp-pill-1' },
@@ -38,15 +36,12 @@ export default function Navbar() {
     setIsOpen(false);
 
     if (item.type === 'scroll') {
-      // Extract hash from href (e.g., '/#about' -> '#about')
       const hash = item.href.split('#')[1];
       if (hash) {
-        // If we're on home page, scroll to section
         if (window.location.pathname === '/') {
           const element = document.getElementById(hash);
           element?.scrollIntoView({ behavior: 'smooth' });
         } else {
-          // If on another page, navigate to home then scroll
           window.location.href = item.href;
         }
       }
@@ -62,21 +57,11 @@ export default function Navbar() {
 
   return (
     <>
-      <header
-        className={`navbar-header ${isOpen ? 'active' : ''}`}
-      >
-        <Link
-          href="/"
-          className="nav-logo-link"
-          onClick={() => setIsOpen(false)}
-        >
+      <header className={`navbar-header ${isOpen ? 'active' : ''}`}>
+        <Link href="/" className="nav-logo-link" onClick={() => setIsOpen(false)}>
           <span className="nav-logo font-bitcount">ANURAG</span>
         </Link>
-        <button
-          className="hamburger-toggle"
-          onClick={toggleMenu}
-          aria-label="Toggle menu"
-        >
+        <button className="hamburger-toggle" onClick={toggleMenu} aria-label="Toggle menu">
           <div className="hamburger-icon">
             <span className="bar bar-1" />
             <span className="bar bar-2" />
@@ -90,33 +75,35 @@ export default function Navbar() {
 
         <div className="menu-shell">
           <aside className="menu-left">
-
             <div className="discover-block">
               <p className="discover-title">Account</p>
               <div className="experience-pills">
                 <SignedOut>
-                    <SignInButton
-                        mode="modal"
-                        forceRedirectUrl="/review?write_review=true"
-                        signUpForceRedirectUrl="/review?write_review=true"
-                    >
-                        <button className="experience-pill exp-pill-1 w-full justify-center">
-                            <span className="experience-pill-label">Login / Sign Up</span>
-                        </button>
-                    </SignInButton>
+                  <SignInButton
+                    mode="modal"
+                    forceRedirectUrl="/review?write_review=true"
+                    signUpForceRedirectUrl="/review?write_review=true"
+                  >
+                    <button className="experience-pill exp-pill-1 w-full justify-center">
+                      <span className="experience-pill-label">Login / Sign Up</span>
+                    </button>
+                  </SignInButton>
                 </SignedOut>
                 <SignedIn>
-                    <div className="flex items-center gap-4 py-2">
-                        <UserButton afterSignOutUrl="/" appearance={{
-                            elements: {
-                                userButtonAvatarBox: "w-10 h-10 ring-2 ring-white/20"
-                            }
-                        }}/>
-                        <div className="flex flex-col">
-                            <span className="text-white font-bold text-sm">Welcome Back</span>
-                            <span className="text-white/40 text-xs uppercase tracking-wider font-orbitron">Manage Account</span>
-                        </div>
+                  <div className="flex items-center gap-4 py-2">
+                    <UserButton
+                      afterSignOutUrl="/"
+                      appearance={{
+                        elements: {
+                          userButtonAvatarBox: "w-10 h-10 ring-2 ring-white/20"
+                        }
+                      }}
+                    />
+                    <div className="flex flex-col">
+                      <span className="text-white font-bold text-sm">Welcome Back</span>
+                      <span className="text-white/40 text-xs uppercase tracking-wider font-orbitron">Manage Account</span>
                     </div>
+                  </div>
                 </SignedIn>
               </div>
             </div>
@@ -149,9 +136,7 @@ export default function Navbar() {
                     rel="noreferrer"
                     className={`experience-pill social-pill social-pill-${i + 1}`}
                   >
-                    <span className="experience-pill-label">
-                      {item.label}
-                    </span>
+                    <span className="experience-pill-label">{item.label}</span>
                   </a>
                 ))}
               </div>
@@ -166,23 +151,13 @@ export default function Navbar() {
                     key={item.number}
                     className="menu-main-item"
                     style={{
-                      transitionDelay: isOpen
-                        ? `${index * 0.08 + 0.2}s`
-                        : '0s',
+                      transitionDelay: isOpen ? `${index * 0.08 + 0.2}s` : '0s',
                     }}
                   >
                     {item.type === 'link' ? (
-                      <Link
-                        href={item.href}
-                        onClick={() => setIsOpen(false)}
-                        className="menu-main-link"
-                      >
-                        <span className="menu-main-number">
-                          {item.number}
-                        </span>
-                        <span className="menu-main-name font-bitcount">
-                          {item.name}
-                        </span>
+                      <Link href={item.href} onClick={() => setIsOpen(false)} className="menu-main-link">
+                        <span className="menu-main-number">{item.number}</span>
+                        <span className="menu-main-name font-bitcount">{item.name}</span>
                         <span className="menu-main-arrow">→</span>
                       </Link>
                     ) : (
@@ -194,12 +169,8 @@ export default function Navbar() {
                         }}
                         className="menu-main-link"
                       >
-                        <span className="menu-main-number">
-                          {item.number}
-                        </span>
-                        <span className="menu-main-name font-bitcount">
-                          {item.name}
-                        </span>
+                        <span className="menu-main-number">{item.number}</span>
+                        <span className="menu-main-name font-bitcount">{item.name}</span>
                         <span className="menu-main-arrow">→</span>
                       </a>
                     )}
@@ -209,29 +180,10 @@ export default function Navbar() {
             </nav>
 
             <footer className="menu-footer-row">
-              <Link
-                href="/projects"
-                className="footer-text-link"
-                onClick={() => setIsOpen(false)}
-              >
+              <Link href="/projects" className="footer-text-link" onClick={() => setIsOpen(false)}>
                 Projects
               </Link>
-              {/* <a
-                href="#blog"
-                className="footer-text-link"
-                onClick={(e) => {
-                  e.preventDefault();
-                  setIsOpen(false);
-                  document.getElementById('blog')?.scrollIntoView({ behavior: 'smooth' });
-                }}
-              >
-                Blog
-              </a> */}
-              <Link
-                href="/contact"
-                className="footer-text-link"
-                onClick={() => setIsOpen(false)}
-              >
+              <Link href="/contact" className="footer-text-link" onClick={() => setIsOpen(false)}>
                 Contact
               </Link>
               <a

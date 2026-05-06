@@ -1,33 +1,55 @@
 'use client';
 
-import { createBlog } from '@/actions/blogs';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useRouter, useParams } from 'next/navigation';
+import { updateBlog, getBlogById } from '@/actions/blogs';
 
-export default function NewBlogPage() {
+export default function EditBlogPage() {
+  const router = useRouter();
+  const { id } = useParams();
+  const [blog, setBlog] = useState(null);
+  const [loading, setLoading] = useState(true);
   const [previewUrl, setPreviewUrl] = useState(null);
-  const [isSubmitting, setIsSubmitting] = useState(false);
-
+  const [isUpdating, setIsUpdating] = useState(false);
   const [status, setStatus] = useState(null);
+
+  useEffect(() => {
+    async function fetchBlog() {
+      const data = await getBlogById(id);
+      
+      if (data) {
+        setBlog(data);
+        setPreviewUrl(data.image_url);
+      }
+      setLoading(false);
+    }
+    fetchBlog();
+  }, [id]);
 
   async function handleSubmit(e) {
     e.preventDefault();
-    setIsSubmitting(true);
-    setStatus({ type: 'info', message: 'Optimizing and publishing article...' });
+    setIsUpdating(true);
+    setStatus({ type: 'info', message: 'Updating article and processing media...' });
     
     const formData = new FormData(e.target);
-    const result = await createBlog(formData);
-
-    if (result && !result.success) {
-      setStatus({ type: 'error', message: result.message || 'Failed to create article' });
-      setIsSubmitting(false);
+    const result = await updateBlog(id, formData);
+    
+    if (result.success) {
+      router.push('/admin/blogs');
+    } else {
+      setStatus({ type: 'error', message: result.message || 'Failed to update article' });
+      setIsUpdating(false);
     }
   }
+
+  if (loading) return <div className="min-h-screen bg-black text-white flex items-center justify-center font-orbitron uppercase tracking-widest">Loading Article...</div>;
+  if (!blog) return <div className="min-h-screen bg-black text-white flex items-center justify-center font-orbitron uppercase tracking-widest">Article Not Found</div>;
 
   return (
     <div className="min-h-screen bg-black text-white p-6 md:p-12 font-inter">
       <div className="max-w-4xl mx-auto">
-        <h1 className="text-3xl font-bold font-helvetica mb-2">Create New Article</h1>
-        <p className="text-white/40 text-sm mb-8">Fill in the details below to publish your story.</p>
+        <h1 className="text-3xl font-bold font-helvetica mb-2 text-blue-500">Edit Article</h1>
+        <p className="text-white/40 text-sm mb-8">Update the content, media, or settings for this post.</p>
 
         {status && (
           <div className={`mb-8 p-4 rounded-lg flex items-center gap-3 border ${
@@ -39,7 +61,6 @@ export default function NewBlogPage() {
         )}
 
         <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-3 gap-8">
-
           {/* Main Content - Left Col */}
           <div className="md:col-span-2 space-y-6">
               <div className="space-y-2">
@@ -47,6 +68,7 @@ export default function NewBlogPage() {
                 <input
                   type="text"
                   name="title"
+                  defaultValue={blog.title}
                   required
                   className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white focus:border-blue-500 outline-none transition-colors text-xl font-bold"
                   placeholder="Article Title..."
@@ -58,6 +80,7 @@ export default function NewBlogPage() {
                 <input
                   type="text"
                   name="slug"
+                  defaultValue={blog.slug}
                   required
                   className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white focus:border-blue-500 outline-none transition-colors font-mono text-sm"
                   placeholder="article-slug-url"
@@ -68,6 +91,7 @@ export default function NewBlogPage() {
                 <label className="block text-xs font-orbitron uppercase tracking-wider text-white/60">Excerpt</label>
                 <textarea
                   name="excerpt"
+                  defaultValue={blog.excerpt}
                   rows={3}
                   className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white focus:border-blue-500 outline-none transition-colors"
                   placeholder="Short summary for cards..."
@@ -78,6 +102,7 @@ export default function NewBlogPage() {
                 <label className="block text-xs font-orbitron uppercase tracking-wider text-white/60">Content (Markdown)</label>
                 <textarea
                   name="content"
+                  defaultValue={blog.content}
                   required
                   rows={20}
                   className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white focus:border-blue-500 outline-none transition-colors font-mono text-sm"
@@ -94,7 +119,7 @@ export default function NewBlogPage() {
                     <label className="block text-xs text-white/60">Cover Image</label>
                     <div className="relative group aspect-video bg-black/50 border border-dashed border-white/10 rounded-lg overflow-hidden flex flex-col items-center justify-center cursor-pointer hover:border-blue-500/50 transition-colors">
                       {previewUrl ? (
-                        <img src={previewUrl} alt="Preview" className="w-full h-full object-cover" />
+                         <img src={previewUrl} alt="Preview" className="w-full h-full object-cover" />
                       ) : (
                         <div className="text-center p-4">
                           <div className="text-2xl mb-2 text-white/20">+</div>
@@ -108,13 +133,14 @@ export default function NewBlogPage() {
                         onChange={(e) => {
                           const file = e.target.files?.[0];
                           if (file) {
-                            setPreviewUrl(URL.createObjectURL(file));
+                             setPreviewUrl(URL.createObjectURL(file));
                           }
                         }}
                         className="absolute inset-0 opacity-0 cursor-pointer"
                       />
                     </div>
-                    <p className="text-[10px] text-white/30 italic">Images will be converted to .webp automatically</p>
+                    <input type="hidden" name="existing_image_url" value={blog.image_url || ''} />
+                    <p className="text-[10px] text-white/30 italic">Selecting a new image will replace the old one (as WebP)</p>
                   </div>
               </div>
 
@@ -125,6 +151,7 @@ export default function NewBlogPage() {
                     <input
                       type="text"
                       name="tags"
+                      defaultValue={blog.tags?.join(', ')}
                       className="w-full bg-black/50 border border-white/10 rounded-lg px-3 py-2 text-xs text-white focus:border-blue-500 outline-none"
                       placeholder="Design, React, AI..."
                     />
@@ -138,6 +165,7 @@ export default function NewBlogPage() {
                     <input
                       type="text"
                       name="seo_title"
+                      defaultValue={blog.seo_title}
                       className="w-full bg-black/50 border border-white/10 rounded-lg px-3 py-2 text-xs text-white focus:border-blue-500 outline-none"
                       placeholder="Same as title if empty"
                     />
@@ -146,6 +174,7 @@ export default function NewBlogPage() {
                     <label className="block text-xs text-white/60">SEO Description</label>
                     <textarea
                       name="seo_description"
+                      defaultValue={blog.seo_description}
                       rows={3}
                       className="w-full bg-black/50 border border-white/10 rounded-lg px-3 py-2 text-xs text-white focus:border-blue-500 outline-none"
                       placeholder="Meta description for search engines..."
@@ -155,13 +184,12 @@ export default function NewBlogPage() {
 
               <button
                 type="submit"
-                disabled={isSubmitting}
+                disabled={isUpdating}
                 className="w-full bg-blue-500 hover:bg-blue-600 disabled:opacity-50 text-white font-orbitron uppercase tracking-wilder py-4 rounded-lg transition-colors font-bold shadow-lg shadow-blue-500/20"
               >
-                {isSubmitting ? 'Publishing...' : 'Publish Article'}
+                {isUpdating ? 'Saving Changes...' : 'Save Changes'}
               </button>
           </div>
-
         </form>
       </div>
     </div>
