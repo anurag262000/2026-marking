@@ -67,11 +67,20 @@ export default function AboutCombined() {
 
             {/* Quick Specs (Location/Education) */}
             <div className="mt-8 space-y-4">
-              <div className="flex items-center gap-4 text-white/70 font-light text-sm p-3 border border-white/5 bg-white/[0.02] rounded-lg hover:border-blue-500/30 transition-colors">
-                <FiMapPin className="text-blue-400" /> <span>Kurukshetra, India</span>
-              </div>
-              <div className="flex items-center gap-4 text-white/70 font-light text-sm p-3 border border-white/5 bg-white/[0.02] rounded-lg hover:border-blue-500/30 transition-colors">
-                <FiBookOpen className="text-blue-400" /> <span>BCA - JMIT</span>
+              <div className="flex items-start gap-4 text-white/80 p-4 border border-white/5 bg-white/[0.02] rounded-lg hover:border-blue-500/30 transition-colors">
+                <FiBookOpen className="text-blue-400 mt-1 shrink-0" />
+
+                <div className="flex flex-col">
+                  <span className="text-white text-sm font-medium leading-snug">
+                    Bachelor of Computer Applications
+                  </span>
+                  <span className="text-white/60 text-sm leading-snug">
+                    Seth Jai Prakash Mukand Lal Institute
+                  </span>
+                  <span className="text-white/40 text-xs mt-1">
+                    Kurukshetra, India
+                  </span>
+                </div>
               </div>
             </div>
           </motion.div>
