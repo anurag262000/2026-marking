@@ -46,32 +46,75 @@ const getRepeatedTestimonials = (testimonials) => {
  * Single Testimonial Card UI
  */
 const TestimonialCard = ({ t, theme = 'light', isMobile = false }) => {
-  const isDark = theme === 'dark';
   const wordCount = t.content.split(/\s+/).filter(word => word.length > 0).length;
   const isLongMobile = isMobile && wordCount > 100;
   
   return (
-    <div className={`w-full ${isLongMobile ? 'h-[400px]' : 'h-auto'} ${isDark ? 'bg-white/5 border-white/60 hover:bg-white/10' : 'bg-white border-gray-300 hover:shadow-xl'} border rounded-2xl p-6 transition-all duration-500 flex flex-col`}>
+    <div 
+      className={`w-full ${isLongMobile ? 'h-[400px]' : 'h-auto'} rounded-2xl p-6 transition-all duration-300 flex flex-col`}
+      style={{
+        backgroundColor: 'var(--pure-white)',
+        border: '3px solid var(--pitch-black)',
+        boxShadow: '6px 6px 0px var(--pitch-black)'
+      }}
+      onMouseEnter={(e) => {
+        e.currentTarget.style.transform = 'translate(2px, 2px)';
+        e.currentTarget.style.boxShadow = '4px 4px 0px var(--pitch-black)';
+      }}
+      onMouseLeave={(e) => {
+        e.currentTarget.style.transform = 'translate(0, 0)';
+        e.currentTarget.style.boxShadow = '6px 6px 0px var(--pitch-black)';
+      }}
+    >
       {/* Header info */}
       <div className="flex items-center gap-0 mb-4 flex-shrink-0">
         {t.image_url ? (
-          <img src={t.image_url} alt={t.name} className={`w-12 h-12 rounded-full object-cover shadow-md border-2 ${isDark ? 'border-white/20' : 'border-white'}`} />
+          <img 
+            src={t.image_url} 
+            alt={t.name} 
+            className="w-12 h-12 rounded-full object-cover shadow-md"
+            style={{ border: '2px solid var(--pitch-black)' }}
+          />
         ) : (
-          <div className="w-12 h-12 rounded-full bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center text-white font-bold text-lg shadow-md border-2 border-white">
+          <div 
+            className="w-12 h-12 rounded-full flex items-center justify-center text-white font-bold text-lg shadow-md"
+            style={{
+              backgroundColor: 'var(--electric-purple)',
+              border: '2px solid var(--pitch-black)'
+            }}
+          >
             {t.name.charAt(0)}
           </div>
         )}
         <div className='ml-4'>
-          <h4 className={`font-bold ${isDark ? 'text-white' : 'text-gray-900'} text-base leading-tight`}>{t.name}</h4>
-          <p className="text-xs text-blue-500 font-bold uppercase tracking-wider">{t.role} {t.company ? `@ ${t.company}` : ''}</p>
+          <h4 
+            className="font-bold text-base leading-tight font-space"
+            style={{ color: 'var(--pitch-black)' }}
+          >
+            {t.name}
+          </h4>
+          <p 
+            className="text-xs font-bold uppercase tracking-wider font-space"
+            style={{ color: 'var(--electric-purple)' }}
+          >
+            {t.role} {t.company ? `@ ${t.company}` : ''}
+          </p>
         </div>
       </div>
 
       {/* Content area */}
       <div className={`relative mt-4 ${isLongMobile ? 'flex-1 min-h-0 overflow-hidden' : ''}`}>
-        <span className={`absolute -top-2 -left-3 text-5xl ${isDark ? 'text-white/10' : 'text-gray-100'} font-serif leading-none pointer-events-none select-none`}>"</span>
+        <span 
+          className="absolute -top-2 -left-3 text-5xl font-serif leading-none pointer-events-none select-none"
+          style={{ color: 'var(--neon-yellow)', opacity: 0.3 }}
+        >
+          "
+        </span>
         <div className={`relative z-10 pt-2 ${isLongMobile ? 'h-full overflow-y-auto custom-scrollbar pr-2' : 'h-auto'}`}>
-          <p className={`${isDark ? 'text-white/70' : 'text-gray-700'} leading-relaxed text-sm italic`}>
+          <p 
+            className="leading-relaxed text-sm italic font-space"
+            style={{ color: 'var(--pitch-black)', opacity: 0.8 }}
+          >
             {t.content}
           </p>
         </div>
@@ -86,7 +129,7 @@ const TestimonialCard = ({ t, theme = 'light', isMobile = false }) => {
             background: transparent;
           }
           .custom-scrollbar::-webkit-scrollbar-thumb {
-            background: ${isDark ? 'rgba(255,255,255,0.2)' : 'rgba(0,0,0,0.1)'};
+            background: rgba(17, 17, 17, 0.2);
             border-radius: 10px;
           }
         `}</style>
@@ -196,7 +239,15 @@ const MobileVerticalColumn = ({ testimonials, theme = 'light', mobilePadding = t
   return (
     <div className="w-full max-w-sm mx-auto px-0 flex flex-col items-center">
       {/* Interaction Hint */}
-      <div className={`mb-4 px-4 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-widest ${isDark ? 'bg-white/10 text-white/50' : 'bg-black/5 text-black/40'} animate-pulse`}>
+      <div 
+        className="mb-4 px-4 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-widest animate-pulse font-space"
+        style={{
+          backgroundColor: 'var(--electric-purple)',
+          color: 'var(--pure-white)',
+          border: '2px solid var(--pitch-black)',
+          boxShadow: '3px 3px 0px var(--pitch-black)'
+        }}
+      >
         {isPaused ? 'Scroll to read • Tap to Resume' : 'Tap to Pause & Scroll'}
       </div>
 
@@ -250,12 +301,25 @@ export default function HomeTestimonials({ theme = 'light', showHeading = true, 
   if (testimonials.length === 0) return null;
 
   return (
-    <section className={`${className || 'py-12 md:py-24'} relative overflow-hidden transition-colors duration-700 ${isDark ? 'bg-black' : 'bg-white'}`}>
+    <section 
+      className={`${className || 'py-12 md:py-24'} relative overflow-hidden transition-colors duration-700`}
+      style={{ backgroundColor: 'var(--off-white)' }}
+    >
+      {/* Neo-Brutalist Dot Pattern */}
+      <div className="absolute inset-0 bg-dot-brutalist pointer-events-none opacity-20" />
+      
       {showHeading && (
-        <div className="relative mb-10 md:mb-24">
+        <div className="relative mb-10 md:mb-24 z-10">
           {/* Large Background Text - Primary Heading */}
           <div className="w-full text-center pointer-events-none select-none">
-            <h2 className={`text-[12vw] md:text-[12vw] font-black uppercase tracking-tighter leading-none ${isDark ? 'text-white/10' : 'text-black'}`}>
+            <h2 
+              className="text-[12vw] md:text-[12vw] font-black uppercase tracking-tight leading-none font-bebas"
+              style={{ 
+                color: 'var(--pitch-black)',
+                WebkitTextStroke: '2px var(--pitch-black)',
+                WebkitTextFillColor: 'transparent'
+              }}
+            >
               Testimonials
             </h2>
           </div>

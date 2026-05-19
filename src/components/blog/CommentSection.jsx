@@ -66,19 +66,19 @@ export default function CommentSection({ blogSlug }) {
   }
 
   return (
-    <div className="mt-20 pt-10 border-t border-white/10">
-      <h3 className="text-2xl font-bold font-helvetica mb-8 flex items-center gap-3">
-        <FiMessageSquare className="text-blue-500" />
-        Discussion <span className="text-white/40 text-lg font-normal">({comments.length})</span>
+    <div className="mt-20 pt-10 border-t-[3px] border-[var(--pitch-black)]">
+      <h3 className="text-3xl font-black font-bebas uppercase tracking-wider mb-8 flex items-center gap-3 text-[var(--pitch-black)]">
+        <FiMessageSquare className="text-[var(--electric-purple)] text-2xl" />
+        Discussion <span className="text-[var(--pitch-black)] opacity-60 text-lg font-space font-bold">({comments.length})</span>
       </h3>
 
       {/* Comment Form */}
-      <div className="mb-12 bg-white/5 border border-white/10 rounded-xl p-6">
+      <div className="mb-12 bg-[var(--pure-white)] border-[3px] border-[var(--pitch-black)] rounded-xl p-6 shadow-[5px_5px_0px_var(--pitch-black)]">
         {!isSignedIn ? (
             <div className="text-center py-4">
-                <p className="text-white/60 mb-4">Join the discussion by logging in.</p>
+                <p className="text-[var(--pitch-black)] font-space font-medium opacity-85 mb-6">Join the discussion by logging in.</p>
                 <SignInButton mode="modal">
-                    <button className="px-6 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg font-bold transition-colors text-sm uppercase tracking-wider">
+                    <button className="px-6 py-3 bg-[var(--neon-yellow)] text-[var(--pitch-black)] border-[3px] border-[var(--pitch-black)] rounded-xl font-space font-black transition-all text-xs uppercase tracking-widest shadow-[4px_4px_0px_var(--pitch-black)] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[2px_2px_0px_var(--pitch-black)]">
                         Log In to Comment
                     </button>
                 </SignInButton>
@@ -86,14 +86,14 @@ export default function CommentSection({ blogSlug }) {
         ) : (
             <form onSubmit={handleSubmit} className="flex flex-col gap-4">
                 <div className="flex items-start gap-4">
-                    <img src={user.imageUrl} alt={user.fullName} className="w-10 h-10 rounded-full border border-white/10" />
+                    <img src={user.imageUrl} alt={user.fullName} className="w-10 h-10 rounded-full border-[2px] border-[var(--pitch-black)]" />
                     <div className="flex-1">
                         <textarea
                             value={newComment}
                             onChange={(e) => setNewComment(e.target.value)}
                             placeholder="What are your thoughts?"
                             rows={3}
-                            className="w-full bg-black/30 border border-white/10 rounded-lg p-4 text-white focus:border-blue-500 outline-none transition-colors resize-none"
+                            className="w-full bg-[var(--off-white)] border-[3px] border-[var(--pitch-black)] rounded-xl p-4 text-[var(--pitch-black)] font-space font-medium focus:border-[var(--electric-purple)] outline-none transition-colors resize-none shadow-[3px_3px_0px_var(--pitch-black)]"
                             required
                         />
                     </div>
@@ -102,7 +102,7 @@ export default function CommentSection({ blogSlug }) {
                     <button
                         type="submit"
                         disabled={isSubmitting || !newComment.trim()}
-                        className="px-6 py-2 bg-blue-500 hover:bg-blue-600 disabled:opacity-50 disabled:cursor-not-allowed text-white rounded-lg font-bold transition-colors text-sm uppercase tracking-wider flex items-center gap-2"
+                        className="px-6 py-3 bg-[var(--neon-yellow)] text-[var(--pitch-black)] border-[3px] border-[var(--pitch-black)] rounded-xl font-space font-black transition-all text-xs uppercase tracking-widest flex items-center gap-2 shadow-[4px_4px_0px_var(--pitch-black)] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[2px_2px_0px_var(--pitch-black)] disabled:opacity-50 disabled:cursor-not-allowed"
                     >
                         {isSubmitting ? 'Posting...' : <><FiSend /> Post Comment</>}
                     </button>
@@ -112,36 +112,38 @@ export default function CommentSection({ blogSlug }) {
       </div>
 
       {/* Comments List */}
-      <div className="space-y-6">
+      <div className="space-y-8">
         {comments.length === 0 ? (
-            <p className="text-white/30 italic text-center py-8">No comments yet. Be the first to share your thoughts!</p>
+            <p className="text-[var(--pitch-black)] opacity-60 italic text-center py-8 font-space font-medium">No comments yet. Be the first to share your thoughts!</p>
         ) : (
             comments.map((comment) => (
-                <div key={comment.id} className="flex gap-4 group">
+                <div key={comment.id} className="flex gap-4 group items-start">
                     {comment.user_image ? (
-                        <img src={comment.user_image} alt={comment.user_name} className="w-10 h-10 rounded-full border border-white/10 object-cover" />
+                        <img src={comment.user_image} alt={comment.user_name} className="w-10 h-10 rounded-full border-[2px] border-[var(--pitch-black)] object-cover shadow-[2px_2px_0px_var(--pitch-black)]" />
                     ) : (
-                        <div className="w-10 h-10 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center font-bold text-xs">
+                        <div className="w-10 h-10 rounded-full bg-[var(--neon-yellow)] text-[var(--pitch-black)] flex items-center justify-center font-space font-black text-sm border-[2px] border-[var(--pitch-black)] shadow-[2px_2px_0px_var(--pitch-black)]">
                             {comment.user_name?.[0]}
                         </div>
                     )}
 
                     <div className="flex-1">
                         <div className="flex items-center gap-3 mb-1">
-                            <span className="font-bold text-white text-sm">{comment.user_name}</span>
-                            <span className="text-xs text-white/30 font-mono">
+                            <span className="font-space font-black text-[var(--pitch-black)] text-sm">{comment.user_name}</span>
+                            <span className="text-xs text-[var(--pitch-black)] opacity-60 font-space font-bold">
                                 {new Date(comment.created_at).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' })}
                             </span>
                              {user?.id === comment.user_id && (
                                 <button
                                     onClick={() => handleDelete(comment.id)}
-                                    className="text-white/20 hover:text-red-500 transition-colors opacity-0 group-hover:opacity-100"
+                                    className="text-[var(--pitch-black)] opacity-40 hover:opacity-100 hover:text-[var(--action-pink)] transition-all ml-2"
                                 >
                                     <FiTrash2 size={14} />
                                 </button>
                             )}
                         </div>
-                        <p className="text-white/70 text-sm leading-relaxed">{comment.content}</p>
+                        <p className="text-[var(--pitch-black)] opacity-95 text-sm leading-relaxed font-space font-medium bg-[var(--pure-white)] border-[2px] border-[var(--pitch-black)] rounded-xl p-4 mt-2 shadow-[2px_2px_0px_var(--pitch-black)]">
+                          {comment.content}
+                        </p>
                     </div>
                 </div>
             ))

@@ -1,7 +1,6 @@
 'use client';
 
 import React from 'react';
-import { motion } from 'framer-motion';
 import InfiniteMarquee from '@/components/ui/InfiniteMarquee';
 import './WeaponRack.css';
 
@@ -59,7 +58,10 @@ export default function WeaponRack() {
   return (
     <section id="weapon-rack" className="weapon-rack-section">
       <div className="weapon-rack-container">
-      
+        {/* Neo-Brutalist Label */}
+        <div className="weapon-rack-label-container">
+          <span className="weapon-rack-label">TECH STACK</span>
+        </div>
 
         <div className="marquee-wrapper">
           <InfiniteMarquee

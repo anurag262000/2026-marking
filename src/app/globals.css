@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Bitcount+Single:wght@100..900&family=Orbitron:wght@400..900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Grotesk:wght@400;500;600;700&display=swap");
 @import "tailwindcss";
 @plugin "@tailwindcss/typography";
 
@@ -8,28 +8,46 @@
   --breakpoint-4xl: 2560px;
 }
 
-/* Theme Custom Properties */
+/* Neo-Brutalist Theme Custom Properties */
 :root {
-  --foreground: #ffffff;
-  --background: #272727;
-  --foreground-muted: rgba(255, 255, 255, 0.7);
-  --background-muted: rgba(44, 44, 44, 0.8);
-  --border-color: rgba(255, 255, 255, 0.1);
-  --card-bg: rgba(255, 255, 255, 0.05);
+  --pitch-black: #111111;
+  --pure-white: #ffffff;
+  --off-white: #fdfdfd;
+  --warm-gray: #f4f4f0;
+  --neon-yellow: #ccff00;
+  --electric-purple: #9B30E0;
+  --action-pink: #ff3366;
+  
+  --foreground: var(--pitch-black);
+  --background: var(--off-white);
+  --border-color: var(--pitch-black);
+  --card-bg: var(--pure-white);
+  --accent-primary: var(--neon-yellow);
+  --accent-secondary: var(--electric-purple);
 }
 
-/* Font Utility Classes */
+/* Neo-Brutalist Font Utility Classes */
+.font-bebas {
+  font-family: "Bebas Neue", cursive !important;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+.font-space {
+  font-family: "Space Grotesk", sans-serif !important;
+}
+
+/* Legacy font fallbacks */
 .font-bitcount {
-  font-family: "Bitcount Single", cursive !important;
-  font-weight: 300;
+  font-family: "Bebas Neue", cursive !important;
 }
 
 .font-orbitron {
-  font-family: "Orbitron", sans-serif !important;
+  font-family: "Space Grotesk", sans-serif !important;
 }
 
 .font-helvetica {
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !important;
+  font-family: "Space Grotesk", sans-serif !important;
 }
 
 * {
@@ -42,166 +60,158 @@ body {
   padding: 0;
   margin: 0;
   min-height: 100vh;
-  /* overflow-x: hidden; Removed to fix sticky scroll issues */
-  background-color: #131313;
-  color: #ffffff;
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  background-color: var(--off-white);
+  color: var(--pitch-black);
+  font-family: "Space Grotesk", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   transition:
-    background-color 0.8s ease,
-    color 0.8s ease;
+    background-color 0.3s ease,
+    color 0.3s ease;
 }
 
 body.light-theme {
-  background-color: #f7f7f5 !important;
-  color: #111111 !important;
-  --foreground: #0f172a;
-  --background: #f7f7f5;
-  --foreground-muted: rgba(15, 23, 42, 0.7);
-  --background-muted: rgba(247, 247, 245, 0.9);
-  --border-color: rgba(0, 0, 0, 0.1);
-  --card-bg: rgba(0, 0, 0, 0.04);
+  background-color: var(--off-white) !important;
+  color: var(--pitch-black) !important;
 }
 
-/* ===== Global Tailwind Class Overrides for Light Theme ===== */
+body.dark-theme {
+  background-color: var(--pitch-black) !important;
+  color: var(--off-white) !important;
+  --foreground: var(--off-white);
+  --background: var(--pitch-black);
+  --card-bg: #1a1a1a;
+}
+
+/* ===== Neo-Brutalist Utility Classes ===== */
+
+/* Brutalist Button */
+.brutalist-btn {
+  border: 2px solid var(--pitch-black);
+  background-color: var(--neon-yellow);
+  color: var(--pitch-black);
+  box-shadow: 4px 4px 0px var(--pitch-black);
+  font-family: "Space Grotesk", sans-serif;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.brutalist-btn:hover {
+  background-color: var(--pitch-black);
+  color: var(--neon-yellow);
+  transform: translate(2px, 2px);
+  box-shadow: 2px 2px 0px var(--pitch-black);
+}
+
+/* Brutalist Card */
+.brutalist-card {
+  background-color: var(--pure-white);
+  border: 3px solid var(--pitch-black);
+  box-shadow: 6px 6px 0px var(--pitch-black);
+  border-radius: 12px;
+  overflow: hidden;
+  transition: all 0.2s ease;
+}
+
+.brutalist-card:hover {
+  transform: translate(2px, 2px);
+  box-shadow: 4px 4px 0px var(--pitch-black);
+}
+
+/* Brutalist Sticker */
+.brutalist-sticker {
+  display: inline-block;
+  background-color: var(--electric-purple);
+  color: var(--pure-white);
+  border: 2px solid var(--pitch-black);
+  box-shadow: 3px 3px 0px var(--pitch-black);
+  padding: 0.25rem 0.75rem;
+  border-radius: 6px;
+  font-family: "Space Grotesk", sans-serif;
+  font-weight: 700;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.brutalist-sticker-rotated {
+  transform: rotate(-3deg);
+}
+
+/* Brutalist Input */
+.brutalist-input {
+  border: 2px solid var(--pitch-black);
+  background-color: var(--pure-white);
+  color: var(--pitch-black);
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  font-family: "Space Grotesk", sans-serif;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.brutalist-input:focus {
+  outline: none;
+  box-shadow: 4px 4px 0px var(--pitch-black);
+  transform: translate(-2px, -2px);
+}
+
+/* Brutalist Link */
+.brutalist-link {
+  background-color: var(--pitch-black);
+  color: var(--neon-yellow);
+  padding: 0.125rem 0.5rem;
+  border-radius: 4px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+.brutalist-link:hover {
+  background-color: var(--neon-yellow);
+  color: var(--pitch-black);
+}
+
+/* Brutalist Blockquote */
+.brutalist-blockquote {
+  border: 3px solid var(--pitch-black);
+  box-shadow: 6px 6px 0px var(--pitch-black);
+  background-color: var(--off-white);
+  padding: 1.5rem;
+  border-radius: 8px;
+  margin: 2rem 0;
+}
+
+/* ===== Neo-Brutalist Theme Overrides ===== */
 
 /* Text colors */
-body.light-theme .text-white {
-  color: #111 !important;
+body.dark-theme .text-white {
+  color: var(--off-white) !important;
 }
 
-body.light-theme .text-white\/20,
-body.light-theme .text-white\/40,
-body.light-theme .text-white\/60 {
-  color: rgba(0, 0, 0, 0.5) !important;
+body.dark-theme .brutalist-card {
+  background-color: #1a1a1a;
+  border-color: var(--neon-yellow);
+  box-shadow: 6px 6px 0px var(--neon-yellow);
 }
 
-body.light-theme .text-white\/70,
-body.light-theme .text-white\/80,
-body.light-theme .text-white\/90 {
-  color: rgba(0, 0, 0, 0.7) !important;
+body.dark-theme .brutalist-btn {
+  border-color: var(--neon-yellow);
+  box-shadow: 4px 4px 0px var(--neon-yellow);
 }
 
-body.light-theme .stroke-text {
-  -webkit-text-stroke-color: rgba(0, 0, 0, 0.2) !important;
+body.dark-theme .brutalist-input {
+  background-color: #1a1a1a;
+  color: var(--off-white);
+  border-color: var(--neon-yellow);
 }
 
-/* Border colors */
-body.light-theme .border-white\/5,
-body.light-theme .border-white\/10 {
-  border-color: rgba(0, 0, 0, 0.08) !important;
-}
-
-/* Background opacity classes */
-body.light-theme .bg-white\/\[0\.02\],
-body.light-theme .bg-white\/\[0\.03\],
-body.light-theme .bg-white\/\[0\.05\] {
-  background-color: rgba(0, 0, 0, 0.03) !important;
-}
-
-/* Gradient text (stats numbers etc.) */
-body.light-theme .bg-gradient-to-b.from-white.to-white\/50 {
-  --tw-gradient-from: #111 !important;
-  --tw-gradient-to: rgba(17, 17, 17, 0.5) !important;
-}
-
-/* ===== About Section ===== */
-body.light-theme #about {
-  transition: all 0.5s ease;
-}
-
-body.light-theme #about .bg-black\/40 {
-  background-color: rgba(247, 247, 245, 0.6) !important;
-}
-
-body.light-theme #about .bg-black\/60 {
-  background-color: rgba(247, 247, 245, 0.8) !important;
-}
-
-/* Status indicator */
-body.light-theme #about .text-\[10px\].text-white\/90 {
-  color: rgba(0, 0, 0, 0.8) !important;
-}
-
-/* Stats gradient text (02+, 15+, etc.) */
-body.light-theme #about .text-transparent.bg-clip-text {
-  background-image: linear-gradient(
-    to bottom,
-    #111,
-    rgba(17, 17, 17, 0.5)
-  ) !important;
-  -webkit-background-clip: text !important;
-}
-
-/* Skill card hover */
-body.light-theme #about .hover\:border-blue-500\/50:hover {
-  border-color: rgba(59, 130, 246, 0.5) !important;
-}
-
-/* Divider line */
-body.light-theme #about .border-t.border-white\/10 {
-  border-color: rgba(0, 0, 0, 0.1) !important;
-}
-
-/* Grid background pattern */
-body.light-theme
-  #about
-  .bg-\[linear-gradient\(to_right\,\#ffffff05_1px\,transparent_1px\)\,linear-gradient\(to_bottom\,\#ffffff05_1px\,transparent_1px\)\] {
-  background-image:
-    linear-gradient(to right, rgba(0, 0, 0, 0.04) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(0, 0, 0, 0.04) 1px, transparent 1px) !important;
-}
-
-/* ===== Navbar ===== */
-body.light-theme .navbar-logo,
-body.light-theme .nav-brand {
-  color: #111 !important;
-}
-
-/* ===== Launch Site Button ===== */
-body.light-theme .bg-blue-600 {
-  background-color: #111 !important;
-}
-
-body.light-theme .bg-blue-600:hover,
-body.light-theme .hover\:bg-blue-500:hover {
-  background-color: #333 !important;
-}
-
-body.light-theme .bg-blue-600.text-white {
-  color: #fff !important;
-}
-
-/* ===== Testimonials ===== */
-body.light-theme #testimonials {
-  background: linear-gradient(to bottom, #f7f7f5, #f0f0ee) !important;
-}
-
-body.light-theme #testimonials h2 {
-  background-image: linear-gradient(to bottom right, #111, #3b82f6) !important;
-}
-
-body.light-theme #testimonials p,
-body.light-theme #testimonials span {
-  color: rgba(0, 0, 0, 0.6) !important;
-}
-
-body.light-theme #testimonials [class*="bg-white/"] {
-  background-color: rgba(0, 0, 0, 0.03) !important;
-  border-color: rgba(0, 0, 0, 0.08) !important;
-}
-
-body.light-theme #testimonials h4 {
-  color: #111 !important;
-}
-
-/* ===== All transition smoothness ===== */
-body.light-theme * {
-  transition-property: color, background-color, border-color;
-  transition-duration: 0.5s;
-  transition-timing-function: ease;
-}
+/* ===== Hero Section ===== */
 
 #canvas-container {
   position: fixed;
@@ -224,53 +234,49 @@ body.light-theme * {
   min-height: 100vh;
   width: 100%;
   overflow: hidden;
+  background-color: var(--off-white);
 }
 
-.bg-dot-thick-neutral-300 {
+/* Neo-Brutalist Dot Pattern */
+.bg-dot-brutalist {
   background-image: radial-gradient(
     circle,
-    rgba(212, 212, 212, 0.2) 1px,
-    transparent 1px
+    var(--pitch-black) 2px,
+    transparent 2px
   );
-  background-size: 24px 24px;
+  background-size: 32px 32px;
+  opacity: 0.1;
 }
 
-.bg-dot-thick-neutral-800 {
-  background-image: radial-gradient(
-    circle,
-    rgba(38, 38, 38, 0.4) 1px,
-    transparent 1px
-  );
-  background-size: 24px 24px;
-}
-
-.bg-dot-thick-indigo-500 {
-  background-image: radial-gradient(
-    circle,
-    rgba(99, 102, 241, 0.3) 1.5px,
-    transparent 1.5px
-  );
-  background-size: 24px 24px;
-}
-
+/* Neo-Brutalist Stroke Text */
 .stroke-text {
   -webkit-text-fill-color: transparent;
-  -webkit-text-stroke-width: 1px;
-  -webkit-text-stroke-color: rgba(255, 255, 255, 0.4);
-  transition: all 0.5s ease;
+  -webkit-text-stroke-width: 2px;
+  -webkit-text-stroke-color: var(--pitch-black);
+  transition: all 0.3s ease;
 }
 
 .stroke-text-active {
-  -webkit-text-fill-color: rgba(255, 255, 255, 0.9);
-  -webkit-text-stroke-width: 0px;
-  text-shadow: 0 0 30px rgba(59, 130, 246, 0.5);
+  -webkit-text-fill-color: var(--neon-yellow);
+  -webkit-text-stroke-width: 2px;
+  -webkit-text-stroke-color: var(--pitch-black);
 }
 
 .stroke-text-thick {
   -webkit-text-fill-color: transparent;
   -webkit-text-stroke-width: 3px;
-  -webkit-text-stroke-color: rgba(255, 255, 255, 0.6);
-  transition: all 0.5s ease;
+  -webkit-text-stroke-color: var(--pitch-black);
+  position: relative;
+}
+
+.stroke-text-offset::after {
+  content: attr(data-text);
+  position: absolute;
+  left: 4px;
+  top: 4px;
+  -webkit-text-fill-color: var(--neon-yellow);
+  -webkit-text-stroke-width: 0;
+  z-index: -1;
 }
 
 /* Infinite Marquee Animation */
@@ -308,8 +314,8 @@ body.light-theme * {
   writing-mode: vertical-rl;
 }
 
-/* Footer Marquee Animation */
-@keyframes marquee {
+/* ===== Marquee Animation (Neo-Brutalist) ===== */
+@keyframes marquee-scroll {
   0% {
     transform: translateX(0);
   }
@@ -318,8 +324,23 @@ body.light-theme * {
   }
 }
 
+.animate-marquee {
+  animation: marquee-scroll 30s linear infinite;
+}
+
 .animate-marquee-slow {
-  animation: marquee 25s linear infinite;
+  animation: marquee-scroll 50s linear infinite;
+}
+
+.animate-marquee-fast {
+  animation: marquee-scroll 15s linear infinite;
+}
+
+/* Pause on hover */
+.marquee-container:hover .animate-marquee,
+.marquee-container:hover .animate-marquee-slow,
+.marquee-container:hover .animate-marquee-fast {
+  animation-play-state: paused;
 }
 
 /* Theme Utility Classes */

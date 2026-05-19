@@ -9,6 +9,28 @@ const NUM_BARS = 7;
 // Uneven stagger delays for each bar — creates the staircase look
 const barDelays = [0.3, 0.1, 0.45, 0, 0.25, 0.15, 0.4];
 
+// Gen Z status messages based on percentage ranges
+const getGenZStatus = (count) => {
+    if (count <= 20) return "GETTING THE DRIP READY... 💧";
+    if (count <= 40) return "COOKING EXTRA SAUCE... 🍳";
+    if (count <= 60) return "LOADING THE DRIP FR FR... 💅";
+    if (count <= 80) return "NO CAP, WE ARE COOKING... ⚡";
+    if (count <= 95) return "SLAYING THE PORTFOLIO... ✨";
+    if (count < 100) return "CLEANING THE CACHE FR... 💀";
+    return "WE ARE SO BACK! 🔥";
+};
+
+// Shutter column colors
+const barColors = [
+    'var(--neon-yellow)',
+    'var(--electric-purple)',
+    'var(--action-pink)',
+    'var(--pitch-black)',
+    'var(--pure-white)',
+    'var(--neon-yellow)',
+    'var(--electric-purple)'
+];
+
 const Preloader = () => {
     const [count, setCount] = useState(0);
     const [loading, setLoading] = useState(true);
@@ -31,12 +53,12 @@ const Preloader = () => {
             setCount((prev) => {
                 if (prev >= 100) {
                     clearInterval(interval);
-                    setTimeout(() => setExitAnimation(true), 300);
+                    setTimeout(() => setExitAnimation(true), 400);
                     return 100;
                 }
                 return prev + 1;
             });
-        }, 40);
+        }, 30); // slightly faster count up
 
         return () => clearInterval(interval);
     }, []);
@@ -44,8 +66,6 @@ const Preloader = () => {
     // When exit starts, make preloader bg transparent so bars reveal content
     useEffect(() => {
         if (exitAnimation && preloaderRef.current) {
-            // Make the main preloader background transparent
-            // The bars themselves are the black columns hiding the content
             preloaderRef.current.style.backgroundColor = 'transparent';
         }
     }, [exitAnimation]);
@@ -64,10 +84,29 @@ const Preloader = () => {
 
     return (
         <div ref={preloaderRef} className={styles.preloader}>
+            {/* Neo-Brutalist Dot Pattern */}
+            <div className="absolute inset-0 bg-dot-brutalist pointer-events-none opacity-20 z-0" />
+            
             {/* Counter content — hidden during exit */}
             {!exitAnimation && (
                 <div className={styles.preloaderContent}>
-                    <div className={styles.counter}>
+                    {/* Rotating "Vibe Check" sticker */}
+                    <motion.div
+                        animate={{ rotate: [3, -3, 3] }}
+                        transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
+                        className="mb-8 px-4 py-2 font-space font-black uppercase text-xs tracking-wider rounded-md z-10"
+                        style={{
+                            backgroundColor: 'var(--action-pink)',
+                            color: 'var(--pure-white)',
+                            border: '3px solid var(--pitch-black)',
+                            boxShadow: '4px 4px 0px var(--pitch-black)',
+                            transform: 'rotate(4deg)'
+                        }}
+                    >
+                        VIBE CHECK IN PROGRESS 🔍
+                    </motion.div>
+
+                    <div className={`${styles.counter} font-bebas`}>
                         {count}
                         <span className={styles.percentage}>%</span>
                     </div>
@@ -81,8 +120,8 @@ const Preloader = () => {
                         />
                     </div>
 
-                    <p className="mt-4 text-white/50 font-bitcount tracking-widest text-sm uppercase">
-                        Initializing Experience
+                    <p className="mt-6 font-space font-black text-center uppercase tracking-widest text-xs md:text-sm text-[var(--pitch-black)] z-10 max-w-[280px] md:max-w-md h-8">
+                        {getGenZStatus(count)}
                     </p>
                 </div>
             )}
@@ -94,6 +133,11 @@ const Preloader = () => {
                         <motion.div
                             key={i}
                             className={styles.verticalBar}
+                            style={{
+                                backgroundColor: barColors[i],
+                                borderLeft: i > 0 ? '2px solid var(--pitch-black)' : 'none',
+                                borderRight: i < NUM_BARS - 1 ? '2px solid var(--pitch-black)' : 'none',
+                            }}
                             initial={{ y: '0%' }}
                             animate={{ y: '-100%' }}
                             transition={{

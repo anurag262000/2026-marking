@@ -10,28 +10,28 @@ if (typeof window !== "undefined") {
 
 const steps = [
   {
-    heading: "WHO WE ARE",
-    text: "A collective of creative developers dedicated to pushing technical boundaries. We blend engineering with artistic vision to create standout digital products.",
+    heading: "WHO I AM 👋",
+    text: "A creative developer dedicated to pushing technical boundaries. I blend engineering with artistic vision to create standout digital products that SLAP.",
   },
   {
-    heading: "OUR STACK",
-    text: "Using Next.js, React, and GSAP, we build scalable architectures with cinematic animations that bring digital stories to life with fluid precision.",
+    heading: "MY STACK 💻",
+    text: "Using Next.js, React, and GSAP, I build scalable architectures with cinematic animations that bring digital stories to life with fluid precision. NO CAP.",
   },
   {
-    heading: "EXPERIENCE",
-    text: "Successfully partnered with global brands to deliver high-impact digital experiences, from complex SaaS platforms to immersive brand narratives.",
+    heading: "EXPERIENCE 🚀",
+    text: "Successfully partnered with global brands to deliver high-impact digital experiences, from complex SaaS platforms to immersive brand narratives. LEGENDARY.",
   },
   {
-    heading: "OUR VISION",
-    text: "Bridging imagination and reality through clean code and minimalist aesthetics. We create an interactive, inclusive, and inspiring web experience.",
+    heading: "MY VISION 👁️",
+    text: "Bridging imagination and reality through clean code and minimalist aesthetics. I create an interactive, inclusive, and inspiring web experience. BUSSIN.",
   },
   {
-    heading: "THE GOAL",
-    text: "Building production-ready applications that leave a lasting digital impression. We strive for perfection, ensuring your presence is innovative.",
+    heading: "THE GOAL 🎯",
+    text: "Building production-ready applications that leave a lasting digital impression. I strive for perfection, ensuring your presence is innovative. SHEESH.",
   },
   {
-    heading: "INNOVATION",
-    text: "Constantly experimenting with new technologies to stay ahead. We deliver future-proof solutions by embracing change and challenging the status quo.",
+    heading: "INNOVATION 💡",
+    text: "Constantly experimenting with new technologies to stay ahead. I deliver future-proof solutions by embracing change and challenging the status quo. FR FR.",
   }
 ];
 
@@ -99,20 +99,66 @@ const AboutInfo = () => {
   return (
     <section
       ref={sectionRef}
-      className="relative w-full h-screen bg-[#ffffff] overflow-hidden flex items-center justify-center text-[#000000]"
+      className="relative w-full h-screen overflow-hidden flex items-center justify-center"
+      style={{ backgroundColor: 'var(--off-white)', color: 'var(--pitch-black)' }}
     >
-      {/* Outer Oval - STATIC and PADDED */}
-      <div className="absolute w-[95vw] h-[85vh] border border-dotted border-[#000000] rounded-[50%] flex items-center justify-center pointer-events-none" />
+      {/* Dot pattern background */}
+      <div className="absolute inset-0 bg-dot-brutalist pointer-events-none opacity-20" />
+      
+      {/* Outer Oval - Neo-Brutalist */}
+      <div 
+        className="absolute w-[95vw] h-[85vh] rounded-[50%] flex items-center justify-center pointer-events-none" 
+        style={{ 
+          border: '3px dashed var(--pitch-black)',
+          opacity: 0.3
+        }}
+      />
 
-      {/* Inner Rotating Border and Arrows - SMALLER TO INCREASE GAP */}
+      {/* Inner Rotating Border and Arrows - Neo-Brutalist */}
       <div
         ref={circleRef}
-        className="absolute w-[280px] h-[280px] md:w-[500px] md:h-[500px] xl:w-[620px] xl:h-[620px] border border-dotted border-[#000000] rounded-full flex items-center justify-center will-change-transform z-0 pointer-events-none"
+        className="absolute w-[280px] h-[280px] md:w-[500px] md:h-[500px] xl:w-[620px] xl:h-[620px] rounded-full flex items-center justify-center will-change-transform z-0 pointer-events-none"
+        style={{ 
+          border: '4px solid var(--pitch-black)',
+          boxShadow: '0 0 0 8px var(--off-white), 0 0 0 12px var(--pitch-black)'
+        }}
       >
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-4 h-4 bg-[#000000]" style={{ clipPath: 'polygon(50% 0%, 0% 100%, 100% 100%)' }} />
-        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2 w-4 h-4 bg-[#000000] rotate-180" style={{ clipPath: 'polygon(50% 0%, 0% 100%, 100% 100%)' }} />
-        <div className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-1/2 w-4 h-4 bg-[#000000] -rotate-90" style={{ clipPath: 'polygon(50% 0%, 0% 100%, 100% 100%)' }} />
-        <div className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/2 w-4 h-4 bg-[#000000] rotate-90" style={{ clipPath: 'polygon(50% 0%, 0% 100%, 100% 100%)' }} />
+        {/* Top Arrow */}
+        <div 
+          className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-6 h-6 rounded-sm" 
+          style={{ 
+            backgroundColor: 'var(--neon-yellow)',
+            border: '2px solid var(--pitch-black)',
+            clipPath: 'polygon(50% 0%, 0% 100%, 100% 100%)'
+          }} 
+        />
+        {/* Bottom Arrow */}
+        <div 
+          className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2 w-6 h-6 rounded-sm rotate-180" 
+          style={{ 
+            backgroundColor: 'var(--electric-purple)',
+            border: '2px solid var(--pitch-black)',
+            clipPath: 'polygon(50% 0%, 0% 100%, 100% 100%)'
+          }} 
+        />
+        {/* Left Arrow */}
+        <div 
+          className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-1/2 w-6 h-6 rounded-sm -rotate-90" 
+          style={{ 
+            backgroundColor: 'var(--action-pink)',
+            border: '2px solid var(--pitch-black)',
+            clipPath: 'polygon(50% 0%, 0% 100%, 100% 100%)'
+          }} 
+        />
+        {/* Right Arrow */}
+        <div 
+          className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/2 w-6 h-6 rounded-sm rotate-90" 
+          style={{ 
+            backgroundColor: 'var(--neon-yellow)',
+            border: '2px solid var(--pitch-black)',
+            clipPath: 'polygon(50% 0%, 0% 100%, 100% 100%)'
+          }} 
+        />
       </div>
 
       {/* Content Container */}
@@ -124,10 +170,16 @@ const AboutInfo = () => {
               ref={(el) => (stepRefs.current[i] = el)}
               className="absolute inset-0 opacity-0 flex flex-col items-center justify-center text-center p-8"
             >
-              <h3 className="text-base md:text-xl font-extrabold tracking-[0.4em] text-[#000000] uppercase mb-4">
+              <h3 
+                className="text-lg md:text-2xl font-black tracking-wider uppercase mb-4 font-bebas"
+                style={{ color: 'var(--pitch-black)' }}
+              >
                 {step.heading}
               </h3>
-              <p className="text-sm md:text-base text-[#000000] leading-relaxed font-medium max-w-[400px] mx-auto">
+              <p 
+                className="text-sm md:text-base leading-relaxed font-space font-medium max-w-[500px] mx-auto"
+                style={{ color: 'var(--pitch-black)', opacity: 0.8 }}
+              >
                 {step.text}
               </p>
             </div>

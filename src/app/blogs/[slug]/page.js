@@ -15,9 +15,17 @@ export default async function BlogPostPage({ params }) {
 
   if (!blog) {
     return (
-      <div className="min-h-screen bg-black text-white flex flex-col items-center justify-center">
-        <h1 className="text-2xl font-bold mb-4">Article Not Found</h1>
-        <Link href="/blogs" className="text-blue-500 hover:underline">Back to Blogs</Link>
+      <div className="min-h-screen bg-[var(--off-white)] text-[var(--pitch-black)] flex flex-col items-center justify-center relative">
+        <div className="absolute inset-0 bg-dot-brutalist pointer-events-none opacity-20 z-0" />
+        <div className="relative z-10 text-center">
+          <h1 className="text-4xl font-bebas font-black uppercase mb-6">Article Not Found</h1>
+          <Link 
+            href="/blogs" 
+            className="inline-block px-6 py-3 bg-[var(--neon-yellow)] text-[var(--pitch-black)] font-space font-black uppercase text-xs border-[3px] border-[var(--pitch-black)] rounded-xl shadow-[4px_4px_0px_var(--pitch-black)] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[2px_2px_0px_var(--pitch-black)] transition-all"
+          >
+            Back to Blogs
+          </Link>
+        </div>
       </div>
     );
   }
@@ -29,44 +37,51 @@ export default async function BlogPostPage({ params }) {
   });
 
   return (
-    <article className="min-h-screen bg-black text-white pt-32 pb-20">
-        {/* Progress Bar (Optional, simpler to just skip complex scroll hooks for now) */}
+    <article className="min-h-screen bg-[var(--off-white)] text-[var(--pitch-black)] pt-32 pb-20 relative">
+        {/* Brutalist Dot Pattern */}
+        <div className="absolute inset-0 bg-dot-brutalist pointer-events-none opacity-20 z-0" />
 
-        <div className="max-w-7xl mx-auto px-6">
-            <Link href="/blogs" className="inline-flex items-center text-white/40 hover:text-white mb-12 transition-colors font-orbitron text-xs uppercase tracking-widest">
-                <FiArrowLeft className="mr-2" /> Back to Articles
+        <div className="max-w-7xl mx-auto px-6 relative z-10">
+            <Link 
+              href="/blogs" 
+              className="inline-flex items-center gap-2 px-4 py-2 bg-[var(--pure-white)] text-[var(--pitch-black)] font-space font-black text-xs uppercase tracking-wider border-[2px] border-[var(--pitch-black)] rounded-md shadow-[2px_2px_0px_var(--pitch-black)] hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-[1px_1px_0px_var(--pitch-black)] transition-all mb-12"
+            >
+                <FiArrowLeft className="text-lg" /> Back to Articles
             </Link>
 
             <header className="mb-10">
                 <div className="flex flex-wrap items-center justify-between gap-4 mb-6">
                     <div className="flex flex-wrap gap-2">
                         {blog.tags?.map((tag, i) => (
-                            <span key={i} className="text-[10px] font-orbitron uppercase tracking-wider text-blue-500 border border-blue-500/30 px-3 py-1 rounded-full bg-blue-500/5">
+                            <span 
+                              key={i} 
+                              className="text-[10px] font-space font-black uppercase tracking-wider text-[var(--pitch-black)] bg-[var(--neon-yellow)] border-[2px] border-[var(--pitch-black)] px-3 py-1.5 rounded-md shadow-[2px_2px_0px_var(--pitch-black)]"
+                            >
                                 {tag}
                             </span>
                         ))}
                     </div>
                     <LikeButton blogSlug={slug} />
                 </div>
-                <h1 className="text-4xl md:text-6xl font-black font-helvetica mb-8 leading-tight">{blog.title}</h1>
+                <h1 className="text-5xl md:text-7xl font-black font-bebas uppercase mb-8 leading-[1.1] text-[var(--pitch-black)]">{blog.title}</h1>
 
-                <div className="flex items-center gap-6 text-sm text-white/40 font-orbitron border-t border-b border-white/10 py-6">
+                <div className="flex flex-wrap items-center gap-6 text-sm text-[var(--pitch-black)] font-space font-bold border-t-[3px] border-b-[3px] border-[var(--pitch-black)] py-6">
                    <div className="flex items-center gap-2">
-                        <FiCalendar />
+                        <FiCalendar className="text-[var(--electric-purple)] text-lg" />
                         <span>{date}</span>
                    </div>
                    <div className="flex items-center gap-2">
-                        <FiClock />
+                        <FiClock className="text-[var(--action-pink)] text-lg" />
                         <span>{blog.content ? Math.ceil(blog.content.length / 1000) : 0} min read</span>
                    </div>
-                   <div className="ml-auto font-mono text-xs opacity-50">
+                   <div className="sm:ml-auto font-mono text-xs opacity-70">
                         {blog.views || 0} views
                    </div>
                 </div>
             </header>
 
             {blog.image_url && (
-                <div className="mb-16 rounded-3xl overflow-hidden border border-white/10 shadow-2xl">
+                <div className="mb-16 rounded-2xl overflow-hidden border-[3px] border-[var(--pitch-black)] shadow-[6px_6px_0px_var(--pitch-black)]">
                     <img 
                         src={blog.image_url} 
                         alt={blog.title} 
@@ -75,7 +90,7 @@ export default async function BlogPostPage({ params }) {
                 </div>
             )}
 
-            <div className="prose prose-invert prose-lg max-w-none mb-20 selection:bg-blue-500/30">
+            <div className="prose prose-lg max-w-none mb-20 selection:bg-[var(--neon-yellow)] prose-headings:text-[var(--pitch-black)] prose-headings:font-bebas prose-headings:font-black prose-headings:uppercase prose-headings:tracking-tight prose-p:text-[var(--pitch-black)] prose-p:font-space prose-p:font-medium prose-p:opacity-90 prose-p:leading-relaxed prose-strong:text-[var(--pitch-black)] prose-strong:font-black prose-code:text-[var(--pitch-black)] prose-code:bg-[var(--pure-white)] prose-code:border-[2px] prose-code:border-[var(--pitch-black)] prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-blockquote:border-l-[4px] prose-blockquote:border-[var(--pitch-black)] prose-blockquote:italic prose-a:text-[var(--electric-purple)] prose-a:underline prose-li:text-[var(--pitch-black)] prose-li:font-space prose-li:font-medium">
                 <ReactMarkdown>
                     {blog.content?.replace(/^#\s+.*(\r?\n|$)/, '')}
                 </ReactMarkdown>

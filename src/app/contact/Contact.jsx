@@ -50,19 +50,25 @@ const ContactPage = () => {
     const particles = [];
     const particleCount = 50;
 
+    const emojis = ["🔥", "💻", "🚀", "💀", "💯", "💅", "✨", "👾", "✌️", "💸", "😎"];
+
     class Particle {
       constructor() {
         this.x = Math.random() * canvas.width;
         this.y = Math.random() * canvas.height;
-        this.size = Math.random() * 2 + 1;
-        this.speedX = Math.random() * 0.5 - 0.25;
-        this.speedY = Math.random() * 0.5 - 0.25;
-        this.opacity = Math.random() * 0.5 + 0.2;
+        this.fontSize = Math.random() * 16 + 12; // 12px to 28px
+        this.speedX = Math.random() * 0.4 - 0.2;
+        this.speedY = Math.random() * 0.4 - 0.2;
+        this.opacity = Math.random() * 0.3 + 0.1;
+        this.emoji = emojis[Math.floor(Math.random() * emojis.length)];
+        this.rotation = Math.random() * Math.PI * 2;
+        this.rotationSpeed = Math.random() * 0.02 - 0.01;
       }
 
       update() {
         this.x += this.speedX;
         this.y += this.speedY;
+        this.rotation += this.rotationSpeed;
 
         if (this.x > canvas.width) this.x = 0;
         if (this.x < 0) this.x = canvas.width;
@@ -71,10 +77,13 @@ const ContactPage = () => {
       }
 
       draw() {
-        ctx.fillStyle = `rgba(251, 146, 60, ${this.opacity})`;
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-        ctx.fill();
+        ctx.save();
+        ctx.globalAlpha = this.opacity;
+        ctx.translate(this.x, this.y);
+        ctx.rotate(this.rotation);
+        ctx.font = `${this.fontSize}px sans-serif`;
+        ctx.fillText(this.emoji, -this.fontSize / 2, this.fontSize / 2);
+        ctx.restore();
       }
     }
 
@@ -203,48 +212,80 @@ const ContactPage = () => {
   };
 
   return (
-    <div className="relative min-h-screen bg-black text-white overflow-hidden ">
-      {/* Animated background and gradients ... */}
+    <div className="relative min-h-screen overflow-hidden" style={{ backgroundColor: 'var(--off-white)', color: 'var(--pitch-black)' }}>
+      {/* Neo-brutalist dot pattern background */}
+      <div className="absolute inset-0 bg-dot-brutalist pointer-events-none opacity-20" />
+      
+      {/* Animated particles - keep for subtle movement */}
       <canvas
         ref={canvasRef}
         className="absolute inset-0 z-0"
-        style={{ opacity: 0.3 }}
+        style={{ opacity: 0.15 }}
       />
-      <div className="absolute inset-0 bg-gradient-to-br from-orange-500/10 via-transparent to-purple-500/10 z-0" />
-      <div className="absolute inset-0 bg-dot-thick-neutral-800 z-0" />
 
-      {/* Success Popup */}
+      {/* Success Popup - Neo-Brutalist */}
       <AnimatePresence>
         {showSuccessPopup && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4"
+            className="fixed inset-0 z-50 flex items-center justify-center p-4"
+            style={{ backgroundColor: 'rgba(17, 17, 17, 0.8)', backdropFilter: 'blur(8px)' }}
           >
             <motion.div
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.9, opacity: 0 }}
-              className="bg-zinc-950/90 backdrop-blur-xl border border-white/10 rounded-3xl p-8 md:p-10 max-w-md w-full text-center shadow-[0_0_50px_rgba(0,0,0,0.5)] relative overflow-hidden"
+              className="rounded-2xl p-8 md:p-10 max-w-md w-full text-center relative overflow-hidden"
+              style={{
+                backgroundColor: 'var(--pure-white)',
+                border: '4px solid var(--pitch-black)',
+                boxShadow: '12px 12px 0px var(--pitch-black)'
+              }}
             >
-              <div className="absolute inset-0 bg-gradient-to-br from-orange-500/10 to-purple-500/10 pointer-events-none" />
-
-              <div className="w-16 h-16 bg-green-500/20 rounded-full flex items-center justify-center mx-auto mb-6">
-                <svg className="w-8 h-8 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+              <div 
+                className="w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6"
+                style={{
+                  backgroundColor: 'var(--neon-yellow)',
+                  border: '3px solid var(--pitch-black)',
+                  boxShadow: '5px 5px 0px var(--pitch-black)'
+                }}
+              >
+                <svg className="w-10 h-10" fill="none" stroke="var(--pitch-black)" strokeWidth={3} viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
                 </svg>
               </div>
 
-              <h3 className="text-3xl md:text-4xl font-helvetica font-light mb-4 text-white">Message Sent!</h3>
-              <p className="text-white/80 mb-8 font-orbitron text-0.9rem tracking-wider leading-relaxed">
-                Thank you for reaching out.<br />
-                I'll get back to you as soon as possible.
+              <h3 className="text-4xl md:text-5xl font-black font-bebas uppercase mb-4" style={{ color: 'var(--pitch-black)' }}>
+                VIBE RECEIVED! 📡
+              </h3>
+              <p className="mb-8 font-space font-medium text-base leading-relaxed" style={{ color: 'var(--pitch-black)', opacity: 0.7 }}>
+                Yo! Thanks for hitting me up.<br />
+                I will review your message ASAP. No cap! 💯
               </p>
 
               <button
                 onClick={closePopup}
-                className="w-full bg-white text-black font-orbitron uppercase tracking-widest py-4 rounded-xl hover:bg-gray-200 transition-colors font-bold shadow-lg"
+                className="w-full font-space font-black uppercase tracking-wider py-4 rounded-xl transition-all"
+                style={{
+                  backgroundColor: 'var(--pitch-black)',
+                  color: 'var(--neon-yellow)',
+                  border: '3px solid var(--pitch-black)',
+                  boxShadow: '5px 5px 0px var(--pitch-black)'
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.transform = 'translate(2px, 2px)';
+                  e.currentTarget.style.boxShadow = '3px 3px 0px var(--pitch-black)';
+                  e.currentTarget.style.backgroundColor = 'var(--neon-yellow)';
+                  e.currentTarget.style.color = 'var(--pitch-black)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.transform = 'translate(0, 0)';
+                  e.currentTarget.style.boxShadow = '5px 5px 0px var(--pitch-black)';
+                  e.currentTarget.style.backgroundColor = 'var(--pitch-black)';
+                  e.currentTarget.style.color = 'var(--neon-yellow)';
+                }}
               >
                 Close
               </button>
@@ -254,10 +295,10 @@ const ContactPage = () => {
       </AnimatePresence>
 
       <div className="relative z-10">
-        {/* ... Hero Section code ... */}
+        {/* Hero Section - Neo-Brutalist */}
         <section className="relative min-h-[60vh] flex items-center justify-center pt-32 pb-20">
           <div className="container mx-auto px-6 md:px-12 text-center">
-            {/* Back button */}
+            {/* Back button - Brutalist */}
             <motion.div
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
@@ -265,38 +306,53 @@ const ContactPage = () => {
             >
               <Link
                 href="/"
-                className="flex items-center gap-2 text-white/60 hover:text-white transition-colors group"
+                className="flex items-center gap-2 px-4 py-2 rounded-lg font-space font-bold uppercase tracking-wider text-sm transition-all"
+                style={{
+                  backgroundColor: 'var(--pure-white)',
+                  color: 'var(--pitch-black)',
+                  border: '2px solid var(--pitch-black)',
+                  boxShadow: '4px 4px 0px var(--pitch-black)'
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.transform = 'translate(2px, 2px)';
+                  e.currentTarget.style.boxShadow = '2px 2px 0px var(--pitch-black)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.transform = 'translate(0, 0)';
+                  e.currentTarget.style.boxShadow = '4px 4px 0px var(--pitch-black)';
+                }}
               >
                 <svg
-                  className="w-5 h-5 transform group-hover:-translate-x-1 transition-transform"
+                  className="w-5 h-5"
                   fill="none"
                   stroke="currentColor"
+                  strokeWidth={2}
                   viewBox="0 0 24 24"
                 >
                   <path
                     strokeLinecap="round"
                     strokeLinejoin="round"
-                    strokeWidth={2}
                     d="M15 19l-7-7 7-7"
                   />
                 </svg>
-                <span className="font-orbitron text-sm uppercase tracking-wider">
-                  Back
-                </span>
+                Back
               </Link>
             </motion.div>
 
             {/* Title */}
             <div className="flex justify-center mb-8">
-              <div className="w-24 h-0.5 bg-gradient-to-r from-transparent via-orange-500 to-transparent"></div>
+              <div 
+                className="w-24 h-1 rounded-full"
+                style={{ backgroundColor: 'var(--neon-yellow)' }}
+              />
             </div>
 
-            <h1 className="text-5xl md:text-7xl lg:text-8xl font-helvetica font-thin italic mb-6 leading-tight">
-              Let's Work Together
+            <h1 className="text-6xl md:text-8xl lg:text-9xl font-black uppercase leading-none mb-6 font-bebas" style={{ color: 'var(--pitch-black)' }}>
+              LET'S COOK<br />SOMETHING FIRE 🔥
             </h1>
 
-            <p className="text-lg md:text-xl text-white/60 font-orbitron uppercase tracking-widest max-w-2xl mx-auto">
-              Have a project in mind? Let's talk
+            <p className="text-lg md:text-xl font-space font-bold uppercase tracking-widest max-w-2xl mx-auto" style={{ color: 'var(--electric-purple)' }}>
+              GOT AN IDEA? LET'S MAKE IT LEGENDARY FR
             </p>
           </div>
         </section>
@@ -306,65 +362,99 @@ const ContactPage = () => {
           <div className="container mx-auto px-6 md:px-12">
             <div className="grid grid-cols-1 lg:grid-cols-5 gap-12 lg:gap-16">
 
-              {/* Left Side - Info */}
+              {/* Left Side - Info - Neo-Brutalist */}
               <div className="lg:col-span-2 space-y-8">
-                {/* ... Intro text ... */}
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: 0.2 }}
                 >
-                  <h3 className="text-3xl md:text-4xl font-helvetica font-thin italic mb-4">
-                    Get in Touch
+                  <h3 className="text-4xl md:text-5xl font-black uppercase leading-tight mb-4 font-bebas" style={{ color: 'var(--pitch-black)' }}>
+                    GET IN TOUCH 📬
                   </h3>
-                  <p className="text-white/70 leading-relaxed">
+                  <p className="leading-relaxed font-space font-medium" style={{ color: 'var(--pitch-black)', opacity: 0.7 }}>
                     I'm currently available for freelance work and new opportunities.
                     Whether you have a question or just want to say hi, I'll try my
                     best to get back to you!
                   </p>
                 </motion.div>
 
-                {/* Contact Info */}
+                {/* Contact Info Cards */}
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: 0.3 }}
-                  className="space-y-6"
+                  className="space-y-4"
                 >
-                  <div className="space-y-2">
-                    <p className="text-xs text-white/40 uppercase tracking-widest font-orbitron">
-                      Email
+                  <div 
+                    className="p-4 rounded-xl transition-all"
+                    style={{
+                      border: '3px solid var(--pitch-black)',
+                      backgroundColor: 'var(--pure-white)',
+                      boxShadow: '5px 5px 0px var(--pitch-black)'
+                    }}
+                  >
+                    <p className="text-xs uppercase tracking-widest font-space font-bold mb-2" style={{ color: 'var(--electric-purple)' }}>
+                      📧 Email
                     </p>
                     <a
                       href="mailto:anuragmishra262000@gmail.com"
-                      className="text-lg text-white hover:text-orange-400 transition-colors"
+                      className="text-base font-space font-bold transition-colors hover:underline"
+                      style={{ color: 'var(--pitch-black)' }}
                     >
                       anuragmishra262000@gmail.com
                     </a>
                   </div>
 
-                  <div className="space-y-2">
-                    <p className="text-xs text-white/40 uppercase tracking-widest font-orbitron">
-                      Location
+                  <div 
+                    className="p-4 rounded-xl transition-all"
+                    style={{
+                      border: '3px solid var(--pitch-black)',
+                      backgroundColor: 'var(--pure-white)',
+                      boxShadow: '5px 5px 0px var(--pitch-black)'
+                    }}
+                  >
+                    <p className="text-xs uppercase tracking-widest font-space font-bold mb-2" style={{ color: 'var(--electric-purple)' }}>
+                      📍 Location
                     </p>
-                    <p className="text-lg text-white/80">
+                    <p className="text-base font-space font-bold" style={{ color: 'var(--pitch-black)' }}>
                       Kurukshetra, India
                     </p>
                   </div>
 
-                  <div className="space-y-2">
-                    <p className="text-xs text-white/40 uppercase tracking-widest font-orbitron">
-                      Social
+                  <div 
+                    className="p-4 rounded-xl transition-all"
+                    style={{
+                      border: '3px solid var(--pitch-black)',
+                      backgroundColor: 'var(--pure-white)',
+                      boxShadow: '5px 5px 0px var(--pitch-black)'
+                    }}
+                  >
+                    <p className="text-xs uppercase tracking-widest font-space font-bold mb-3" style={{ color: 'var(--electric-purple)' }}>
+                      🔗 Social
                     </p>
-                    <div className="flex gap-4">
-                      {/* ... Social Links ... */}
+                    <div className="flex flex-wrap gap-3">
                       <a
                         href="https://github.com/anurag262000"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-white/60 hover:text-orange-400 transition-colors"
+                        className="px-4 py-2 rounded-lg font-space font-bold text-xs uppercase tracking-wider transition-all"
+                        style={{
+                          backgroundColor: 'var(--neon-yellow)',
+                          color: 'var(--pitch-black)',
+                          border: '2px solid var(--pitch-black)',
+                          boxShadow: '3px 3px 0px var(--pitch-black)'
+                        }}
+                        onMouseEnter={(e) => {
+                          e.currentTarget.style.transform = 'translate(1px, 1px)';
+                          e.currentTarget.style.boxShadow = '2px 2px 0px var(--pitch-black)';
+                        }}
+                        onMouseLeave={(e) => {
+                          e.currentTarget.style.transform = 'translate(0, 0)';
+                          e.currentTarget.style.boxShadow = '3px 3px 0px var(--pitch-black)';
+                        }}
                       >
                         GitHub
                       </a>
@@ -372,7 +462,21 @@ const ContactPage = () => {
                         href="https://www.linkedin.com/in/anuragmishra26"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-white/60 hover:text-orange-400 transition-colors"
+                        className="px-4 py-2 rounded-lg font-space font-bold text-xs uppercase tracking-wider transition-all"
+                        style={{
+                          backgroundColor: 'var(--electric-purple)',
+                          color: 'var(--pure-white)',
+                          border: '2px solid var(--pitch-black)',
+                          boxShadow: '3px 3px 0px var(--pitch-black)'
+                        }}
+                        onMouseEnter={(e) => {
+                          e.currentTarget.style.transform = 'translate(1px, 1px)';
+                          e.currentTarget.style.boxShadow = '2px 2px 0px var(--pitch-black)';
+                        }}
+                        onMouseLeave={(e) => {
+                          e.currentTarget.style.transform = 'translate(0, 0)';
+                          e.currentTarget.style.boxShadow = '3px 3px 0px var(--pitch-black)';
+                        }}
                       >
                         LinkedIn
                       </a>
@@ -380,7 +484,21 @@ const ContactPage = () => {
                         href="https://twitter.com/anuragmishra"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-white/60 hover:text-orange-400 transition-colors"
+                        className="px-4 py-2 rounded-lg font-space font-bold text-xs uppercase tracking-wider transition-all"
+                        style={{
+                          backgroundColor: 'var(--action-pink)',
+                          color: 'var(--pure-white)',
+                          border: '2px solid var(--pitch-black)',
+                          boxShadow: '3px 3px 0px var(--pitch-black)'
+                        }}
+                        onMouseEnter={(e) => {
+                          e.currentTarget.style.transform = 'translate(1px, 1px)';
+                          e.currentTarget.style.boxShadow = '2px 2px 0px var(--pitch-black)';
+                        }}
+                        onMouseLeave={(e) => {
+                          e.currentTarget.style.transform = 'translate(0, 0)';
+                          e.currentTarget.style.boxShadow = '3px 3px 0px var(--pitch-black)';
+                        }}
                       >
                         Twitter
                       </a>
@@ -388,37 +506,53 @@ const ContactPage = () => {
                   </div>
                 </motion.div>
 
-                {/* Availability Badge */}
+                {/* Availability Badge - Neo-Brutalist */}
                 <motion.div
                   initial={{ opacity: 0, scale: 0.9 }}
                   whileInView={{ opacity: 1, scale: 1 }}
                   viewport={{ once: true }}
                   transition={{ delay: 0.4 }}
-                  className="inline-flex items-center gap-3 px-6 py-3 bg-green-500/10 border border-green-500/20 rounded-full"
+                  className="inline-flex items-center gap-3 px-6 py-3 rounded-full"
+                  style={{
+                    backgroundColor: 'var(--neon-yellow)',
+                    border: '3px solid var(--pitch-black)',
+                    boxShadow: '4px 4px 0px var(--pitch-black)',
+                    transform: 'rotate(-2deg)'
+                  }}
                 >
-                  <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
-                  <span className="text-sm text-green-400 font-orbitron">
-                    Available for work
+                  <div className="w-3 h-3 rounded-full animate-pulse" style={{ backgroundColor: 'var(--action-pink)' }} />
+                  <span className="text-sm font-space font-black uppercase" style={{ color: 'var(--pitch-black)' }}>
+                    Available for work 💼
                   </span>
                 </motion.div>
               </div>
 
-              {/* Right Side - Form */}
+              {/* Right Side - Form - Neo-Brutalist */}
               <div className="lg:col-span-3" ref={formRef}>
                 <motion.div
                   initial={{ opacity: 0, x: 20 }}
                   whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true }}
-                  className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-8 md:p-12 relative overflow-hidden group"
+                  className="rounded-2xl p-8 md:p-12 relative overflow-hidden"
+                  style={{
+                    backgroundColor: 'var(--pure-white)',
+                    border: '4px solid var(--pitch-black)',
+                    boxShadow: '8px 8px 0px var(--pitch-black)'
+                  }}
                 >
-                  {/* Animated border glow */}
-                  <div className="absolute inset-0 bg-gradient-to-r from-orange-500/0 via-orange-500/20 to-orange-500/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
-
                   <form onSubmit={handleSubmit} className="space-y-6 relative z-10">
 
-                    {/* Explicit Error Message Display */}
+                    {/* Error Message Display */}
                     {formStatus.error && (
-                      <div className="bg-red-500/10 border border-red-500/20 text-red-500 px-4 py-3 rounded-lg text-sm font-orbitron">
+                      <div 
+                        className="px-4 py-3 rounded-lg text-sm font-space font-bold"
+                        style={{
+                          backgroundColor: 'var(--action-pink)',
+                          color: 'var(--pure-white)',
+                          border: '2px solid var(--pitch-black)',
+                          boxShadow: '4px 4px 0px var(--pitch-black)'
+                        }}
+                      >
                         {formStatus.errorMessage}
                       </div>
                     )}
@@ -427,9 +561,10 @@ const ContactPage = () => {
                     <div className="form-field">
                       <label
                         htmlFor="name"
-                        className="block text-sm font-orbitron uppercase tracking-wider text-white/70 mb-2"
+                        className="block text-sm font-space font-bold uppercase tracking-wider mb-2"
+                        style={{ color: 'var(--pitch-black)' }}
                       >
-                        Your Name *
+                        Who are you? *
                       </label>
                       <input
                         type="text"
@@ -437,14 +572,25 @@ const ContactPage = () => {
                         name="name"
                         value={formData.name}
                         onChange={handleChange}
-                        onFocus={() => setFocusedField("name")}
-                        onBlur={() => setFocusedField(null)}
+                        onFocus={(e) => {
+                          setFocusedField("name");
+                          e.currentTarget.style.boxShadow = '6px 6px 0px var(--pitch-black)';
+                          e.currentTarget.style.transform = 'translate(-2px, -2px)';
+                        }}
+                        onBlur={(e) => {
+                          setFocusedField(null);
+                          e.currentTarget.style.boxShadow = '3px 3px 0px var(--pitch-black)';
+                          e.currentTarget.style.transform = 'translate(0, 0)';
+                        }}
                         required
-                        className={`w-full bg-white/5 border ${focusedField === "name"
-                          ? "border-orange-500"
-                          : "border-white/20"
-                          } rounded-lg px-4 py-3 text-white placeholder-white/30 focus:outline-none focus:border-orange-500 transition-all duration-300`}
-                        placeholder="John Doe"
+                        className="w-full px-4 py-3 rounded-xl font-space font-semibold transition-all"
+                        style={{
+                          border: '3px solid var(--pitch-black)',
+                          backgroundColor: 'var(--off-white)',
+                          color: 'var(--pitch-black)',
+                          boxShadow: '3px 3px 0px var(--pitch-black)'
+                        }}
+                        placeholder="Chad / Stacy"
                       />
                     </div>
 
@@ -452,9 +598,10 @@ const ContactPage = () => {
                     <div className="form-field">
                       <label
                         htmlFor="email"
-                        className="block text-sm font-orbitron uppercase tracking-wider text-white/70 mb-2"
+                        className="block text-sm font-space font-bold uppercase tracking-wider mb-2"
+                        style={{ color: 'var(--pitch-black)' }}
                       >
-                        Email Address *
+                        Where can I spam you? *
                       </label>
                       <input
                         type="email"
@@ -462,14 +609,25 @@ const ContactPage = () => {
                         name="email"
                         value={formData.email}
                         onChange={handleChange}
-                        onFocus={() => setFocusedField("email")}
-                        onBlur={() => setFocusedField(null)}
+                        onFocus={(e) => {
+                          setFocusedField("email");
+                          e.currentTarget.style.boxShadow = '6px 6px 0px var(--pitch-black)';
+                          e.currentTarget.style.transform = 'translate(-2px, -2px)';
+                        }}
+                        onBlur={(e) => {
+                          setFocusedField(null);
+                          e.currentTarget.style.boxShadow = '3px 3px 0px var(--pitch-black)';
+                          e.currentTarget.style.transform = 'translate(0, 0)';
+                        }}
                         required
-                        className={`w-full bg-white/5 border ${focusedField === "email"
-                          ? "border-orange-500"
-                          : "border-white/20"
-                          } rounded-lg px-4 py-3 text-white placeholder-white/30 focus:outline-none focus:border-orange-500 transition-all duration-300`}
-                        placeholder="john@example.com"
+                        className="w-full px-4 py-3 rounded-xl font-space font-semibold transition-all"
+                        style={{
+                          border: '3px solid var(--pitch-black)',
+                          backgroundColor: 'var(--off-white)',
+                          color: 'var(--pitch-black)',
+                          boxShadow: '3px 3px 0px var(--pitch-black)'
+                        }}
+                        placeholder="chad@example.com"
                       />
                     </div>
 
@@ -477,9 +635,10 @@ const ContactPage = () => {
                     <div className="form-field">
                       <label
                         htmlFor="phone"
-                        className="block text-sm font-orbitron uppercase tracking-wider text-white/70 mb-2"
+                        className="block text-sm font-space font-bold uppercase tracking-wider mb-2"
+                        style={{ color: 'var(--pitch-black)' }}
                       >
-                        Phone Number *
+                        Digits? *
                       </label>
                       <input
                         type="tel"
@@ -487,25 +646,36 @@ const ContactPage = () => {
                         name="phone"
                         value={formData.phone}
                         onChange={handleChange}
-                        onFocus={() => setFocusedField("phone")}
-                        onBlur={() => setFocusedField(null)}
+                        onFocus={(e) => {
+                          setFocusedField("phone");
+                          e.currentTarget.style.boxShadow = '6px 6px 0px var(--pitch-black)';
+                          e.currentTarget.style.transform = 'translate(-2px, -2px)';
+                        }}
+                        onBlur={(e) => {
+                          setFocusedField(null);
+                          e.currentTarget.style.boxShadow = '3px 3px 0px var(--pitch-black)';
+                          e.currentTarget.style.transform = 'translate(0, 0)';
+                        }}
                         required
-                        className={`w-full bg-white/5 border ${focusedField === "phone"
-                          ? "border-orange-500"
-                          : "border-white/20"
-                          } rounded-lg px-4 py-3 text-white placeholder-white/30 focus:outline-none focus:border-orange-500 transition-all duration-300`}
-                        placeholder="9876543210"
+                        className="w-full px-4 py-3 rounded-xl font-space font-semibold transition-all"
+                        style={{
+                          border: '3px solid var(--pitch-black)',
+                          backgroundColor: 'var(--off-white)',
+                          color: 'var(--pitch-black)',
+                          boxShadow: '3px 3px 0px var(--pitch-black)'
+                        }}
+                        placeholder="10 digit number fr fr"
                       />
                     </div>
 
                     {/* Company Field */}
                     <div className="form-field">
-                      {/* Wrapper to match layout */}
                       <label
                         htmlFor="company"
-                        className="block text-sm font-orbitron uppercase tracking-wider text-white/70 mb-2"
+                        className="block text-sm font-space font-bold uppercase tracking-wider mb-2"
+                        style={{ color: 'var(--pitch-black)' }}
                       >
-                        Company / Organization
+                        Your Crew / Gang
                       </label>
                       <input
                         type="text"
@@ -513,39 +683,61 @@ const ContactPage = () => {
                         name="company"
                         value={formData.company}
                         onChange={handleChange}
-                        onFocus={() => setFocusedField("company")}
-                        onBlur={() => setFocusedField(null)}
-                        className={`w-full bg-white/5 border ${focusedField === "company"
-                          ? "border-orange-500"
-                          : "border-white/20"
-                          } rounded-lg px-4 py-3 text-white placeholder-white/30 focus:outline-none focus:border-orange-500 transition-all duration-300`}
-                        placeholder="Your Company"
+                        onFocus={(e) => {
+                          setFocusedField("company");
+                          e.currentTarget.style.boxShadow = '6px 6px 0px var(--pitch-black)';
+                          e.currentTarget.style.transform = 'translate(-2px, -2px)';
+                        }}
+                        onBlur={(e) => {
+                          setFocusedField(null);
+                          e.currentTarget.style.boxShadow = '3px 3px 0px var(--pitch-black)';
+                          e.currentTarget.style.transform = 'translate(0, 0)';
+                        }}
+                        className="w-full px-4 py-3 rounded-xl font-space font-semibold transition-all"
+                        style={{
+                          border: '3px solid var(--pitch-black)',
+                          backgroundColor: 'var(--off-white)',
+                          color: 'var(--pitch-black)',
+                          boxShadow: '3px 3px 0px var(--pitch-black)'
+                        }}
+                        placeholder="Slay Inc."
                       />
                     </div>
-
 
                     {/* Message Field */}
                     <div className="form-field">
                       <label
                         htmlFor="message"
-                        className="block text-sm font-orbitron uppercase tracking-wider text-white/70 mb-2"
+                        className="block text-sm font-space font-bold uppercase tracking-wider mb-2"
+                        style={{ color: 'var(--pitch-black)' }}
                       >
-                        Your Message *
+                        What's the tea? *
                       </label>
                       <textarea
                         id="message"
                         name="message"
                         value={formData.message}
                         onChange={handleChange}
-                        onFocus={() => setFocusedField("message")}
-                        onBlur={() => setFocusedField(null)}
+                        onFocus={(e) => {
+                          setFocusedField("message");
+                          e.currentTarget.style.boxShadow = '6px 6px 0px var(--pitch-black)';
+                          e.currentTarget.style.transform = 'translate(-2px, -2px)';
+                        }}
+                        onBlur={(e) => {
+                          setFocusedField(null);
+                          e.currentTarget.style.boxShadow = '3px 3px 0px var(--pitch-black)';
+                          e.currentTarget.style.transform = 'translate(0, 0)';
+                        }}
                         required
                         rows={6}
-                        className={`w-full bg-white/5 border ${focusedField === "message"
-                          ? "border-orange-500"
-                          : "border-white/20"
-                          } rounded-lg px-4 py-3 text-white placeholder-white/30 focus:outline-none focus:border-orange-500 transition-all duration-300 resize-none`}
-                        placeholder="Tell me about your project..."
+                        className="w-full px-4 py-3 rounded-xl font-space font-semibold transition-all resize-none"
+                        style={{
+                          border: '3px solid var(--pitch-black)',
+                          backgroundColor: 'var(--off-white)',
+                          color: 'var(--pitch-black)',
+                          boxShadow: '3px 3px 0px var(--pitch-black)'
+                        }}
+                        placeholder="Spill the tea... (min. 10 characters or you get filtered)"
                       />
                     </div>
 
@@ -555,26 +747,52 @@ const ContactPage = () => {
                       disabled={formStatus.submitting}
                       whileHover={{ scale: 1.02 }}
                       whileTap={{ scale: 0.98 }}
-                      className="w-full bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-orbitron uppercase tracking-wider py-4 rounded-lg flex items-center justify-center gap-3 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed group"
+                      className="w-full font-space font-black uppercase tracking-wider py-4 rounded-xl flex items-center justify-center gap-3 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                      style={{
+                        backgroundColor: 'var(--neon-yellow)',
+                        color: 'var(--pitch-black)',
+                        border: '3px solid var(--pitch-black)',
+                        boxShadow: '5px 5px 0px var(--pitch-black)'
+                      }}
+                      onMouseEnter={(e) => {
+                        if (!formStatus.submitting) {
+                          e.currentTarget.style.transform = 'translate(2px, 2px)';
+                          e.currentTarget.style.boxShadow = '3px 3px 0px var(--pitch-black)';
+                          e.currentTarget.style.backgroundColor = 'var(--pitch-black)';
+                          e.currentTarget.style.color = 'var(--neon-yellow)';
+                        }
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.transform = 'translate(0, 0)';
+                        e.currentTarget.style.boxShadow = '5px 5px 0px var(--pitch-black)';
+                        e.currentTarget.style.backgroundColor = 'var(--neon-yellow)';
+                        e.currentTarget.style.color = 'var(--pitch-black)';
+                      }}
                     >
                       {formStatus.submitting ? (
                         <>
-                          <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                          Sending...
+                          <div 
+                            className="w-5 h-5 rounded-full animate-spin"
+                            style={{
+                              border: '3px solid var(--pitch-black)',
+                              borderTopColor: 'transparent'
+                            }}
+                          />
+                          VIBING...
                         </>
                       ) : (
                         <>
-                          Send Message
+                          SEND IT! 🚀
                           <svg
-                            className="w-5 h-5 transform group-hover:translate-x-1 transition-transform"
+                            className="w-5 h-5"
                             fill="none"
                             stroke="currentColor"
+                            strokeWidth={2}
                             viewBox="0 0 24 24"
                           >
                             <path
                               strokeLinecap="round"
                               strokeLinejoin="round"
-                              strokeWidth={2}
                               d="M14 5l7 7m0 0l-7 7m7-7H3"
                             />
                           </svg>
@@ -589,11 +807,11 @@ const ContactPage = () => {
           </div>
         </section>
 
-        {/* Footer */}
-        <section className="relative py-16 border-t border-white/10">
+        {/* Footer - Neo-Brutalist */}
+        <section className="relative py-16" style={{ borderTop: '3px solid var(--pitch-black)' }}>
           <div className="container mx-auto px-6 md:px-12 text-center">
-            <p className="text-white/40 text-sm">
-              © 2026 Anurag Mishra. All rights reserved.
+            <p className="text-sm font-space font-bold uppercase tracking-wider" style={{ color: 'var(--pitch-black)', opacity: 0.5 }}>
+              © 2026 Anurag Mishra. All rights reserved. 💯
             </p>
           </div>
         </section>

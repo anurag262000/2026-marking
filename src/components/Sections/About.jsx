@@ -2,13 +2,13 @@
 import React from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
-import { FiMapPin, FiBookOpen, FiCode, FiZap, FiTarget, FiCoffee } from "react-icons/fi";
+import { FiBookOpen, FiCode, FiZap, FiTarget, FiCoffee } from "react-icons/fi";
 
 const skills = [
-  { icon: <FiCode />, label: "Full-Stack Dev" },
-  { icon: <FiZap />, label: "UI/UX Design" },
-  { icon: <FiTarget />, label: "Leadership" },
-  { icon: <FiCoffee />, label: "Problem Solving" },
+  { icon: <FiCode />, label: "Full-Stack", color: "var(--neon-yellow)" },
+  { icon: <FiZap />, label: "UI/UX", color: "var(--electric-purple)" },
+  { icon: <FiTarget />, label: "Leadership", color: "var(--action-pink)" },
+  { icon: <FiCoffee />, label: "Problem Solving", color: "var(--neon-yellow)" },
 ];
 
 const stats = [
@@ -20,9 +20,13 @@ const stats = [
 
 export default function AboutCombined() {
   return (
-    <section className="relative w-full mt-[-100px] md:mt-0 py-0 md:py-24 bg-transparent overflow-hidden" id="about">
-      {/* Background: Subtle tech grid to match Hero */}
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff05_1px,transparent_1px),linear-gradient(to_bottom,#ffffff05_1px,transparent_1px)] bg-size-[40px_40px] pointer-events-none" />
+    <section 
+      className="relative w-full mt-[-100px] md:mt-0 py-0 md:py-24 overflow-hidden" 
+      id="about"
+      style={{ backgroundColor: 'var(--off-white)' }}
+    >
+      {/* Neo-Brutalist Dot Pattern Background */}
+      <div className="absolute inset-0 bg-dot-brutalist pointer-events-none" />
 
       <div className="container mx-auto  px-4 md:px-6 relative z-10 py-16 md:py-0">
         <div className="grid lg:grid-cols-12 gap-8 md:gap-12 items-start">
@@ -36,17 +40,48 @@ export default function AboutCombined() {
             className="lg:col-span-5 xl:col-span-4 lg:sticky lg:top-24"
           >
             <div className="relative group">
-              <h2 className="text-blue-400 block md:hidden font-orbitron tracking-[0.4em] text-xs font-bold mb-4 uppercase drop-shadow-[0_0_10px_rgba(96,165,250,0.3)]">
-                // ROOT_IDENTITY
-              </h2>
-              <h3 className="text-4xl block md:hidden md:text-6xl font-black text-white font-orbitron uppercase leading-none mb-8 tracking-tighter">
-                ANURAG <span className="stroke-text">MISHRA</span>
-              </h3>
-              {/* Corner Accents */}
-              <div className="absolute -top-2 -left-2 w-8 h-8 border-t-2 border-l-2 border-blue-500/50" />
-              <div className="absolute -bottom-2 -right-2 w-8 h-8 border-b-2 border-r-2 border-blue-500/50" />
+              {/* Mobile Title */}
+              <div className="block md:hidden mb-6">
+                <span 
+                  className="inline-block px-4 py-2 rounded-xl font-space font-black text-xs uppercase tracking-wider mb-3"
+                  style={{ 
+                    backgroundColor: 'var(--electric-purple)',
+                    color: 'var(--pure-white)',
+                    border: '3px solid var(--pitch-black)',
+                    boxShadow: '4px 4px 0px var(--pitch-black)',
+                    transform: 'rotate(-2deg)'
+                  }}
+                >
+                  🎯 WHO I AM
+                </span>
+                <h3 
+                  className="text-4xl md:text-6xl font-black font-bebas uppercase leading-none mt-3"
+                  style={{ color: 'var(--pitch-black)' }}
+                >
+                  ANURAG MISHRA
+                </h3>
+                <div 
+                  className="w-24 h-2 mt-3 rounded-full"
+                  style={{ backgroundColor: 'var(--neon-yellow)' }}
+                />
+              </div>
 
-              <div className="relative aspect-[4/5] overflow-hidden border border-white/10 bg-black/40 backdrop-blur-sm grayscale-0 md:grayscale hover:grayscale-0 transition-all duration-700 rounded-sm">
+              {/* Brutalist Image Frame */}
+              <div 
+                className="relative aspect-[4/5] overflow-hidden rounded-xl transition-all duration-300"
+                style={{ 
+                  border: '3px solid var(--pitch-black)',
+                  boxShadow: '8px 8px 0px var(--pitch-black)'
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.transform = 'translate(3px, 3px)';
+                  e.currentTarget.style.boxShadow = '5px 5px 0px var(--pitch-black)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.transform = 'translate(0, 0)';
+                  e.currentTarget.style.boxShadow = '8px 8px 0px var(--pitch-black)';
+                }}
+              >
                 <Image
                   src="/Headshot.png"
                   alt="Anurag Mishra"
@@ -54,30 +89,67 @@ export default function AboutCombined() {
                   className="object-cover group-hover:scale-105 transition-transform duration-700"
                   priority
                 />
-                {/* Scanline overlay */}
-                <div className="absolute inset-0 pointer-events-none bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.1)_50%)] bg-[size:100%_4px]" />
               </div>
 
-              {/* Status Indicator */}
-              <div className="absolute bottom-4 left-4 flex items-center gap-2 px-3 py-1 bg-black/60 backdrop-blur-md border border-white/10 rounded-full">
-                <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse shadow-[0_0_10px_rgba(34,197,94,0.5)]" />
-                <span className="text-[10px] text-white/90 font-orbitron tracking-widest uppercase">System.Active</span>
+              {/* Status Sticker */}
+              <div 
+                className="absolute -bottom-4 -right-4 flex items-center gap-2 px-5 py-3 rounded-xl font-space font-black text-xs uppercase tracking-wider"
+                style={{ 
+                  backgroundColor: 'var(--neon-yellow)',
+                  color: 'var(--pitch-black)',
+                  border: '3px solid var(--pitch-black)',
+                  boxShadow: '6px 6px 0px var(--pitch-black)',
+                  transform: 'rotate(4deg)'
+                }}
+              >
+                <div 
+                  className="w-3 h-3 rounded-full animate-pulse"
+                  style={{ backgroundColor: 'var(--action-pink)' }}
+                />
+                <span>AVAILABLE 🔥</span>
               </div>
             </div>
 
-            {/* Quick Specs (Location/Education) */}
-            <div className="mt-8 space-y-4">
-              <div className="flex items-start gap-4 text-white/80 p-4 border border-white/5 bg-white/[0.02] rounded-lg hover:border-blue-500/30 transition-colors">
-                <FiBookOpen className="text-blue-400 mt-1 shrink-0" />
-
+            {/* Education Card */}
+            <div className="mt-8">
+              <div 
+                className="flex items-start gap-4 p-4 rounded-xl transition-all"
+                style={{ 
+                  border: '2px solid var(--pitch-black)',
+                  backgroundColor: 'var(--pure-white)',
+                  boxShadow: '4px 4px 0px var(--pitch-black)'
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.transform = 'translate(2px, 2px)';
+                  e.currentTarget.style.boxShadow = '2px 2px 0px var(--pitch-black)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.transform = 'translate(0, 0)';
+                  e.currentTarget.style.boxShadow = '4px 4px 0px var(--pitch-black)';
+                }}
+              >
+                <FiBookOpen 
+                  className="mt-1 shrink-0" 
+                  size={20}
+                  style={{ color: 'var(--electric-purple)' }}
+                />
                 <div className="flex flex-col">
-                  <span className="text-white text-sm font-medium leading-snug">
+                  <span 
+                    className="text-sm font-bold font-space leading-snug"
+                    style={{ color: 'var(--pitch-black)' }}
+                  >
                     Bachelor of Computer Applications
                   </span>
-                  <span className="text-white/60 text-sm leading-snug">
+                  <span 
+                    className="text-sm font-medium font-space leading-snug mt-1"
+                    style={{ color: 'var(--pitch-black)', opacity: 0.7 }}
+                  >
                     Seth Jai Prakash Mukand Lal Institute
                   </span>
-                  <span className="text-white/40 text-xs mt-1">
+                  <span 
+                    className="text-xs font-space mt-1"
+                    style={{ color: 'var(--pitch-black)', opacity: 0.5 }}
+                  >
                     Kurukshetra, India
                   </span>
                 </div>
@@ -95,43 +167,148 @@ export default function AboutCombined() {
               transition={{ delay: 0.2 }}
               viewport={{ once: true }}
             >
-              <h2 className="text-blue-400 hidden md:block font-orbitron tracking-[0.4em] text-xs font-bold mb-4 uppercase drop-shadow-[0_0_10px_rgba(96,165,250,0.3)]">
-                // ROOT_IDENTITY
-              </h2>
-              <h3 className="text-4xl hidden md:block md:text-6xl font-black text-white font-orbitron uppercase leading-none mb-8 tracking-tighter">
-                ANURAG <span className="stroke-text">MISHRA</span>
-              </h3>
+              {/* Desktop Title */}
+              <div className="hidden md:block mb-8">
+                <span 
+                  className="inline-block px-4 py-2 rounded-xl font-space font-black text-xs uppercase tracking-wider mb-4"
+                  style={{ 
+                    backgroundColor: 'var(--electric-purple)',
+                    color: 'var(--pure-white)',
+                    border: '3px solid var(--pitch-black)',
+                    boxShadow: '4px 4px 0px var(--pitch-black)',
+                    transform: 'rotate(-2deg)'
+                  }}
+                >
+                  🎯 WHO I AM
+                </span>
+                <h3 
+                  className="text-5xl md:text-7xl font-black font-bebas uppercase leading-none mt-4"
+                  style={{ color: 'var(--pitch-black)' }}
+                >
+                  ANURAG MISHRA
+                </h3>
+                <div 
+                  className="w-32 h-2 mt-4 rounded-full"
+                  style={{ backgroundColor: 'var(--neon-yellow)' }}
+                />
+              </div>
 
-              <div className="space-y-4 md:space-y-6 text-white/80 text-base md:text-lg leading-relaxed max-w-3xl font-light font-sans">
+              <div 
+                className="space-y-5 md:space-y-6 text-base md:text-lg leading-relaxed max-w-3xl font-space font-medium"
+                style={{ color: 'var(--pitch-black)' }}
+              >
                 <p>
-                  Full-Stack Architect & Technical Lead engineering high-performance systems with a focus on <span className="text-blue-400 font-medium italic">visual excellence</span>. I specialize in transforming complex business challenges into elegant, user-centric solutions.
+                  Yo! I'm a{' '}
+                  <span 
+                    className="font-black px-2 py-1 rounded-md inline-block"
+                    style={{ 
+                      backgroundColor: 'var(--neon-yellow)',
+                      color: 'var(--pitch-black)',
+                      transform: 'rotate(-1deg)'
+                    }}
+                  >
+                    Full-Stack Developer
+                  </span>
+                  {' '}who turns caffeine into code and ideas into reality. I build stuff that doesn't just work—it{' '}
+                  <span 
+                    className="font-black px-2 py-1 rounded-md inline-block"
+                    style={{ 
+                      backgroundColor: 'var(--electric-purple)',
+                      color: 'var(--pure-white)',
+                      transform: 'rotate(1deg)'
+                    }}
+                  >
+                    SLAPS
+                  </span>
+                  .
                 </p>
                 <p>
-                  With expertise spanning from modern frontend frameworks to scalable backend architectures, I blend technical precision with creative innovation to build the next generation of digital experiences.
+                  From sleek frontends to bulletproof backends, I've got the full stack on lock. Whether it's React, Next.js, Node, or whatever's next—I'm here for it. Let's build something{' '}
+                  <span 
+                    className="font-black px-2 py-1 rounded-md inline-block"
+                    style={{ 
+                      backgroundColor: 'var(--action-pink)',
+                      color: 'var(--pure-white)',
+                      transform: 'rotate(-2deg)'
+                    }}
+                  >
+                    LEGENDARY
+                  </span>
+                  .
                 </p>
               </div>
             </motion.div>
 
-            {/* 2. Skills Grid (Minimalist Industrial) */}
+            {/* 2. Skills Grid (Neo-Brutalist Cards) */}
             <div className="space-y-6">
-              <h4 className="text-white/40 font-orbitron text-[10px] tracking-[0.3em] uppercase">Core_Strengths</h4>
+              <span 
+                className="inline-block px-4 py-2 rounded-xl font-space font-black text-xs uppercase tracking-wider"
+                style={{ 
+                  backgroundColor: 'var(--pitch-black)',
+                  color: 'var(--neon-yellow)',
+                  border: '3px solid var(--pitch-black)',
+                  boxShadow: '4px 4px 0px var(--pitch-black)'
+                }}
+              >
+                💪 MY SUPERPOWERS
+              </span>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                 {skills.map((skill, i) => (
                   <motion.div
                     key={i}
-                    whileHover={{ y: -5, backgroundColor: "rgba(255, 255, 255, 0.05)" }}
-                    className="p-4 border border-white/10 bg-white/[0.02] backdrop-blur-sm flex flex-col items-center gap-3 text-center group hover:border-blue-500/50 transition-all rounded-sm"
+                    whileHover={{ y: -3 }}
+                    className="p-4 rounded-xl flex flex-col items-center gap-3 text-center transition-all"
+                    style={{ 
+                      border: '2px solid var(--pitch-black)',
+                      backgroundColor: 'var(--pure-white)',
+                      boxShadow: '4px 4px 0px var(--pitch-black)'
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.transform = 'translate(2px, 2px)';
+                      e.currentTarget.style.boxShadow = '2px 2px 0px var(--pitch-black)';
+                      e.currentTarget.style.backgroundColor = skill.color;
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.transform = 'translate(0, 0)';
+                      e.currentTarget.style.boxShadow = '4px 4px 0px var(--pitch-black)';
+                      e.currentTarget.style.backgroundColor = 'var(--pure-white)';
+                    }}
                   >
-                    <div className="text-blue-400 text-2xl group-hover:scale-110 group-hover:drop-shadow-[0_0_15px_rgba(96,165,250,0.5)] transition-all">{skill.icon}</div>
-                    <span className="text-[11px] text-white/80 font-orbitron tracking-wider uppercase">{skill.label}</span>
+                    <div 
+                      className="text-2xl transition-colors"
+                      style={{ color: skill.color }}
+                    >
+                      {skill.icon}
+                    </div>
+                    <span 
+                      className="text-[11px] font-space font-bold tracking-wider uppercase"
+                      style={{ color: 'var(--pitch-black)' }}
+                    >
+                      {skill.label}
+                    </span>
                   </motion.div>
                 ))}
               </div>
             </div>
 
-            {/* 3. Stats Grid (Dashboard Look) */}
-            <div className="pt-12 border-t border-white/10">
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+            {/* 3. Stats Grid (Brutalist Dashboard) */}
+            <div 
+              className="pt-8 mt-8"
+              style={{ borderTop: '4px solid var(--pitch-black)' }}
+            >
+              <span 
+                className="inline-block px-4 py-2 rounded-xl font-space font-black text-xs uppercase tracking-wider mb-6"
+                style={{ 
+                  backgroundColor: 'var(--action-pink)',
+                  color: 'var(--pure-white)',
+                  border: '3px solid var(--pitch-black)',
+                  boxShadow: '4px 4px 0px var(--pitch-black)',
+                  transform: 'rotate(-2deg)'
+                }}
+              >
+                📊 BY THE NUMBERS
+              </span>
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mt-6">
                 {stats.map((stat, i) => (
                   <motion.div
                     key={i}
@@ -140,8 +317,21 @@ export default function AboutCombined() {
                     transition={{ delay: i * 0.1 }}
                     className="space-y-2"
                   >
-                    <div className="text-4xl font-black text-transparent bg-clip-text bg-gradient-to-b from-white to-white/50 font-orbitron">{stat.value}</div>
-                    <div className="text-[10px] tracking-[0.2em] text-blue-400/80 uppercase font-bold font-orbitron">{stat.label}</div>
+                    <div 
+                      className="text-5xl md:text-6xl font-black font-bebas"
+                      style={{ 
+                        color: 'var(--neon-yellow)',
+                        WebkitTextStroke: '2px var(--pitch-black)'
+                      }}
+                    >
+                      {stat.value}
+                    </div>
+                    <div 
+                      className="text-xs tracking-wider uppercase font-black font-space"
+                      style={{ color: 'var(--pitch-black)', opacity: 0.7 }}
+                    >
+                      {stat.label}
+                    </div>
                   </motion.div>
                 ))}
               </div>

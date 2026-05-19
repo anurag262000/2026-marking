@@ -85,10 +85,10 @@ export default function ProjectsPage() {
 
   return (
     <ReactLenis root options={{ lerp: 0.05, duration: 1.2, smoothWheel: true }}>
-      <main className="relative w-full min-h-screen bg-black text-white overflow-x-hidden transition-colors duration-700">
+      <main className="relative w-full min-h-screen bg-[var(--off-white)] text-[var(--pitch-black)] overflow-x-hidden transition-colors duration-700">
 
         {/* HERO SECTION: EXPANDING BANNER */}
-        <section ref={heroRef} className="relative w-full h-screen flex items-center justify-center overflow-hidden bg-black z-20">
+        <section ref={heroRef} className="relative w-full h-screen flex items-center justify-center overflow-hidden bg-[var(--off-white)] z-20">
             <div
                 ref={bannerRef}
                 style={{
@@ -97,46 +97,40 @@ export default function ProjectsPage() {
                     height: "100%",
                     transformOrigin: "center center",
                 }}
-                className="relative w-full h-full bg-[#111] overflow-hidden border border-white/5 z-10 shadow-2xl"
+                className="relative w-full h-full bg-[var(--pure-white)] overflow-hidden border-[3px] border-[var(--pitch-black)] z-10 shadow-[6px_6px_0px_var(--pitch-black)]"
             >
-                {/* Background Aurora Effect */}
-                <div className="absolute inset-0 w-full h-full z-0 pointer-events-none opacity-50 blur-3xl transform-gpu">
-                    <AuroraCore
-                        id="tsparticleshero"
-                        background="transparent"
-                        particleDensity={5}
-                        className="w-full h-full"
-                        blur={100}
-                        speed={0.5}
-                    />
-                </div>
+                {/* Neo-Brutalist Dot Pattern */}
+                <div className="absolute inset-0 bg-dot-brutalist pointer-events-none opacity-25 z-0" />
 
                 {/* Texture Overlay */}
                 <div className="absolute inset-0 opacity-[0.03] bg-[url('https://grainy-gradients.vercel.app/noise.svg')] pointer-events-none" />
 
                 {/* Static Hero Text */}
-                <div className="absolute inset-0 flex items-center justify-center overflow-hidden">
+                <div className="absolute inset-0 flex flex-col items-center justify-center overflow-hidden z-10">
+                    {/* Rotating sticker above heading */}
+                    <div 
+                      className="mb-4 px-4 py-2 font-space font-black uppercase text-xs md:text-sm tracking-wider rounded-md border-[3px] border-[var(--pitch-black)] shadow-[4px_4px_0px_var(--pitch-black)] rotate-[-4deg]"
+                      style={{ backgroundColor: 'var(--action-pink)', color: 'var(--pure-white)' }}
+                    >
+                      WORK ARCHIVE 📁
+                    </div>
+
                     <h1
-                        className="font-orbitron font-bold text-white text-[10vw] md:text-[6rem] lg:text-[8rem] uppercase tracking-tighter select-none text-center leading-none"
+                        className="font-bebas font-black text-[var(--pitch-black)] text-[12vw] md:text-[8rem] lg:text-[10rem] uppercase tracking-tighter select-none text-center leading-none"
                         style={{
-                            textShadow: "0 0 30px rgba(255,255,255,0.1)"
+                            textShadow: "6px 6px 0px var(--neon-yellow)"
                         }}
                     >
                         PROJECT SHOWCASE
                     </h1>
-                </div>
 
-                {/* Light Sweep Animation */}
-                <motion.div
-                    animate={{ x: ["-100%", "200%"] }}
-                    transition={{
-                        duration: 1.5,
-                        ease: "easeInOut",
-                        repeat: Infinity,
-                        repeatDelay: 10 // Runs every ~11.5s
-                    }}
-                    className="absolute top-0 left-0 w-1/3 h-full bg-gradient-to-r from-transparent via-white/5 to-transparent skew-x-[-20deg] pointer-events-none mix-blend-overlay"
-                />
+                    <div 
+                      className="mt-6 px-4 py-2 font-space font-black uppercase text-xs md:text-sm tracking-wider rounded-md border-[3px] border-[var(--pitch-black)] shadow-[4px_4px_0px_var(--pitch-black)] rotate-[3deg]"
+                      style={{ backgroundColor: 'var(--electric-purple)', color: 'var(--pure-white)' }}
+                    >
+                      100% AUTHENTIC 🔌
+                    </div>
+                </div>
             </div>
         </section>
 

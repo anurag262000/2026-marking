@@ -152,10 +152,9 @@ export default function ReviewPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#050505] text-white p-6 lg:p-12 relative overflow-hidden">
-      {/* Background Gradients */}
-      <div className="absolute top-0 right-0 p-96 bg-blue-500/5 blur-[150px] rounded-full pointer-events-none -translate-y-1/2 translate-x-1/2 fixed" />
-      <div className="absolute bottom-0 left-0 p-96 bg-purple-500/5 blur-[150px] rounded-full pointer-events-none translate-y-1/2 -translate-x-1/2 fixed" />
+    <div className="min-h-screen bg-[var(--off-white)] text-[var(--pitch-black)] p-6 lg:p-12 relative overflow-hidden">
+      {/* Brutalist Dot Pattern */}
+      <div className="absolute inset-0 bg-dot-brutalist pointer-events-none opacity-20 z-0" />
 
       <div className="max-w-7xl mx-auto relative z-10 pt-20">
         {/* Header */}
@@ -163,27 +162,23 @@ export default function ReviewPage() {
           <div>
             <Link
               href="/"
-              className="inline-block mb-4 text-white/40 hover:text-white transition-colors text-xs font-orbitron uppercase tracking-wider"
+              className="inline-flex items-center gap-2 px-4 py-2 bg-[var(--pure-white)] text-[var(--pitch-black)] font-space font-black text-xs uppercase tracking-wider border-[2px] border-[var(--pitch-black)] rounded-md shadow-[2px_2px_0px_var(--pitch-black)] hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-[1px_1px_0px_var(--pitch-black)] transition-all mb-6"
             >
               ← Back to Home
             </Link>
-            <h1 className="text-4xl md:text-6xl font-black font-bitcount uppercase leading-tight">
-              Working{" "}
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-500">
-                With Me
-              </span>
+            <h1 className="text-6xl md:text-8xl font-black font-bebas tracking-tight mb-6 text-[var(--pitch-black)]">
+              Working <span className="px-4 py-1.5 inline-block bg-[var(--neon-yellow)] border-[3px] border-[var(--pitch-black)] shadow-[4px_4px_0px_var(--pitch-black)] rotate-[-2deg]">With Me</span>
             </h1>
-            <p className="text-white/60 mt-4 max-w-xl text-lg font-light">
+            <p className="text-[var(--pitch-black)] mt-4 max-w-xl text-lg font-space font-medium opacity-80">
               Insights and feedback from colleagues, clients, and collaborators
               I've had the pleasure of working with.
             </p>
           </div>
           <button
             onClick={() => setIsModalOpen(true)}
-            className="group relative px-8 py-4 bg-white text-black font-bold font-orbitron uppercase tracking-wider rounded-full hover:bg-blue-500 hover:text-white transition-all duration-300 shadow-xl shadow-white/10 hover:shadow-blue-500/20"
+            className="px-8 py-4 bg-[var(--neon-yellow)] text-[var(--pitch-black)] font-black font-space text-xs uppercase tracking-widest border-[3px] border-[var(--pitch-black)] rounded-xl shadow-[5px_5px_0px_var(--pitch-black)] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[3px_3px_0px_var(--pitch-black)] transition-all"
           >
             Write a Review
-            <div className="absolute inset-0 rounded-full ring-2 ring-white/20 group-hover:ring-blue-400 group-hover:scale-105 transition-all duration-300" />
           </button>
         </div>
       </div>
@@ -191,31 +186,31 @@ export default function ReviewPage() {
       {/* Modal */}
       {isModalOpen && (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md cursor-pointer"
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/75 backdrop-blur-md cursor-pointer"
           onClick={() => setIsModalOpen(false)}
         >
           <div
             onClick={(e) => e.stopPropagation()}
             data-lenis-prevent
-            className="bg-[#1a1a1a] border border-white/20 rounded-3xl p-6 md:p-8 max-w-md w-full relative shadow-2xl shadow-blue-500/10 animate-fade-in-up max-h-[85vh] overflow-y-auto hide-scrollbar"
+            className="bg-[var(--pure-white)] border-[3px] border-[var(--pitch-black)] rounded-2xl p-6 md:p-8 max-w-md w-full relative shadow-[8px_8px_0px_var(--pitch-black)] animate-fade-in-up max-h-[85vh] overflow-y-auto hide-scrollbar text-[var(--pitch-black)]"
           >
             <button
               onClick={() => setIsModalOpen(false)}
-              className="absolute top-4 right-4 text-white/60 hover:text-white transition-colors bg-white/10 p-2 rounded-full hover:bg-white/20"
+              className="absolute top-4 right-4 text-[var(--pitch-black)] bg-[var(--pure-white)] border-[2px] border-[var(--pitch-black)] p-2 rounded-md shadow-[2px_2px_0px_var(--pitch-black)] hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-[1px_1px_0px_var(--pitch-black)] transition-all z-20"
             >
               <FiX size={20} />
             </button>
 
-            <h3 className="text-xl font-bold font-bitcount mb-2 uppercase text-white">
+            <h3 className="text-3xl font-black font-bebas mb-2 uppercase text-[var(--pitch-black)] mt-4">
               Share Experience
             </h3>
-            <p className="text-white/70 text-xs mb-6">
+            <p className="text-[var(--pitch-black)] opacity-75 font-space font-medium text-xs mb-6">
               Your feedback helps me improve and grow.
             </p>
 
             {!isSignedIn ? (
-              <div className="text-center py-8 bg-white/5 rounded-2xl border border-white/10 border-dashed">
-                <p className="text-white/80 mb-6 text-sm">
+              <div className="text-center py-8 bg-[var(--off-white)] border-[3px] border-[var(--pitch-black)] rounded-xl shadow-[4px_4px_0px_var(--pitch-black)]">
+                <p className="text-[var(--pitch-black)] font-space font-medium mb-6 text-sm opacity-80">
                   Please identify yourself to leave a review.
                 </p>
                 <SignInButton
@@ -223,7 +218,7 @@ export default function ReviewPage() {
                   forceRedirectUrl="/review?write_review=true"
                   signUpForceRedirectUrl="/review?write_review=true"
                 >
-                  <button className="px-8 py-3 bg-blue-600 hover:bg-blue-500 text-white rounded-full font-bold font-orbitron text-xs uppercase tracking-wider transition-colors shadow-lg shadow-blue-600/20">
+                  <button className="px-8 py-4 bg-[var(--neon-yellow)] text-[var(--pitch-black)] border-[3px] border-[var(--pitch-black)] rounded-xl font-space font-black text-xs uppercase tracking-widest shadow-[4px_4px_0px_var(--pitch-black)] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[2px_2px_0px_var(--pitch-black)] transition-all">
                     Log In with Google
                   </button>
                 </SignInButton>
@@ -232,7 +227,7 @@ export default function ReviewPage() {
               <form action={handleSubmit} className="space-y-5">
                 {/* Avatar Selection */}
                 <div className="mb-4">
-                  <label className="text-[10px] font-orbitron uppercase tracking-wider text-white/70 mb-3 block">
+                  <label className="text-[10px] font-space font-black uppercase tracking-wider text-[var(--pitch-black)] opacity-80 mb-3 block">
                     Choose Avatar
                   </label>
                   <div
@@ -250,7 +245,7 @@ export default function ReviewPage() {
                             key={opt.id}
                             type="button"
                             onClick={() => setSelectedAvatar(opt.url)}
-                            className={`relative w-12 h-12 rounded-full flex-shrink-0 transition-all duration-300 ${selectedAvatar === opt.url ? "ring-2 ring-blue-500 scale-110 opacity-100 bg-white" : "ring-1 ring-white/20 opacity-50 hover:opacity-100 hover:scale-105 bg-white/5"}`}
+                            className={`relative w-12 h-12 rounded-full flex-shrink-0 transition-all duration-300 ${selectedAvatar === opt.url ? "border-[3px] border-[var(--electric-purple)] scale-110 opacity-100 bg-white shadow-[2px_2px_0px_var(--pitch-black)]" : "border-[2px] border-[var(--pitch-black)] opacity-60 hover:opacity-100 bg-[var(--pure-white)]"}`}
                             title={opt.label}
                           >
                             <img
@@ -260,7 +255,7 @@ export default function ReviewPage() {
                               className="w-full h-full rounded-full object-cover pointer-events-none"
                             />
                             {opt.id === "user" && (
-                              <span className="absolute -bottom-1 -right-1 bg-blue-600 text-[8px] px-1.5 py-0.5 rounded-full text-white font-bold tracking-tighter border border-[#1a1a1a]">
+                              <span className="absolute -bottom-1 -right-1 bg-[var(--electric-purple)] text-[8px] px-1.5 py-0.5 rounded-full text-white font-space font-black tracking-wider border-[2px] border-[var(--pitch-black)]">
                                 YOU
                               </span>
                             )}
@@ -272,40 +267,40 @@ export default function ReviewPage() {
 
                 <div className="grid md:grid-cols-2 gap-4">
                   <div className="space-y-1.5">
-                    <label className="text-[10px] font-orbitron uppercase tracking-wider text-white/70 pl-1">
-                      Role <span className="text-white/40">(Optional)</span>
+                    <label className="text-[10px] font-space font-black uppercase tracking-wider text-[var(--pitch-black)] pl-1">
+                      Role <span className="text-[var(--pitch-black)] opacity-50">(Optional)</span>
                     </label>
                     <input
                       name="role"
                       placeholder="Manager"
-                      className="w-full bg-white/10 border border-white/20 rounded-xl px-4 py-3 text-white text-sm focus:border-blue-500 focus:bg-white/15 outline-none transition-all placeholder:text-white/30"
+                      className="w-full bg-[var(--off-white)] border-[3px] border-[var(--pitch-black)] rounded-xl px-4 py-3 text-[var(--pitch-black)] font-space font-medium text-sm focus:border-[var(--electric-purple)] outline-none transition-all placeholder:text-[var(--pitch-black)]/30 shadow-[3px_3px_0px_var(--pitch-black)]"
                     />
                   </div>
                   <div className="space-y-1.5">
-                    <label className="text-[10px] font-orbitron uppercase tracking-wider text-white/70 pl-1">
-                      Company <span className="text-white/40">(Optional)</span>
+                    <label className="text-[10px] font-space font-black uppercase tracking-wider text-[var(--pitch-black)] pl-1">
+                      Company <span className="text-[var(--pitch-black)] opacity-50">(Optional)</span>
                     </label>
                     <input
                       name="company"
                       placeholder="Acme Inc."
-                      className="w-full bg-white/10 border border-white/20 rounded-xl px-4 py-3 text-white text-sm focus:border-blue-500 focus:bg-white/15 outline-none transition-all placeholder:text-white/30"
+                      className="w-full bg-[var(--off-white)] border-[3px] border-[var(--pitch-black)] rounded-xl px-4 py-3 text-[var(--pitch-black)] font-space font-medium text-sm focus:border-[var(--electric-purple)] outline-none transition-all placeholder:text-[var(--pitch-black)]/30 shadow-[3px_3px_0px_var(--pitch-black)]"
                     />
                   </div>
                 </div>
 
                 <div className="space-y-1.5">
-                  <label className="text-[10px] font-orbitron uppercase tracking-wider text-white/70 pl-1">
-                    Social <span className="text-white/40">(Optional)</span>
+                  <label className="text-[10px] font-space font-black uppercase tracking-wider text-[var(--pitch-black)] pl-1">
+                    Social <span className="text-[var(--pitch-black)] opacity-50">(Optional)</span>
                   </label>
                   <input
                     name="social_link"
                     placeholder="LinkedIn or Instagram profile URL"
-                    className="w-full bg-white/10 border border-white/20 rounded-xl px-4 py-3 text-white text-sm focus:border-blue-500 focus:bg-white/15 outline-none transition-all placeholder:text-white/30"
+                    className="w-full bg-[var(--off-white)] border-[3px] border-[var(--pitch-black)] rounded-xl px-4 py-3 text-[var(--pitch-black)] font-space font-medium text-sm focus:border-[var(--electric-purple)] outline-none transition-all placeholder:text-[var(--pitch-black)]/30 shadow-[3px_3px_0px_var(--pitch-black)]"
                   />
                 </div>
 
                 <div className="space-y-1.5">
-                  <label className="text-[10px] font-orbitron uppercase tracking-wider text-white/70 pl-1">
+                  <label className="text-[10px] font-space font-black uppercase tracking-wider text-[var(--pitch-black)] pl-1">
                     Review
                   </label>
                   <textarea
@@ -313,13 +308,13 @@ export default function ReviewPage() {
                     required
                     rows="4"
                     placeholder="How was your experience working together? (Your feedback really matters!)"
-                    className="w-full bg-white/10 border border-white/20 rounded-xl px-4 py-3 text-white text-sm focus:border-blue-500 focus:bg-white/15 outline-none transition-all resize-none placeholder:text-white/30 leading-relaxed scrollbar-hide"
+                    className="w-full bg-[var(--off-white)] border-[3px] border-[var(--pitch-black)] rounded-xl px-4 py-3 text-[var(--pitch-black)] font-space font-medium text-sm focus:border-[var(--electric-purple)] outline-none transition-all resize-none placeholder:text-[var(--pitch-black)]/30 leading-relaxed scrollbar-hide shadow-[3px_3px_0px_var(--pitch-black)]"
                   />
                 </div>
 
                 {message && (
                   <div
-                    className={`text-xs p-3 rounded-lg text-center font-bold tracking-wide ${message.success ? "bg-green-500/20 text-green-400 border border-green-500/30" : "bg-red-500/20 text-red-400 border border-red-500/30"}`}
+                    className={`text-xs p-3 rounded-xl text-center font-space font-black tracking-wide border-[3px] border-[var(--pitch-black)] ${message.success ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"}`}
                   >
                     {message.message}
                   </div>
@@ -328,7 +323,7 @@ export default function ReviewPage() {
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="w-full bg-white text-black hover:bg-blue-500 hover:text-white disabled:opacity-50 disabled:cursor-not-allowed font-orbitron uppercase tracking-wider py-4 rounded-xl font-bold transition-all duration-300 flex items-center justify-center gap-2 mt-4 text-xs shadow-lg shadow-white/5"
+                  className="w-full bg-[var(--neon-yellow)] text-[var(--pitch-black)] disabled:opacity-50 disabled:cursor-not-allowed font-space font-black uppercase tracking-widest py-4 border-[3px] border-[var(--pitch-black)] rounded-xl transition-all duration-300 flex items-center justify-center gap-2 mt-4 text-xs shadow-[4px_4px_0px_var(--pitch-black)] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[2px_2px_0px_var(--pitch-black)]"
                 >
                   {isSubmitting ? (
                     "Submitting..."
@@ -345,7 +340,7 @@ export default function ReviewPage() {
       )}
       {/* Dynamic Testimonial Section */}
       <HomeTestimonials
-        theme="dark"
+        theme="light"
         showHeading={false}
         className="py-0 md:py-0"
         mobilePadding={false}

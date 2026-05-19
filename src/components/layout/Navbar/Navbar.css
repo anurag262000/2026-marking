@@ -1,53 +1,45 @@
 :root {
-  --pill-font: 'Bitcount Single', cursive, sans-serif;
+  --pill-font: 'Space Grotesk', sans-serif;
 }
 
-/* ===== TOP GLASSMORPHISM NAVBAR ===== */
+/* ===== NEO-BRUTALIST NAVBAR ===== */
 
 .navbar-header {
   position: fixed;
   top: 1.5rem;
   right: 1.5rem;
-  /* Right aligned with some margin */
   left: auto;
-  /* No longer full width */
   z-index: 50;
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  /* Align items to the right */
   gap: 1.5rem;
-  /* Space between logo and hamburger */
   padding: 0.75rem 1.5rem;
-  /* Compact padding */
 
-  /* Enhanced Glassmorphism */
-  background: rgba(15, 15, 15, 0.7);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  /* Neo-Brutalist Style */
+  background: var(--pure-white);
+  border: 3px solid var(--pitch-black);
   border-radius: 999px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+  box-shadow: 4px 4px 0px var(--pitch-black);
 
-  transition: all 0.3s ease;
+  transition: all 0.2s ease;
 }
 
-/* Simplify active state since base style has glass */
+.navbar-header:hover {
+  transform: translate(1px, 1px);
+  box-shadow: 3px 3px 0px var(--pitch-black);
+}
+
 .navbar-header.active {
-  background: rgba(0, 0, 0, 0.0);
-  /* Transparent when menu open to see menu bg? Or keep it? Let's check menu overlay z-index. Menu is 40, Header 50. */
-  /* If menu overlay is full screen black, header should probably blend or stay on top. */
-  /* Actually, if menu is open, maybe we want it to look the same or disappear? */
-  /* Let's keep it visible on top. The user said "black glass morhphsim effect both desktop and mobile". */
-  /* If the menu has its own background, maybe we don't need to change much here, or just ensure it stays consistent. */
-  border-color: rgba(255, 255, 255, 0.1);
+  background: var(--neon-yellow);
+  border-color: var(--pitch-black);
 }
 
 .nav-logo-link {
   text-decoration: none;
   display: flex;
   align-items: center;
-  transition: transform 0.3s ease;
+  transition: transform 0.2s ease;
 }
 
 .nav-logo-link:hover {
@@ -65,11 +57,12 @@
 }
 
 .nav-logo {
-  letter-spacing: 0.15em;
+  letter-spacing: 0.05em;
   font-size: 1.1rem;
-  color: #ffffff;
+  color: var(--pitch-black);
   font-weight: 700;
-  text-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+  font-family: 'Bebas Neue', cursive;
+  text-transform: uppercase;
 }
 
 .hamburger-icon {
@@ -79,7 +72,7 @@
   flex-direction: column;
   justify-content: space-between;
   cursor: pointer;
-  transition: transform 0.3s ease;
+  transition: transform 0.2s ease;
 }
 
 .hamburger-icon:hover {
@@ -87,21 +80,19 @@
 }
 
 .bar {
-  height: 2px;
+  height: 3px;
   width: 100%;
-  background: #ffffff;
-  border-radius: 999px;
+  background: var(--pitch-black);
+  border-radius: 2px;
   transition:
     transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
     opacity 0.3s ease,
     background 0.3s ease;
-  box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
 }
 
 .navbar-header.active .bar-1 {
   transform: translateY(8px) rotate(45deg);
-  background: #3b82f6;
-  box-shadow: 0 0 15px rgba(59, 130, 246, 0.5);
+  background: var(--pitch-black);
 }
 
 .navbar-header.active .bar-2 {
@@ -110,8 +101,7 @@
 
 .navbar-header.active .bar-3 {
   transform: translateY(-8px) rotate(-45deg);
-  background: #3b82f6;
-  box-shadow: 0 0 15px rgba(59, 130, 246, 0.5);
+  background: var(--pitch-black);
 }
 
 /* Fullscreen menu overlay */
@@ -122,7 +112,7 @@
   z-index: 40;
   opacity: 0;
   pointer-events: none;
-  transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .fullscreen-menu.open {
@@ -133,9 +123,15 @@
 .menu-bg {
   position: absolute;
   inset: 0;
-  background: rgba(0, 0, 0, 0.95);
-  backdrop-filter: blur(40px);
-  -webkit-backdrop-filter: blur(40px);
+  background: var(--off-white);
+  /* Neo-brutalist dot pattern */
+  background-image: radial-gradient(
+    circle,
+    var(--pitch-black) 2px,
+    transparent 2px
+  );
+  background-size: 32px 32px;
+  background-position: 0 0;
 }
 
 /* Menu shell layout */
@@ -154,8 +150,8 @@
   opacity: 0;
   transform: translateY(-20px);
   transition:
-    opacity 0.6s ease 0.2s,
-    transform 0.6s ease 0.2s;
+    opacity 0.4s ease 0.1s,
+    transform 0.4s ease 0.1s;
 }
 
 .fullscreen-menu.open .menu-shell {
@@ -178,46 +174,13 @@
 }
 
 .discover-title {
-  font-family: 'Orbitron', sans-serif;
-  font-size: 1.4rem;
-  line-height: 1.2;
-  color: rgba(255, 255, 255, 0.9);
-  letter-spacing: 0.05em;
+  font-family: 'Bebas Neue', cursive;
+  font-size: 1.8rem;
+  line-height: 1;
+  color: var(--pitch-black);
+  letter-spacing: 0.02em;
   text-transform: uppercase;
-  font-weight: 600;
-}
-
-.discover-city-pills {
-  display: flex;
-  gap: 0.75rem;
-  flex-wrap: wrap;
-}
-
-.city-pill {
-  padding: 0.5rem 1.5rem;
-  border-radius: 999px;
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  background: rgba(255, 255, 255, 0.03);
-  backdrop-filter: blur(10px);
-  font-size: 0.95rem;
-  font-family: var(--pill-font);
-  color: rgba(255, 255, 255, 0.7);
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.city-pill:hover {
-  background: rgba(255, 255, 255, 0.08);
-  border-color: rgba(255, 255, 255, 0.3);
-  color: #ffffff;
-  transform: translateY(-2px);
-}
-
-.city-pill-active {
-  background: rgba(59, 130, 246, 0.2);
-  border-color: #3b82f6;
-  color: #3b82f6;
-  box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
+  font-weight: 400;
 }
 
 .experience-pills {
@@ -227,53 +190,72 @@
 }
 
 .experience-pill {
-  border-radius: 16px;
+  border-radius: 12px;
   padding: 0.85rem 1.2rem;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  background: rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(10px);
+  border: 2px solid var(--pitch-black);
+  background: var(--pure-white);
+  box-shadow: 3px 3px 0px var(--pitch-black);
   text-align: left;
   font-family: var(--pill-font);
-  font-size: 0.95rem;
-  color: rgba(255, 255, 255, 0.9);
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--pitch-black);
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all 0.2s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
 }
 
 .experience-pill:hover {
-  background: rgba(255, 255, 255, 0.1);
-  border-color: rgba(255, 255, 255, 0.2);
-  transform: translateX(8px);
+  background: var(--neon-yellow);
+  transform: translate(2px, 2px);
+  box-shadow: 1px 1px 0px var(--pitch-black);
 }
 
 .experience-pill-label {
   max-width: 22ch;
 }
 
-/* Color variants with glassmorphism */
+/* Color variants - Neo-Brutalist */
 
 .exp-pill-1 {
-  background: rgba(255, 154, 160, 0.15);
-  border-color: rgba(255, 154, 160, 0.3);
-  color: #ff9aa0;
+  background: var(--action-pink);
+  color: var(--pure-white);
+}
+
+.exp-pill-1:hover {
+  background: var(--pitch-black);
+  color: var(--action-pink);
 }
 
 .exp-pill-2 {
-  background: rgba(214, 198, 255, 0.15);
-  border-color: rgba(214, 198, 255, 0.3);
-  color: #d6c6ff;
+  background: var(--electric-purple);
+  color: var(--pure-white);
+}
+
+.exp-pill-2:hover {
+  background: var(--pitch-black);
+  color: var(--electric-purple);
 }
 
 .exp-pill-3 {
-  background: rgba(255, 198, 176, 0.15);
-  border-color: rgba(255, 198, 176, 0.3);
-  color: #ffc6b0;
+  background: var(--neon-yellow);
+  color: var(--pitch-black);
+}
+
+.exp-pill-3:hover {
+  background: var(--pitch-black);
+  color: var(--neon-yellow);
 }
 
 .exp-pill-4 {
-  background: rgba(189, 239, 255, 0.15);
-  border-color: rgba(189, 239, 255, 0.3);
-  color: #bdefff;
+  background: var(--pure-white);
+  color: var(--pitch-black);
+}
+
+.exp-pill-4:hover {
+  background: var(--pitch-black);
+  color: var(--pure-white);
 }
 
 /* Social block */
@@ -293,21 +275,23 @@
 }
 
 .social-pill-1 {
-  background: rgba(59, 130, 246, 0.2);
-  border-color: #3b82f6;
-  color: #3b82f6;
+  background: var(--electric-purple);
+  color: var(--pure-white);
+}
+
+.social-pill-1:hover {
+  background: var(--pitch-black);
+  color: var(--electric-purple);
 }
 
 .social-pill-2 {
-  background: rgba(255, 111, 97, 0.2);
-  border-color: #ff6f61;
-  color: #ff6f61;
+  background: var(--action-pink);
+  color: var(--pure-white);
 }
 
-.social-pill-3 {
-  background: rgba(147, 51, 234, 0.2);
-  border-color: #9333ea;
-  color: #9333ea;
+.social-pill-2:hover {
+  background: var(--pitch-black);
+  color: var(--action-pink);
 }
 
 /* Main column */
@@ -335,8 +319,8 @@
   transform: translateX(-40px);
   opacity: 0;
   transition:
-    transform 0.5s cubic-bezier(0.4, 0, 0.2, 1),
-    opacity 0.5s ease;
+    transform 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+    opacity 0.4s ease;
 }
 
 .fullscreen-menu.open .menu-main-item {
@@ -349,38 +333,42 @@
   align-items: baseline;
   gap: 2rem;
   text-decoration: none;
-  color: #ffffff;
-  transition: all 0.3s ease;
+  color: var(--pitch-black);
+  transition: all 0.2s ease;
   padding: 0.5rem 1.5rem 0.5rem 0;
 }
 
 .menu-main-link:hover {
-  color: #3b82f6;
-  text-shadow: 0 0 20px rgba(59, 130, 246, 0.5);
+  color: var(--electric-purple);
 }
 
 .menu-main-link:hover .menu-main-arrow {
   transform: translateX(10px);
-  color: #3b82f6;
+  color: var(--neon-yellow);
 }
 
 .menu-main-number {
   font-size: 1rem;
-  letter-spacing: 0.15em;
-  color: rgba(255, 255, 255, 0.4);
+  letter-spacing: 0.1em;
+  color: var(--electric-purple);
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 700;
 }
 
 .menu-main-name {
   font-size: clamp(3rem, 6vw, 5rem);
   text-transform: uppercase;
-  line-height: 0.95;
+  line-height: 0.85;
   font-weight: 400;
+  font-family: 'Bebas Neue', cursive;
+  letter-spacing: 0.02em;
 }
 
 .menu-main-arrow {
   font-size: 2.5rem;
   margin-left: auto;
-  transition: transform 0.3s ease, color 0.3s ease;
+  transition: transform 0.2s ease, color 0.2s ease;
+  font-weight: 700;
 }
 
 /* Footer in main column */
@@ -390,28 +378,29 @@
   gap: 2rem;
   font-size: 0.95rem;
   padding-top: 2rem;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  border-top: 3px solid var(--pitch-black);
 }
 
 .footer-text-link {
   text-decoration: none;
-  color: rgba(255, 255, 255, 0.5);
-  transition: color 0.3s ease;
+  color: var(--pitch-black);
+  transition: all 0.2s ease;
   font-family: var(--pill-font);
   letter-spacing: 0.05em;
+  font-weight: 600;
+  text-transform: uppercase;
+  padding: 0.25rem 0.75rem;
+  border-radius: 6px;
 }
 
 .footer-text-link:hover {
-  color: #ffffff;
+  background: var(--neon-yellow);
+  color: var(--pitch-black);
 }
 
 /* Responsive */
 
 @media (max-width: 900px) {
-  .hamburger-button {
-    padding: 1.2rem 1.5rem;
-  }
-
   .nav-logo {
     font-size: 0.95rem;
   }
@@ -432,12 +421,7 @@
   }
 
   .discover-title {
-    font-size: 1.1rem;
-  }
-
-  .city-pill {
-    padding: 0.45rem 1.2rem;
-    font-size: 0.85rem;
+    font-size: 1.4rem;
   }
 
   .experience-pill {
@@ -479,32 +463,13 @@
 }
 
 @media (max-width: 600px) {
-  .hamburger-button {
-    padding: 1rem 1.2rem;
-  }
-
   .menu-shell {
     padding: 4.5rem 1.2rem 2rem;
   }
-}
-
-/* ===== LIGHT THEME OVERRIDES ===== */
-body.light-theme .nav-logo {
-  color: #111111;
-  text-shadow: none;
-}
-
-body.light-theme .bar {
-  background: #111111;
-  box-shadow: none;
-}
-
-body.light-theme .hamburger-button.active .nav-logo {
-  color: #ffffff;
-  /* Revert to white when menu is open (dark overlay) */
-}
-
-body.light-theme .hamburger-button.active .bar {
-  background: #ffffff;
-  /* Revert to white when menu is open */
+  
+  .navbar-header {
+    top: 1rem;
+    right: 1rem;
+    padding: 0.6rem 1.2rem;
+  }
 }

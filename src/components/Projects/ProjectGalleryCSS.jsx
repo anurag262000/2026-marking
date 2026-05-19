@@ -103,20 +103,20 @@ export default function ProjectGalleryCSS() {
           }
 
           // Direct DOM manipulation for performance
-            // Dark mode (default)
-            sidebar.style.background = 'rgba(10, 10, 10, 0.4)';
-            sidebar.style.borderColor = 'rgba(255, 255, 255, 0.1)';
-            sidebar.style.color = 'white';
+            // Neo-brutalist theme
+            sidebar.style.background = 'var(--pure-white)';
+            sidebar.style.borderColor = 'var(--pitch-black)';
+            sidebar.style.color = 'var(--pitch-black)';
         },
         onLeave: () => {
-          sidebar.style.background = 'rgba(10, 10, 10, 0.4)';
-          sidebar.style.borderColor = 'rgba(255, 255, 255, 0.1)';
-          sidebar.style.color = 'white';
+          sidebar.style.background = 'var(--pure-white)';
+          sidebar.style.borderColor = 'var(--pitch-black)';
+          sidebar.style.color = 'var(--pitch-black)';
         },
         onLeaveBack: () => {
-          sidebar.style.background = 'rgba(10, 10, 10, 0.4)';
-          sidebar.style.borderColor = 'rgba(255, 255, 255, 0.1)';
-          sidebar.style.color = 'white';
+          sidebar.style.background = 'var(--pure-white)';
+          sidebar.style.borderColor = 'var(--pitch-black)';
+          sidebar.style.color = 'var(--pitch-black)';
         }
       });
     }, sectionRef);
@@ -130,7 +130,14 @@ export default function ProjectGalleryCSS() {
   const isExploreSlide = activeIndex === limitedProjects.length;
 
   return (
-    <section ref={sectionRef} className="relative z-20 bg-transparent" id="projects-gallery">
+    <section 
+      ref={sectionRef} 
+      className="relative z-20" 
+      id="projects-gallery"
+      style={{ backgroundColor: 'var(--off-white)' }}
+    >
+      {/* Neo-Brutalist Dot Pattern */}
+      <div className="absolute inset-0 bg-dot-brutalist pointer-events-none opacity-10" />
 
       {/* DESKTOP VIEW (Above 1100px) */}
       <div ref={pinContainerRef} className="hidden desk:block relative w-full h-[100dvh] overflow-hidden">
@@ -138,41 +145,84 @@ export default function ProjectGalleryCSS() {
 
           <div
             ref={sidebarRef}
-            className="desktop-sidebar relative z-30 w-[40%] h-full flex flex-col justify-center p-10 border-r transition-all duration-700 backdrop-blur-xl"
+            className="desktop-sidebar relative z-30 w-[40%] h-full flex flex-col justify-center p-10 border-r-[3px] transition-all duration-700"
             style={{
-              background: 'rgba(10, 10, 10, 0.4)',
-              borderColor: 'rgba(255, 255, 255, 0.1)',
-              color: 'white',
+              background: 'var(--pure-white)',
+              borderColor: 'var(--pitch-black)',
+              color: 'var(--pitch-black)',
             }}
           >
             {isExploreSlide ? (
                // EXPLORE MORE SIDEBAR CONTENT
                <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
                   <div className="space-y-1">
-                    <span className="text-sm tracking-widest uppercase font-bold opacity-50">Archive</span>
-                    <h3 className="text-3xl font-semibold italic">More Work</h3>
+                    <span 
+                      className="inline-block px-3 py-1 rounded-md font-space font-bold text-xs uppercase tracking-wider"
+                      style={{
+                        backgroundColor: 'var(--electric-purple)',
+                        color: 'var(--pure-white)',
+                        border: '2px solid var(--pitch-black)',
+                        boxShadow: '3px 3px 0px var(--pitch-black)',
+                        transform: 'rotate(-2deg)'
+                      }}
+                    >
+                      Archive
+                    </span>
+                    <h3 className="text-3xl font-bold font-space mt-3" style={{ color: 'var(--pitch-black)' }}>More Work</h3>
                   </div>
 
                   <div className="space-y-2">
-                    <h2 className="text-5xl lg:text-7xl font-helvetica italic font-normal leading-[1.1]">
+                    <h2 className="text-5xl lg:text-7xl font-bebas uppercase leading-[1.1]" style={{ color: 'var(--pitch-black)' }}>
                       Explore More
                     </h2>
                   </div>
 
-                  <p className="text-base leading-relaxed opacity-80 max-w-md">
+                  <p className="text-base leading-relaxed max-w-md font-space font-medium" style={{ color: 'var(--pitch-black)', opacity: 0.8 }}>
                     This is a curated selection. Dive into my full repository of experiments, open-source contributions, and side projects on GitHub.
                   </p>
 
                   <div className="flex flex-col gap-4 pt-4">
                     <Link
                       href="/projects"
-                      className={`inline-block px-8 py-4 bg-white text-black hover:bg-gray-200 font-orbitron text-sm uppercase tracking-[0.2em] rounded-lg transition-all transform hover:scale-105 text-center`}
+                      className="inline-block px-8 py-4 font-space font-bold text-sm uppercase tracking-wider rounded-lg transition-all text-center"
+                      style={{
+                        backgroundColor: 'var(--neon-yellow)',
+                        color: 'var(--pitch-black)',
+                        border: '2px solid var(--pitch-black)',
+                        boxShadow: '4px 4px 0px var(--pitch-black)'
+                      }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.transform = 'translate(2px, 2px)';
+                        e.currentTarget.style.boxShadow = '2px 2px 0px var(--pitch-black)';
+                        e.currentTarget.style.backgroundColor = 'var(--pitch-black)';
+                        e.currentTarget.style.color = 'var(--neon-yellow)';
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.transform = 'translate(0, 0)';
+                        e.currentTarget.style.boxShadow = '4px 4px 0px var(--pitch-black)';
+                        e.currentTarget.style.backgroundColor = 'var(--neon-yellow)';
+                        e.currentTarget.style.color = 'var(--pitch-black)';
+                      }}
                     >
                       View All Projects ↗
                     </Link>
                     <Link
                       href="/contact"
-                      className="inline-block px-8 py-4 border border-current hover:opacity-50 font-orbitron text-sm uppercase tracking-[0.2em] rounded-lg transition-all text-center"
+                      className="inline-block px-8 py-4 font-space font-bold text-sm uppercase tracking-wider rounded-lg transition-all text-center"
+                      style={{
+                        backgroundColor: 'var(--pure-white)',
+                        color: 'var(--pitch-black)',
+                        border: '2px solid var(--pitch-black)',
+                        boxShadow: '4px 4px 0px var(--pitch-black)'
+                      }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.transform = 'translate(2px, 2px)';
+                        e.currentTarget.style.boxShadow = '2px 2px 0px var(--pitch-black)';
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.transform = 'translate(0, 0)';
+                        e.currentTarget.style.boxShadow = '4px 4px 0px var(--pitch-black)';
+                      }}
                     >
                       Contact Me
                     </Link>
@@ -182,23 +232,56 @@ export default function ProjectGalleryCSS() {
                // NORMAL PROJECT CONTENT
                <div className="space-y-8">
                   <div className="space-y-1">
-                    <span className="text-sm tracking-widest uppercase font-bold opacity-50">Organization</span>
-                    <h3 className="text-3xl font-semibold italic">{activeProject?.org}</h3>
+                    <span 
+                      className="inline-block px-3 py-1 rounded-md font-space font-bold text-xs uppercase tracking-wider"
+                      style={{
+                        backgroundColor: 'var(--electric-purple)',
+                        color: 'var(--pure-white)',
+                        border: '2px solid var(--pitch-black)',
+                        boxShadow: '3px 3px 0px var(--pitch-black)',
+                        transform: 'rotate(-2deg)'
+                      }}
+                    >
+                      Organization
+                    </span>
+                    <h3 className="text-3xl font-bold font-space mt-3" style={{ color: 'var(--pitch-black)' }}>{activeProject?.org}</h3>
                   </div>
 
                   <div className="space-y-2">
-                    <span className="text-sm tracking-widest uppercase font-bold opacity-50">Project</span>
-                    <h2 className="text-5xl lg:text-7xl font-helvetica italic font-normal leading-[1.1]">
+                    <span 
+                      className="inline-block px-3 py-1 rounded-md font-space font-bold text-xs uppercase tracking-wider"
+                      style={{
+                        backgroundColor: 'var(--neon-yellow)',
+                        color: 'var(--pitch-black)',
+                        border: '2px solid var(--pitch-black)',
+                        boxShadow: '3px 3px 0px var(--pitch-black)',
+                        transform: 'rotate(2deg)'
+                      }}
+                    >
+                      Project
+                    </span>
+                    <h2 className="text-5xl lg:text-7xl font-bebas uppercase leading-[1.1] mt-3" style={{ color: 'var(--pitch-black)' }}>
                       {activeProject?.title}
                     </h2>
                   </div>
 
                   <div className="space-y-1">
-                    <span className="text-sm tracking-widest uppercase font-bold opacity-50">Role</span>
-                    <p className="text-2xl italic font-semibold">{activeProject?.team}</p>
+                    <span 
+                      className="inline-block px-3 py-1 rounded-md font-space font-bold text-xs uppercase tracking-wider"
+                      style={{
+                        backgroundColor: 'var(--action-pink)',
+                        color: 'var(--pure-white)',
+                        border: '2px solid var(--pitch-black)',
+                        boxShadow: '3px 3px 0px var(--pitch-black)',
+                        transform: 'rotate(-1deg)'
+                      }}
+                    >
+                      Role
+                    </span>
+                    <p className="text-2xl font-bold font-space mt-3" style={{ color: 'var(--pitch-black)' }}>{activeProject?.team}</p>
                   </div>
 
-                  <p className="text-base leading-relaxed opacity-80 max-w-md">
+                  <p className="text-base leading-relaxed max-w-md font-space font-medium" style={{ color: 'var(--pitch-black)', opacity: 0.8 }}>
                     {activeProject?.fullDescription}
                   </p>
 
@@ -206,10 +289,12 @@ export default function ProjectGalleryCSS() {
                     {activeProject?.technologies.slice(0, 4).map((tech, i) => (
                       <span
                         key={i}
-                        className="px-4 py-1.5 text-xs font-orbitron uppercase tracking-wider rounded-full border opacity-70"
+                        className="px-4 py-1.5 text-xs font-space font-bold uppercase tracking-wider rounded-lg"
                         style={{
-                          background: 'rgba(255,255,255,0.05)',
-                          borderColor: 'currentColor'
+                          backgroundColor: i % 3 === 0 ? 'var(--neon-yellow)' : i % 3 === 1 ? 'var(--electric-purple)' : 'var(--action-pink)',
+                          color: i % 3 === 0 ? 'var(--pitch-black)' : 'var(--pure-white)',
+                          border: '2px solid var(--pitch-black)',
+                          boxShadow: '2px 2px 0px var(--pitch-black)'
                         }}
                       >
                         {tech}
@@ -221,7 +306,25 @@ export default function ProjectGalleryCSS() {
                     href={activeProject?.liveUrl || '#'}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className={`inline-block mt-2 px-6 py-3 bg-blue-600 hover:bg-blue-500 text-white font-orbitron text-xs uppercase tracking-[0.2em] rounded-lg transition-all transform hover:scale-105`}
+                    className="inline-block mt-2 px-6 py-3 font-space font-bold text-xs uppercase tracking-wider rounded-lg transition-all"
+                    style={{
+                      backgroundColor: 'var(--neon-yellow)',
+                      color: 'var(--pitch-black)',
+                      border: '2px solid var(--pitch-black)',
+                      boxShadow: '4px 4px 0px var(--pitch-black)'
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.transform = 'translate(2px, 2px)';
+                      e.currentTarget.style.boxShadow = '2px 2px 0px var(--pitch-black)';
+                      e.currentTarget.style.backgroundColor = 'var(--pitch-black)';
+                      e.currentTarget.style.color = 'var(--neon-yellow)';
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.transform = 'translate(0, 0)';
+                      e.currentTarget.style.boxShadow = '4px 4px 0px var(--pitch-black)';
+                      e.currentTarget.style.backgroundColor = 'var(--neon-yellow)';
+                      e.currentTarget.style.color = 'var(--pitch-black)';
+                    }}
                   >
                     Launch Site ↗
                   </Link>
@@ -256,28 +359,44 @@ export default function ProjectGalleryCSS() {
                   }}
                 />
                 {/* Project number */}
-                <div className="absolute bottom-8 right-8 font-orbitron text-white/20 text-8xl font-bold">
+                <div 
+                  className="absolute bottom-8 right-8 font-bebas text-8xl font-bold"
+                  style={{ 
+                    color: 'var(--neon-yellow)',
+                    WebkitTextStroke: '2px var(--pitch-black)',
+                    opacity: 0.3
+                  }}
+                >
                   {String(index + 1).padStart(2, '0')}
                 </div>
               </div>
             ))}
 
-            {/* EXPLORE MORE CARD (Final Slide) */}
             <div
                 ref={el => cardsRef.current[limitedProjects.length] = el}
-                className="absolute inset-0 w-full h-full bg-[#050505] flex items-center justify-center p-10"
+                className="absolute inset-0 w-full h-full flex items-center justify-center p-10"
                 style={{
                   zIndex: limitedProjects.length + 1,
+                  backgroundColor: 'var(--pitch-black)'
                 }}
             >
                 <div className="absolute inset-0 opacity-[0.15] bg-[url('https://grainy-gradients.vercel.app/noise.svg')] pointer-events-none" />
-                <div className="absolute inset-0 bg-gradient-to-br from-blue-900/20 via-transparent to-purple-900/20" />
 
                 <div className="text-center relative z-10">
-                   <h1 className="text-6xl desk:text-8xl font-black text-white/10 font-orbitron tracking-tighter uppercase mb-4">
+                   <h1 
+                     className="text-6xl desk:text-8xl font-black font-bebas tracking-tighter uppercase mb-4"
+                     style={{ 
+                       color: 'var(--neon-yellow)',
+                       WebkitTextStroke: '2px var(--pitch-black)',
+                       opacity: 0.3
+                     }}
+                   >
                       FIN
                    </h1>
-                   <p className="text-white/40 font-mono tracking-widest text-sm uppercase">
+                   <p 
+                     className="font-space tracking-widest text-sm uppercase font-bold"
+                     style={{ color: 'var(--neon-yellow)', opacity: 0.5 }}
+                   >
                       End of Archive
                    </p>
                 </div>
@@ -301,12 +420,13 @@ export default function ProjectGalleryCSS() {
           {limitedProjects.map((project, index) => (
             <div
               key={project.id}
-              className="flex-shrink-0 snap-center rounded-2xl overflow-hidden border shadow-2xl transition-all duration-500"
+              className="flex-shrink-0 snap-center rounded-2xl overflow-hidden shadow-2xl transition-all duration-500"
               style={{
                 width: '85vw',
-                background: 'rgba(0,0,0,0.7)',
-                borderColor: 'rgba(255,255,255,0.08)',
-                color: 'white',
+                background: 'var(--pure-white)',
+                border: '3px solid var(--pitch-black)',
+                boxShadow: '6px 6px 0px var(--pitch-black)',
+                color: 'var(--pitch-black)',
               }}
             >
               <div className="relative aspect-square">
@@ -318,20 +438,44 @@ export default function ProjectGalleryCSS() {
                   className="object-cover"
                 />
                 {/* Number badge */}
-                <div className="absolute bottom-3 right-4 font-orbitron text-white/15 text-5xl font-black">
+                <div 
+                  className="absolute bottom-3 right-4 font-bebas text-5xl font-black"
+                  style={{
+                    color: 'var(--neon-yellow)',
+                    WebkitTextStroke: '2px var(--pitch-black)',
+                    opacity: 0.5
+                  }}
+                >
                   {String(index + 1).padStart(2, '0')}
                 </div>
               </div>
 
               <div className="p-5 space-y-3">
                 <div className="flex items-center justify-between">
-                  <span className="text-[10px] uppercase tracking-widest opacity-50 font-bold">{project.org}</span>
-                  <span className="text-[10px] uppercase tracking-widest opacity-50">{project.team}</span>
+                  <span 
+                    className="inline-block px-2 py-1 rounded text-[10px] uppercase tracking-widest font-bold font-space"
+                    style={{
+                      backgroundColor: 'var(--electric-purple)',
+                      color: 'var(--pure-white)',
+                      border: '2px solid var(--pitch-black)',
+                      boxShadow: '2px 2px 0px var(--pitch-black)'
+                    }}
+                  >
+                    {project.org}
+                  </span>
+                  <span 
+                    className="text-[10px] uppercase tracking-widest font-space font-bold"
+                    style={{ color: 'var(--pitch-black)', opacity: 0.5 }}
+                  >
+                    {project.team}
+                  </span>
                 </div>
 
-                <h3 className="text-2xl font-helvetica italic font-semibold leading-snug">{project.title}</h3>
+                <h3 className="text-2xl font-bebas uppercase font-bold leading-snug" style={{ color: 'var(--pitch-black)' }}>
+                  {project.title}
+                </h3>
 
-                <p className="text-xs leading-relaxed opacity-60 line-clamp-2">
+                <p className="text-xs leading-relaxed line-clamp-2 font-space" style={{ color: 'var(--pitch-black)', opacity: 0.7 }}>
                   {project.fullDescription}
                 </p>
 
@@ -339,7 +483,13 @@ export default function ProjectGalleryCSS() {
                   {project.technologies.slice(0, 3).map((tech, i) => (
                     <span
                       key={i}
-                      className="px-2.5 py-1 text-[9px] font-orbitron uppercase rounded-full border border-white/20 opacity-60"
+                      className="px-2.5 py-1 text-[9px] font-space font-bold uppercase rounded-lg"
+                      style={{
+                        backgroundColor: i % 2 === 0 ? 'var(--neon-yellow)' : 'var(--action-pink)',
+                        color: i % 2 === 0 ? 'var(--pitch-black)' : 'var(--pure-white)',
+                        border: '2px solid var(--pitch-black)',
+                        boxShadow: '2px 2px 0px var(--pitch-black)'
+                      }}
                     >
                       {tech}
                     </span>
@@ -350,7 +500,13 @@ export default function ProjectGalleryCSS() {
                   href={project.liveUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-block w-full text-center px-4 py-3 bg-blue-600 hover:bg-blue-500 text-white font-orbitron text-[10px] uppercase tracking-[0.2em] rounded-lg transition-all mt-2"
+                  className="inline-block w-full text-center px-4 py-3 font-space font-bold text-[10px] uppercase tracking-wider rounded-lg transition-all mt-2"
+                  style={{
+                    backgroundColor: 'var(--neon-yellow)',
+                    color: 'var(--pitch-black)',
+                    border: '2px solid var(--pitch-black)',
+                    boxShadow: '4px 4px 0px var(--pitch-black)'
+                  }}
                 >
                   Launch Site ↗
                 </Link>
@@ -360,35 +516,49 @@ export default function ProjectGalleryCSS() {
 
           {/* MOBILE EXPLORE CARD */}
           <div
-             className="flex-shrink-0 snap-center rounded-2xl overflow-hidden border shadow-2xl transition-all duration-500 bg-[#0a0a0a] flex flex-col items-center justify-center p-8 text-center"
+             className="flex-shrink-0 snap-center rounded-2xl overflow-hidden flex flex-col items-center justify-center p-8 text-center transition-all duration-500"
              style={{
                 width: '85vw',
-                borderColor: 'rgba(255,255,255,0.08)',
-                color: 'white',
+                backgroundColor: 'var(--pure-white)',
+                border: '3px solid var(--pitch-black)',
+                boxShadow: '6px 6px 0px var(--pitch-black)',
+                color: 'var(--pitch-black)',
              }}
           >
-             <h3 className="text-3xl font-helvetica font-bold mb-4">Explore More</h3>
-             <p className="text-sm text-white/60 mb-8 leading-relaxed">
+             <h3 className="text-4xl font-bebas uppercase font-bold mb-4">Explore More</h3>
+             <p className="text-sm font-space font-medium mb-8 leading-relaxed opacity-75">
                View my complete project history and source code on GitHub.
              </p>
              <Link
                 href="/projects"
-                className="w-full py-4 bg-white text-black font-orbitron text-xs uppercase tracking-widest rounded-lg font-bold mb-3"
+                className="w-full py-4 text-center font-space font-black text-xs uppercase tracking-widest rounded-xl transition-all mb-3"
+                style={{
+                  backgroundColor: 'var(--neon-yellow)',
+                  color: 'var(--pitch-black)',
+                  border: '3px solid var(--pitch-black)',
+                  boxShadow: '4px 4px 0px var(--pitch-black)'
+                }}
              >
                View All Projects ↗
              </Link>
              <Link
                 href="/contact"
-                className="w-full py-4 border border-white/20 text-white font-orbitron text-xs uppercase tracking-widest rounded-lg font-bold"
+                className="w-full py-4 text-center font-space font-black text-xs uppercase tracking-widest rounded-xl transition-all"
+                style={{
+                  backgroundColor: 'var(--pure-white)',
+                  color: 'var(--pitch-black)',
+                  border: '3px solid var(--pitch-black)',
+                  boxShadow: '4px 4px 0px var(--pitch-black)'
+                }}
              >
-               Contact
+               Contact Me
              </Link>
           </div>
 
         </div>
 
         {/* Scroll hint */}
-        <div className="text-center mt-4 text-xs text-white/30 font-inter tracking-wider">
+        <div className="text-center mt-4 text-xs font-space font-black uppercase tracking-wider text-[var(--pitch-black)] opacity-60">
           ← Swipe to explore →
         </div>
       </div>
