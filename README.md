@@ -1,32 +1,216 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Portfolio Project
+
+## Project Information
+
+**Framework:** Next.js 16.1.4  
+**Package Manager:** pnpm  
+**Node Version:** React 19.2.3
+
+## Tech Stack
+
+### Core
+- **Next.js** 16.1.4 - React framework with App Router
+- **React** 19.2.3 - UI library
+- **Tailwind CSS** 4.0 - Utility-first CSS framework
+
+### Authentication & Backend
+- **Clerk** (@clerk/nextjs ^6.37.4) - Authentication and user management
+- **Supabase** (@supabase/supabase-js ^2.95.3) - Backend as a Service (Database, Storage, Auth)
+
+### Animations & 3D
+- **GSAP** ^3.14.2 - Professional-grade animation library
+- **Framer Motion** ^12.29.2 - React animation library
+- **Three.js** ^0.182.0 - 3D graphics library
+- **@react-three/fiber** ^9.5.0 - React renderer for Three.js
+- **@react-three/drei** ^10.7.7 - Useful helpers for react-three-fiber
+- **Lenis** (@studio-freight/lenis ^1.0.42) - Smooth scroll library
+
+### UI Components & Effects
+- **tsparticles** (@tsparticles/react ^3.0.0) - Particle effects
+- **typewriter-effect** ^2.22.0 - Typewriter animation
+- **react-icons** ^5.5.0 - Icon library
+
+### Email & Communication
+- **EmailJS** (@emailjs/browser ^4.4.1) - Email service for contact forms
+
+### Utilities
+- **clsx** ^2.1.1 - Conditional className utility
+- **tailwind-merge** ^3.4.0 - Merge Tailwind CSS classes
+- **sharp** ^0.34.5 - Image optimization
+- **tweakpane** ^4.0.5 - Compact GUI for tweaking parameters
+
+### Dev Dependencies
+- **ESLint** ^9 - Linting
+- **@tailwindcss/typography** ^0.5.19 - Typography plugin
+- **react-markdown** ^10.1.0 - Markdown renderer
+- **babel-plugin-react-compiler** 1.0.0 - React compiler plugin
+
+## Scripts
+
+```bash
+# Development
+pnpm dev          # Start development server at http://localhost:3000
+
+# Production
+pnpm build        # Build for production
+pnpm start        # Start production server
+
+# Linting
+pnpm lint         # Run ESLint
+```
+
+## Database Schema (Supabase)
+
+### Tables
+
+#### `testimonials`
+Stores client testimonials and reviews.
+
+| Column | Type | Description |
+|--------|------|-------------|
+| `id` | uuid | Primary key (auto-generated) |
+| `name` | text | Client name |
+| `role` | text | Client's job title |
+| `company` | text | Client's company name |
+| `content` | text | Testimonial content |
+| `approved` | boolean | Approval status for display |
+| `social_link` | text | Optional social media link |
+| `image_url` | text | Profile image URL |
+| `created_at` | timestamp | Record creation timestamp |
+
+#### `blogs`
+Stores blog posts and articles.
+
+| Column | Type | Description |
+|--------|------|-------------|
+| `id` | uuid | Primary key (auto-generated) |
+| `title` | text | Blog post title |
+| `slug` | text | URL-friendly slug (unique) |
+| `excerpt` | text | Short description |
+| `content` | text | Full blog content (Markdown) |
+| `cover_image` | text | Cover image URL |
+| `tags` | text[] | Array of tags |
+| `published` | boolean | Publication status |
+| `author_email` | text | Author's email |
+| `created_at` | timestamp | Record creation timestamp |
+| `updated_at` | timestamp | Last update timestamp |
+
+#### `blog_likes`
+Tracks blog post likes by users.
+
+| Column | Type | Description |
+|--------|------|-------------|
+| `id` | uuid | Primary key (auto-generated) |
+| `blog_id` | uuid | Foreign key to blogs table |
+| `user_id` | text | Clerk user ID |
+| `created_at` | timestamp | Like timestamp |
+
+**Unique Constraint:** `(blog_id, user_id)` - One like per user per blog
+
+## Environment Variables
+
+Create a `.env.local` file with the following variables:
+
+```env
+# Clerk Authentication
+NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=
+CLERK_SECRET_KEY=
+NEXT_PUBLIC_CLERK_SIGN_IN_URL=/sign-in
+NEXT_PUBLIC_CLERK_SIGN_UP_URL=/sign-up
+
+# Supabase
+NEXT_PUBLIC_SUPABASE_URL=
+NEXT_PUBLIC_SUPABASE_ANON_KEY=
+SUPABASE_SERVICE_ROLE_KEY=
+
+# Admin
+ADMIN_EMAIL=your-admin-email@example.com
+
+# EmailJS
+NEXT_PUBLIC_EMAILJS_SERVICE_ID=
+NEXT_PUBLIC_EMAILJS_TEMPLATE_ID=
+NEXT_PUBLIC_EMAILJS_PUBLIC_KEY=
+```
+
+## Project Structure
+
+```
+├── src/
+│   ├── app/              # Next.js App Router pages
+│   │   ├── about/        # About page
+│   │   ├── admin/        # Admin dashboard (protected)
+│   │   ├── blogs/        # Blog listing and detail pages
+│   │   ├── contact/      # Contact page
+│   │   ├── projects/     # Projects showcase
+│   │   └── review/       # Testimonials page
+│   ├── components/       # React components
+│   │   ├── Sections/     # Page sections (Hero, About, etc.)
+│   │   ├── about/        # About page components
+│   │   ├── blog/         # Blog components
+│   │   ├── projects/     # Project components
+│   │   └── ui/           # Reusable UI components
+│   ├── actions/          # Server actions
+│   │   ├── blogs.js      # Blog CRUD operations
+│   │   └── testimonials.js # Testimonial operations
+│   └── data/             # Static data files
+├── public/               # Static assets
+└── .env.local           # Environment variables (not in git)
+```
+
+## Features
+
+- ✅ Modern portfolio with hero section
+- ✅ About page with animated sections
+- ✅ Projects showcase with detailed case studies
+- ✅ Blog system with Markdown support
+- ✅ Like functionality for blog posts (requires authentication)
+- ✅ Testimonials/reviews section
+- ✅ Contact form with EmailJS integration
+- ✅ Admin dashboard for content management
+- ✅ Authentication with Clerk
+- ✅ Smooth animations with GSAP and Framer Motion
+- ✅ 3D elements with Three.js
+- ✅ Responsive design
+- ✅ Neo-brutalist design aesthetic
 
 ## Getting Started
 
-First, run the development server:
+1. **Install dependencies:**
+   ```bash
+   pnpm install
+   ```
 
-```bash
+2. **Set up environment variables:**
+   - Copy `.env.local.example` to `.env.local`
+   - Fill in all required API keys and credentials
 
-pnpm dev
+3. **Set up Supabase:**
+   - Create a new Supabase project
+   - Run the database migrations (see `dummy_data.sql` for schema reference)
+   - Enable Row Level Security (RLS) policies as needed
 
-```
+4. **Set up Clerk:**
+   - Create a Clerk application
+   - Configure sign-in/sign-up pages
+   - Add your admin email to environment variables
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+5. **Run development server:**
+   ```bash
+   pnpm dev
+   ```
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+6. **Open browser:**
+   Navigate to [http://localhost:3000](http://localhost:3000)
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Deployment
 
-## Learn More
+This project is optimized for deployment on **Vercel**:
 
-To learn more about Next.js, take a look at the following resources:
+1. Push your code to GitHub
+2. Import the repository in Vercel
+3. Add all environment variables
+4. Deploy
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## License
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Private project - All rights reserved
