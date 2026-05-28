@@ -10,11 +10,13 @@
 
 /* Neo-Brutalist Theme Custom Properties */
 :root {
-  --pitch-black: #111111;
+  --pitch-black: #0A0A0A;
   --pure-white: #ffffff;
   --off-white: #fdfdfd;
   --warm-gray: #f4f4f0;
-  --neon-yellow: #ccff00;
+  --neon-yellow: #FFEE32;
+  --electric-cyan: #00D9FF;
+  --vibrant-orange: #FF6B35;
   --electric-purple: #9B30E0;
   --action-pink: #ff3366;
   
@@ -22,8 +24,9 @@
   --background: var(--off-white);
   --border-color: var(--pitch-black);
   --card-bg: var(--pure-white);
-  --accent-primary: var(--neon-yellow);
-  --accent-secondary: var(--electric-purple);
+  --accent-primary: var(--electric-cyan);
+  --accent-secondary: var(--vibrant-orange);
+  --accent-tertiary: var(--neon-yellow);
 }
 
 /* Neo-Brutalist Font Utility Classes */
