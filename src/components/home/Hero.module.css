@@ -13,15 +13,12 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 0; /* Start at 0 width */
-  height: 0; /* Start at 0 height */
-  max-width: 1600px;
-  max-height: 900px;
+  width: 0;
+  height: 0;
   opacity: 0;
   z-index: 15;
   pointer-events: none;
   will-change: width, height, opacity;
-  border-radius: 8px;
   overflow: hidden;
   box-shadow: 0 25px 100px rgba(0, 0, 0, 0.5);
 }
@@ -432,13 +429,13 @@
   }
 
   .firstName {
-    font-size: clamp(6.1rem, 11.7vw, 11.2rem);
+    font-size: clamp(6.1rem, 15.7vw, 15.2rem);
   }
 
   .lastName {
     margin-left: auto;
     text-align: right;
-    font-size: clamp(6.1rem, 11.2vw, 11rem);
+    font-size: clamp(6.1rem, 15.2vw, 15rem);
   }
 
   .footerRow {
