@@ -9,49 +9,80 @@ gsap.registerPlugin(ScrollTrigger);
 
 export default function About() {
   const sectionRef = useRef(null);
+  const textRef = useRef<HTMLDivElement>(null);
+  const imageRef = useRef<HTMLDivElement>(null);
+  const infoRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      // Smooth fade in for entire section
-      gsap.fromTo(
-        sectionRef.current,
-        {
+      // 1. Text blur-to-visible, scrubbed by scroll
+      const lines = gsap.utils.toArray('.about-line-inner');
+      
+      gsap.fromTo(lines,
+        { 
+          y: '100%', 
           opacity: 0,
+          filter: 'blur(12px)',
+          rotation: 2
         },
         {
+          y: '0%',
           opacity: 1,
-          duration: 1.5,
-          ease: 'power2.out',
+          filter: 'blur(0px)',
+          rotation: 0,
+          stagger: 0.1,
+          ease: 'none',
           scrollTrigger: {
-            trigger: sectionRef.current,
-            start: 'top 90%',
-            end: 'top 60%',
+            trigger: textRef.current,
+            start: 'top 85%',
+            end: 'top 35%',
             scrub: 1,
-          },
+          }
         }
       );
 
-      // Stagger content elements
-      gsap.fromTo(
-        '.about-content',
+      // 2. Image parallax & fade in (slightly below 1st text)
+      gsap.fromTo(imageRef.current,
         {
+          y: 150,
           opacity: 0,
-          y: 60,
+          filter: 'blur(20px)',
         },
         {
+          y: -100, // Parallax movement
           opacity: 1,
-          y: 0,
-          duration: 1.2,
-          stagger: 0.15,
-          ease: 'power3.out',
+          filter: 'blur(0px)',
+          ease: 'none',
           scrollTrigger: {
-            trigger: sectionRef.current,
-            start: 'top 80%',
-            end: 'top 50%',
-            scrub: 1.5,
-          },
+            trigger: imageRef.current,
+            start: 'top 90%',
+            end: 'bottom 40%',
+            scrub: 1,
+          }
         }
       );
+
+      // 3. 3rd text (bottom info) appears after
+      gsap.fromTo(infoRef.current,
+        {
+          y: 80,
+          opacity: 0,
+          filter: 'blur(8px)',
+        },
+        {
+          y: 0,
+          opacity: 1,
+          filter: 'blur(0px)',
+          ease: 'none',
+          scrollTrigger: {
+            trigger: infoRef.current,
+            start: 'top 85%',
+            end: 'top 50%',
+            scrub: 1,
+          }
+        }
+      );
+      
     }, sectionRef);
 
     return () => ctx.revert();
@@ -59,45 +90,51 @@ export default function About() {
 
   return (
     <section ref={sectionRef} id="about" className={styles.about}>
+      <div className={styles.sideLabel}>
+        <div className={styles.sideLabelLine}></div>
+        <span>About</span>
+      </div>
+
       <div className={styles.container}>
-        <div className={`${styles.header} about-content`}>
-          <h2 className={styles.title}>About Me</h2>
-          <div className={styles.divider} />
+        <div className={styles.leftCol}>
+          <div ref={textRef} className={styles.textBlock}>
+            <div className={styles.lineWrapper}>
+              <span className={`about-line-inner ${styles.line}`}>As a <em>creative developer</em>, I craft</span>
+            </div>
+            <div className={styles.lineWrapper}>
+              <span className={`about-line-inner ${styles.line}`}>tailor-made web experiences,</span>
+            </div>
+            <div className={styles.lineWrapper}>
+              <span className={`about-line-inner ${styles.line}`}>blending technical precision and</span>
+            </div>
+            <div className={styles.lineWrapper}>
+              <span className={`about-line-inner ${styles.line}`}><em>emotion</em>.</span>
+            </div>
+          </div>
+
+          <div ref={infoRef} className={styles.bottomInfo}>
+            <div className={styles.ageLabel}>
+              (24)
+            </div>
+            <div className={styles.descWrapper}>
+              <p className={styles.description}>
+                My name is Anurag. A passionate creator and computer science student, I build memorable digital experiences, always seeking the symbiosis between art and information.
+              </p>
+              <div className={styles.infoLink}>
+                INFO
+              </div>
+            </div>
+          </div>
         </div>
 
-        <div className={`${styles.content} about-content`}>
-          <p className={styles.text}>
-            I'm <span className={styles.highlight}>Anurag Mishra</span>, a passionate developer and designer 
-            crafting digital experiences that blend creativity with functionality. With a keen eye for detail 
-            and a love for clean code, I transform ideas into elegant solutions.
-          </p>
-          
-          <p className={styles.text}>
-            My journey in tech has been driven by curiosity and a constant desire to learn. 
-            I specialize in building modern web applications using cutting-edge technologies, 
-            always pushing the boundaries of what's possible on the web.
-          </p>
-
-          <div className={styles.skills}>
-            <div className={styles.skillCategory}>
-              <h3 className={styles.skillTitle}>Development</h3>
-              <div className={styles.skillTags}>
-                <span className={styles.tag}>React</span>
-                <span className={styles.tag}>Next.js</span>
-                <span className={styles.tag}>TypeScript</span>
-                <span className={styles.tag}>Node.js</span>
-              </div>
-            </div>
-
-            <div className={styles.skillCategory}>
-              <h3 className={styles.skillTitle}>Design</h3>
-              <div className={styles.skillTags}>
-                <span className={styles.tag}>UI/UX</span>
-                <span className={styles.tag}>Animation</span>
-                <span className={styles.tag}>3D Graphics</span>
-                <span className={styles.tag}>Prototyping</span>
-              </div>
-            </div>
+        <div className={styles.rightCol}>
+          <div ref={imageRef} className={styles.imageWrapper}>
+            <img 
+              src="/Headshot.png" 
+              alt="Anurag Mishra" 
+              className={styles.profileImage} 
+            />
+            <div className={styles.imageOverlay}></div>
           </div>
         </div>
       </div>

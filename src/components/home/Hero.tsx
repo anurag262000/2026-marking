@@ -17,141 +17,105 @@ export default function Hero() {
   const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
-    // Wait for video to load before setting up animations
-    const video = videoRef.current;
-    if (!video) return;
+    const ctx = gsap.context(() => {
+      const tl = gsap.timeline({
+        defaults: { ease: 'power3.out' },
+        delay: 0.15,
+      });
 
-    const handleVideoLoaded = () => {
-      // Set video to loop and start paused
-      video.pause();
-      video.currentTime = 0;
-      
-      console.log('Video loaded. Duration:', video.duration);
-
-      const ctx = gsap.context(() => {
-        const tl = gsap.timeline({
-          defaults: { ease: 'power3.out' },
-          delay: 0.15,
-        });
-
-        tl.fromTo(
-          '.hero-intro',
-          { opacity: 0, y: 18, filter: 'blur(8px)' },
-          { opacity: 1, y: 0, filter: 'blur(0px)', duration: 1.0 }
+      tl.fromTo(
+        '.hero-intro',
+        { opacity: 0, y: 18, filter: 'blur(8px)' },
+        { opacity: 1, y: 0, filter: 'blur(0px)', duration: 1.0 }
+      )
+        .fromTo(
+          '.hero-first',
+          { opacity: 0, y: 90, filter: 'blur(12px)' },
+          { opacity: 1, y: 0, filter: 'blur(0px)', duration: 1.35, ease: 'power4.out' },
+          '-=0.55'
         )
-          .fromTo(
-            '.hero-first',
-            { opacity: 0, y: 90, filter: 'blur(12px)' },
-            { opacity: 1, y: 0, filter: 'blur(0px)', duration: 1.35, ease: 'power4.out' },
-            '-=0.55'
-          )
-          .fromTo(
-            '.hero-last',
-            { opacity: 0, y: 90, filter: 'blur(12px)' },
-            { opacity: 1, y: 0, filter: 'blur(0px)', duration: 1.35, ease: 'power4.out' },
-            '-=1.0'
-          )
-          .fromTo(
-            '.hero-divider',
-            { scaleX: 0, transformOrigin: 'left center' },
-            { scaleX: 1, duration: 1.0, ease: 'power2.inOut' },
-            '-=0.85'
-          )
-          .fromTo(
-            '.hero-footer-item',
-            { opacity: 0, y: 12 },
-            { opacity: 1, y: 0, duration: 0.7, stagger: 0.05 },
-            '-=0.55'
-          );
+        .fromTo(
+          '.hero-last',
+          { opacity: 0, y: 90, filter: 'blur(12px)' },
+          { opacity: 1, y: 0, filter: 'blur(0px)', duration: 1.35, ease: 'power4.out' },
+          '-=1.0'
+        )
+        .fromTo(
+          '.hero-divider',
+          { scaleX: 0, transformOrigin: 'left center' },
+          { scaleX: 1, duration: 1.0, ease: 'power2.inOut' },
+          '-=0.85'
+        )
+        .fromTo(
+          '.hero-footer-item',
+          { opacity: 0, y: 12 },
+          { opacity: 1, y: 0, duration: 0.7, stagger: 0.05 },
+          '-=0.55'
+        );
 
-        // Scroll-triggered animations
-        const scrollTl = gsap.timeline({
-          scrollTrigger: {
-            trigger: heroRef.current,
-            start: 'top top',
-            end: '+=8000vh', // Reduced for 4-second video
-            scrub: 1, // Reduced scrub for more responsive feel
-            pin: true,
-            anticipatePin: 1,
-            onUpdate: (self) => {
-              const progress = self.progress;
-              
-              // Video plays during expansion phase (25% to 87.5%)
-              const videoStartProgress = 0.25;
-              const videoEndProgress = 0.875;
-              
-              if (progress >= videoStartProgress && progress <= videoEndProgress) {
-                // Map scroll progress to video time for scrubbing effect
-                const videoPhaseProgress = (progress - videoStartProgress) / (videoEndProgress - videoStartProgress);
-                const targetTime = videoPhaseProgress * video.duration;
-                
-                // Update video time based on scroll position
-                if (Math.abs(video.currentTime - targetTime) > 0.1) {
-                  video.currentTime = targetTime;
-                }
-              } else if (progress < videoStartProgress) {
-                video.currentTime = 0;
-              }
-            },
-          },
-        });
+      // Scroll-triggered animations
+      const scrollTl = gsap.timeline({
+        scrollTrigger: {
+          trigger: heroRef.current,
+          start: 'top top',
+          end: '+=8000vh',
+          scrub: 1,
+          pin: true,
+          anticipatePin: 1,
+        },
+      });
 
-        scrollTl
-          .to('.hero-intro', {
-            opacity: 0,
-            y: -40,
-            duration: 1.0,
-            ease: 'power2.in',
-          }, 0)
-          .fromTo(firstNameRef.current, 
-            { y: 0 },
-            {
-              y: '-30vh',
-              duration: 3.0,
-              ease: 'power1.inOut',
-            }, 1.0)
-          .fromTo(lastNameRef.current,
-            { y: 0 },
-            {
-              y: '-30vh',
-              duration: 3.0,
-              ease: 'power1.inOut',
-            }, 1.0)
-          .to(videoContainerRef.current, {
-            opacity: 1,
-            duration: 0.5,
-            ease: 'none',
-          }, 4.0)
-          .to(videoContainerRef.current, {
-            width: '80vw',
-            height: '80vh',
-            duration: 10.0,
-            ease: 'power2.out',
-          }, 4.0)
-          .to(firstNameRef.current, {
-            x: '-100vw',
+      scrollTl
+        .to('.hero-intro', {
+          opacity: 0,
+          y: -40,
+          duration: 1.0,
+          ease: 'power2.in',
+        }, 0)
+        .fromTo(firstNameRef.current, 
+          { y: 0 },
+          {
+            y: '-30vh',
             duration: 3.0,
-            ease: 'power2.inOut',
-          }, 10.0)
-          .to(lastNameRef.current, {
-            x: '100vw',
+            ease: 'power1.inOut',
+          }, 1.0)
+        .fromTo(lastNameRef.current,
+          { y: 0 },
+          {
+            y: '-30vh',
             duration: 3.0,
-            ease: 'power2.inOut',
-          }, 10.0);
+            ease: 'power1.inOut',
+          }, 1.0)
+        .to(videoContainerRef.current, {
+          opacity: 1,
+          duration: 0.5,
+          ease: 'none',
+        }, 4.0)
+        .to(videoContainerRef.current, {
+          width: '100vw',
+          height: '100vh',
+          duration: 10.0,
+          ease: 'power2.out',
+        }, 4.0)
+        .to('.hero-bottom-gradient', {
+          opacity: 1,
+          duration: 10.0,
+          ease: 'power2.out',
+        }, 4.0)
+        .to(firstNameRef.current, {
+          x: '-100vw',
+          duration: 3.0,
+          ease: 'power2.inOut',
+        }, 10.0)
+        .to(lastNameRef.current, {
+          x: '100vw',
+          duration: 3.0,
+          ease: 'power2.inOut',
+        }, 10.0);
 
-      }, heroRef);
+    }, heroRef);
 
-      return () => ctx.revert();
-    };
-    
-    if (video.readyState >= 2) {
-      // Video already loaded
-      handleVideoLoaded();
-    } else {
-      // Wait for video to load
-      video.addEventListener('loadedmetadata', handleVideoLoaded);
-      return () => video.removeEventListener('loadedmetadata', handleVideoLoaded);
-    }
+    return () => ctx.revert();
   }, []);
 
   return (
@@ -196,17 +160,14 @@ export default function Hero() {
           </footer>
         </div>
 
-        {/* Video Container - Scroll Controlled */}
+        {/* Image Container - Scroll Controlled */}
         <div ref={videoContainerRef} className={styles.videoContainer}>
-          <video
-            ref={videoRef}
+          <img
+            src="/hero/2.png"
+            alt="Hero expansion"
             className={styles.video}
-            muted
-            playsInline
-            preload="auto"
-          >
-            <source src="/hero/animate2.mp4" type="video/mp4" />
-          </video>
+          />
+          <div className={`${styles.bottomGradient} hero-bottom-gradient`} />
         </div>
       </section>
     </>
